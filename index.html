@@ -309,44 +309,66 @@
     mainService.addEventListener('change', updatePrice);
     addServiceButton.addEventListener('click', addExtraService);
 
-    document.getElementById('sendButton').addEventListener('click', () => {
-      const form = document.getElementById('requestForm');
-      if (!form.checkValidity()) { form.reportValidity(); return; }
-      const main = selectedData(mainService);
-      const extras = extraSelects().map(selectedData).filter(x => x.value);
-      const model = document.getElementById('model').value.trim();
-      const deviceName = device.options[device.selectedIndex].textContent;
-      const fw = device.value === 'ps4' ? firmware.value : 'غير مطلوب';
-      const sum = main.price + extras.reduce((total,x) => total + x.price, 0);
-      const hasModding = [main, ...extras].some(x => isModdingService(x.value));
-      const extraLines = extras.map((x,i) => 'خدمة إضافية ' + (i + 1) + ': ' + x.name);
+  document.getElementById('sendButton').addEventListener('click', () => {
+  const form = document.getElementById('requestForm');
 
-      const message = [
-        'طلب صيانة - ورشة بيتية',
-        '--------------------------------',
-        'الاسم: ' + document.getElementById('name').value.trim(),
-        'واتساب: ' + document.getElementById('phone').value.trim(),
-        '--------------------------------',
-        'الجهاز: ' + deviceName,
-        'رقم الموديل: ' + model,
-        device.value === 'ps4' ? 'إصدار نظام PS4: ' + fw : '',
-        'الخدمة الأساسية: ' + main.name,
-        ...extraLines,
-        extraRequest.value.trim() ? 'طلب إضافي للاستفسار: ' + extraRequest.value.trim() : '',
-        document.getElementById('notes').value.trim() ? 'ملاحظات: ' + document.getElementById('notes').value.trim() : '',
-        '--------------------------------',
-        'خدمات التعديل: ' + (hasModding ? 'نعم - تم الموافقة الصريحة' : 'لا'),
-        'السعر التقريبي: ' + sum + ' جنيه (لا يشمل قطع الغيار)',
-        'القطع المستوردة قد تستغرق 1-5 أسابيع.',
-        'خدمة منزلية.',
-        '--------------------------------',
-        'أوافق على بنود الخدمة وسياسة الدفع والاسترداد.',
-        'سأرسل صور الجهاز وملصق رقم الموديل وحالته الحالية هنا.'
-      ].filter(Boolean).join('\n');
+  const phoneInput = document.getElementById('phone');
+  if (!/^[0-9]{11}$/.test(phoneInput.value.trim())) {
+    alert('⚠️ أدخل رقم واتساب صحيح مكون من 11 رقم.');
+    phoneInput.focus();
+    return;
+  }
 
-      const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-      window.open(whatsappUrl, '_blank');
-    });
+  if (!document.getElementById('agree').checked) {
+    alert('⚠️ يجب الموافقة على البنود قبل المتابعة.');
+    return;
+  }
+  if (!document.getElementById('moddingOptIn').checked &&
+      !document.getElementById('moddingSection').classList.contains('hidden')) {
+    alert('⚠️ يجب الموافقة على خدمات التعديل قبل المتابعة.');
+    return;
+  }
+
+  if (!form.checkValidity()) { 
+    form.reportValidity(); 
+    return; 
+  }
+
+  const main = selectedData(mainService);
+  const extras = extraSelects().map(selectedData).filter(x => x.value);
+  const model = document.getElementById('model').value.trim();
+  const deviceName = device.options[device.selectedIndex].textContent;
+  const fw = device.value === 'ps4' ? firmware.value : 'غير مطلوب';
+  const sum = main.price + extras.reduce((total,x) => total + x.price, 0);
+  const hasModding = [main, ...extras].some(x => isModdingService(x.value));
+  const extraLines = extras.map((x,i) => 'خدمة إضافية ' + (i + 1) + ': ' + x.name);
+
+  const message = [
+    'طلب صيانة - ورشة بيتية',
+    '--------------------------------',
+    'الاسم: ' + document.getElementById('name').value.trim(),
+    'واتساب: ' + phoneInput.value.trim(),
+    '--------------------------------',
+    'الجهاز: ' + deviceName,
+    'رقم الموديل: ' + model,
+    device.value === 'ps4' ? 'إصدار نظام PS4: ' + fw : '',
+    'الخدمة الأساسية: ' + main.name,
+    ...extraLines,
+    extraRequest.value.trim() ? 'طلب إضافي للاستفسار: ' + extraRequest.value.trim() : '',
+    document.getElementById('notes').value.trim() ? 'ملاحظات: ' + document.getElementById('notes').value.trim() : '',
+    '--------------------------------',
+    'خدمات التعديل: ' + (hasModding ? 'نعم - تم الموافقة الصريحة' : 'لا'),
+    'السعر التقريبي: ' + sum + ' جنيه (لا يشمل قطع الغيار)',
+    'القطع المستوردة قد تستغرق 1-5 أسابيع.',
+    'خدمة منزلية.',
+    '--------------------------------',
+    'أوافق على بنود الخدمة وسياسة الدفع والاسترداد.',
+    'سأرسل صور الجهاز وملصق رقم الموديل وحالته الحالية هنا.'
+  ].filter(Boolean).join('\n');
+
+  const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+  window.open(whatsappUrl, '_blank');
+});
   </script>
 </body>
 </html>
