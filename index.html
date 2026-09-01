@@ -274,17 +274,21 @@
       moddingOptIn.required = requiresModding;
       if (!requiresModding) moddingOptIn.checked = false;
     }
-    function populateServices() {
-      fillSelect(mainService, '-- اختر الخدمة الأساسية --');
-      mainService.disabled = !device.value;
-      additionalServices.innerHTML = '';
-      extraBox.classList.toggle('hidden', !device.value);
-      extraRequestBox.classList.toggle('hidden', !device.value);
-      firmwareBox.classList.toggle('hidden', device.value !== 'ps4');
-      firmware.required = device.value === 'ps4';
-      updateModdingRequirement();
-      updatePrice();
-    }
+   function populateServices() {
+  fillSelect(mainService, '-- اختر الخدمة الأساسية --');
+  mainService.disabled = !device.value;
+  additionalServices.innerHTML = '';
+
+  // Updated toggles with smooth transitions
+  extraBox.classList.toggle('show', !!device.value);
+  extraRequestBox.classList.toggle('show', !!device.value);
+  firmwareBox.classList.toggle('show', device.value === 'ps4');
+
+  firmware.required = device.value === 'ps4';
+  updateModdingRequirement();
+  updatePrice();
+}
+
     function updatePrice() {
       const main = selectedData(mainService);
       const extras = extraSelects().map(selectedData).filter(x => x.value);
