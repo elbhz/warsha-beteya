@@ -303,3 +303,6 @@ button:hover {
   background: #fff;
   border: 1px solid #ff6b6b;
 }
+.price-note {
+  margin-top: 10px;
+}
