@@ -305,6 +305,7 @@ button:hover {
 }
 .price-note {
   margin-top: 10px;
+  display: block;
 }
 .input-group {
   background: #f9f9ff;   /* soft background */
