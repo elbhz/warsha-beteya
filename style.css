@@ -298,3 +298,8 @@ button:hover {
   margin: 8px 0 0;
   padding-right: 20px;
 }
+.agreement-warning {
+  margin-top: 12px;
+  background: #fff;
+  border: 1px solid #ff6b6b;
+}
