@@ -294,3 +294,7 @@ button:hover {
   box-shadow:none;
   transform:none;
 }
+.modding-list {
+  margin: 8px 0 0;
+  padding-right: 20px;
+}
