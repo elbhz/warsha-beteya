@@ -314,3 +314,18 @@ button:hover {
   padding: 12px;
   margin-bottom: 15px;
 }
+.hidden {
+  display: none;
+}
+
+.fade-slide {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+.fade-slide.show {
+  opacity: 1;
+  max-height: 500px;
+}
