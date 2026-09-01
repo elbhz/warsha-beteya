@@ -24,35 +24,45 @@
     <form id="requestForm">
       <section class="section">
         <h2>📋 بياناتك</h2>
-        <label for="name">الاسم <span class="required">*</span></label>
-        <input id="name" type="text" required placeholder="اكتب اسمك">
-        <label for="phone">رقم واتساب <span class="required">*</span></label>
-        <input id="phone" type="tel" required placeholder="01xxxxxxxxx">
+        <div class="input-group">
+          <label for="name">الاسم <span class="required">*</span></label>
+          <input id="name" type="text" required placeholder="اكتب اسمك">
+        </div>
+
+        <div class="input-group">
+          <label for="phone">رقم واتساب <span class="required">*</span></label>
+          <input id="phone" type="tel" required placeholder="01xxxxxxxxx">
+        </div>
       </section>
 
       <section class="section">
         <h2>🕹️ الجهاز</h2>
-        <label for="device">نوع الجهاز <span class="required">*</span></label>
-        <select id="device" required>
-          <option value="">-- اختر الجهاز --</option>
-          <option value="ps1">PlayStation 1 (PS1)</option>
-          <option value="ps2">PlayStation 2 (PS2)</option>
-          <option value="ps3">PlayStation 3 (PS3)</option>
-          <option value="ps4">PlayStation 4 (PS4)</option>
-          <option value="psp">PlayStation Portable (PSP)</option>
-          <option value="vita">PlayStation Vita (PS Vita)</option>
-          <option value="ds2">يد DualShock 2</option>
-          <option value="ds3">يد DualShock 3</option>
-          <option value="ds4">يد DualShock 4</option>
-          <option value="mac-intel">MacBook Intel (قديم / OCLP)</option>
-          <option value="mac-silicon">MacBook Apple Silicon (M1 / M2 / M3 / M4)</option>
-        </select>
 
-        <label for="model">رقم الموديل <span class="required">*</span></label>
-        <input id="model" type="text" required placeholder="مثال: CUH-7216B / CECH-2504A / PCH-2008 / A1466">
-        <p class="hint">لو لا تعرفه، اكتب "لا أعرف" وسأراجعه عند الاستلام.</p>
+        <div class="input-group">
+          <label for="device">نوع الجهاز <span class="required">*</span></label>
+          <select id="device" required>
+            <option value="">-- اختر الجهاز --</option>
+            <option value="ps1">PlayStation 1 (PS1)</option>
+            <option value="ps2">PlayStation 2 (PS2)</option>
+            <option value="ps3">PlayStation 3 (PS3)</option>
+            <option value="ps4">PlayStation 4 (PS4)</option>
+            <option value="psp">PlayStation Portable (PSP)</option>
+            <option value="vita">PlayStation Vita (PS Vita)</option>
+            <option value="ds2">يد DualShock 2</option>
+            <option value="ds3">يد DualShock 3</option>
+            <option value="ds4">يد DualShock 4</option>
+            <option value="mac-intel">MacBook Intel (قديم / OCLP)</option>
+            <option value="mac-silicon">MacBook Apple Silicon (M1 / M2 / M3 / M4)</option>
+          </select>
+        </div>
 
-        <div id="ps4FirmwareBox" class="hidden">
+        <div class="input-group">
+          <label for="model">رقم الموديل <span class="required">*</span></label>
+          <input id="model" type="text" required placeholder="مثال: CUH-7216B / CECH-2504A / PCH-2008 / A1466">
+          <p class="hint">لو لا تعرفه، اكتب "لا أعرف" وسأراجعه عند الاستلام.</p>
+        </div>
+          
+        <div id="ps4FirmwareBox" class="hidden input-group">
           <label for="firmware">إصدار نظام PS4 <span class="required">*</span></label>
           <select id="firmware">
             <option value="">-- اختر الإصدار --</option>
@@ -69,57 +79,67 @@
 
       <section class="section">
         <h2>🛠️ الخدمة المطلوبة</h2>
-        <label for="mainService">الخدمة الأساسية <span class="required">*</span></label>
-        <select id="mainService" required disabled>
-          <option value="">-- اختر نوع الجهاز أولاً --</option>
-        </select>
 
-        <div id="extraBox" class="hidden">
+        <div class="input-group">
+          <label for="mainService">الخدمة الأساسية <span class="required">*</span></label>
+          <select id="mainService" required disabled>
+            <option value="">-- اختر نوع الجهاز أولاً --</option>
+          </select>
+        </div>
+
+        <div id="extraBox" class="hidden input-group">
           <label>خدمات إضافية (اختياري)</label>
           <div id="additionalServices"></div>
           <button type="button" class="add-service-btn" id="addServiceButton">+ إضافة خدمة أخرى</button>
           <p class="hint">يمكنك إضافة أكثر من خدمة. تظهر فقط الخدمات المناسبة للجهاز المختار.</p>
         </div>
 
-        <div id="extraRequestBox" class="hidden">
+        <div id="extraRequestBox" class="hidden input-group">
           <label for="extraRequest">طلب أو خدمة أخرى للاستفسار (اختياري)</label>
           <textarea id="extraRequest" placeholder="اكتب طلبك هنا، وسيتم تأكيد توفره وسعره قبل البدء"></textarea>
         </div>
-
-        <label for="notes">ملاحظات أو وصف المشكلة (اختياري)</label>
-        <textarea id="notes" placeholder="مثال: الجهاز صوته عالٍ، أو لا يقرأ الأقراص"></textarea>
+        
+        <div class="input-group">
+          <label for="notes">ملاحظات أو وصف المشكلة (اختياري)</label>
+          <textarea id="notes" placeholder="مثال: الجهاز صوته عالٍ، أو لا يقرأ الأقراص"></textarea>
+        </div>
       </section>
 
       <section class="modding-section hidden" id="moddingSection">
-        <h2>🔓 خدمات التعديل (Jailbreak/CFW/HEN/OPL/OCLP)</h2>
-        <div class="modding-warning">
-          <strong>⚠️ تنبيه مهم:</strong><br>
-          خدمات التعديل قد تلغي الضمان الرسمي، وقد تخالف شروط استخدام المنصة (مثل شبكة PlayStation).<br>
-          هذه الخدمات مخصصة للاستخدام الشخصي مع الألعاب والبرامج اللي تملكها بشكل قانوني فقط.<br>
-          لازم توافق صراحة على البنود دي قبل المتابعة.
-          <br><br>
-          <strong>📌 ملاحظة الأداء:</strong> بعد التعديل، قد تلاحظ فرق في الأداء عن النظام الأصلي. أمثلة:
-          <ul class="modding-list">
-            <li>أجهزة Mac مع أنظمة أحدث قد تكون أبطأ قليلاً من النظام الأصلي.</li>
-            <li>بعض الألعاب أو التطبيقات قد تعمل بأداء مختلف عن المتوقع.</li>
-            <li>قد تظهر مشاكل توافق مع بعض البرامج أو الخصائص.</li>
-          </ul>
-        </div>
-        <label for="moddingOptIn">
-          <input type="checkbox" id="moddingOptIn" required>
-          <strong>أوافق صراحة على خدمات التعديل وأتحمل المسؤولية الكاملة</strong> <span class="required">*</span>
-        </label>
-        <div class="agreement agreement-warning">
-          <strong>بموافقتي، أقر بالآتي:</strong>
-          <ul>
-            <li>الجهاز ملكي وأنا المسؤول الوحيد عنه.</li>
-            <li>أفهم أن التعديل قد يلغي الضمان وقد يسبب حظر الجهاز من الخدمات أونلاين.</li>
-            <li>ألتزم باستخدام الجهاز المعدّل للأغراض الشخصية والقانونية فقط.</li>
-            <li>مقدّم الخدمة لا يوفّر ألعاباً مقرصنة ولا يساعد في أي استخدام غير قانوني.</li>
-            <li>أتحمل المسؤولية الكاملة عن أي عواقب قانونية أو فنية ناتجة عن التعديل، <strong>بما في ذلك أي فرق في الأداء</strong>.</li>
-          </ul>
-        </div>
-      </section>
+  <h2>🔓 خدمات التعديل (Jailbreak/CFW/HEN/OPL/OCLP)</h2>
+
+  <div class="modding-warning">
+    <strong>⚠️ تنبيه مهم:</strong><br>
+    خدمات التعديل قد تلغي الضمان الرسمي، وقد تخالف شروط استخدام المنصة (مثل شبكة PlayStation).<br>
+    هذه الخدمات مخصصة للاستخدام الشخصي مع الألعاب والبرامج اللي تملكها بشكل قانوني فقط.<br>
+    لازم توافق صراحة على البنود دي قبل المتابعة.
+    <br><br>
+    <strong>📌 ملاحظة الأداء:</strong> بعد التعديل، قد تلاحظ فرق في الأداء عن النظام الأصلي. أمثلة:
+    <ul class="modding-list">
+      <li>أجهزة Mac مع أنظمة أحدث قد تكون أبطأ قليلاً من النظام الأصلي.</li>
+      <li>بعض الألعاب أو التطبيقات قد تعمل بأداء مختلف عن المتوقع.</li>
+      <li>قد تظهر مشاكل توافق مع بعض البرامج أو الخصائص.</li>
+    </ul>
+  </div>
+
+  <div class="input-group">
+    <label for="moddingOptIn">
+      <input type="checkbox" id="moddingOptIn" required>
+      <strong>أوافق صراحة على خدمات التعديل وأتحمل المسؤولية الكاملة</strong> <span class="required">*</span>
+    </label>
+  </div>
+
+  <div class="agreement agreement-warning input-group">
+    <strong>بموافقتي، أقر بالآتي:</strong>
+    <ul>
+      <li>الجهاز ملكي وأنا المسؤول الوحيد عنه.</li>
+      <li>أفهم أن التعديل قد يلغي الضمان وقد يسبب حظر الجهاز من الخدمات أونلاين.</li>
+      <li>ألتزم باستخدام الجهاز المعدّل للأغراض الشخصية والقانونية فقط.</li>
+      <li>مقدّم الخدمة لا يوفّر ألعاباً مقرصنة ولا يساعد في أي استخدام غير قانوني.</li>
+      <li>أتحمل المسؤولية الكاملة عن أي عواقب قانونية أو فنية ناتجة عن التعديل، <strong>بما في ذلك أي فرق في الأداء</strong>.</li>
+    </ul>
+  </div>
+</section>
 
       <div class="notice">
         <strong>مهم قبل الطلب:</strong><br>
@@ -148,28 +168,35 @@
       </div>
 
       <section class="section">
-        <h2>⚠️ الموافقة</h2>
-        <div class="agreement">
-          <strong>بإرسال الطلب، أنا أوافق على الآتي:</strong>
-          <ul>
-            <li>الجهاز ملكي ولي الحق في تسليمه للصيانة.</li>
-            <li>السعر الظاهر تقديري، والسعر النهائي يتأكد بعد الفحص وقبل بدء أي عمل إضافي.</li>
-            <li>قد يحدث فقدان للبيانات أو تظهر أعطال قديمة أثناء الفحص؛ لا يوجد نسخ احتياطي للبيانات إلا باتفاق مسبق.</li>
-            <li>سيتم تسجيل حالة الجهاز عند الاستلام بالصور/الفيديو ووصف مختصر؛ هذا التوثيق هو المرجع لحالة الجهاز قبل الصيانة.</li>
-            <li>الفحص يشمل فقط النقاط المسجلة، ولا يعني أن كل خصائص الجهاز تم اختبارها.</li>
-            <li>مسؤولية مقدم الخدمة لا تتجاوز المبلغ المدفوع مقابل الخدمة.</li>
-            <li>أوافق على سياسة الدفع والاسترداد المذكورة أعلاه، وألتزم بإرسال رسالة "استلمت المبلغ المسترد" عند الاسترداد.</li>
-          </ul>
-        </div>
-        <label class="agree-row" for="agree"><input id="agree" type="checkbox" required> قرأت وأوافق على البنود أعلاه <span class="required">*</span></label>
-      </section>
+  <h2>⚠️ الموافقة</h2>
 
-      <section class="price" id="priceBox">
-        <small>💰 السعر التقريبي</small>
-        <div class="total" id="total">0 جنيه</div>
-        <div class="breakdown" id="breakdown"></div>
-        <small class="price-note">لا يشمل قطع الغيار أو الشحن أو الجمارك.</small>
-      </section>
+  <div class="agreement input-group">
+    <strong>بإرسال الطلب، أنا أوافق على الآتي:</strong>
+    <ul>
+      <li>الجهاز ملكي ولي الحق في تسليمه للصيانة.</li>
+      <li>السعر الظاهر تقديري، والسعر النهائي يتأكد بعد الفحص وقبل بدء أي عمل إضافي.</li>
+      <li>قد يحدث فقدان للبيانات أو تظهر أعطال قديمة أثناء الفحص؛ لا يوجد نسخ احتياطي للبيانات إلا باتفاق مسبق.</li>
+      <li>سيتم تسجيل حالة الجهاز عند الاستلام بالصور/الفيديو ووصف مختصر؛ هذا التوثيق هو المرجع لحالة الجهاز قبل الصيانة.</li>
+      <li>الفحص يشمل فقط النقاط المسجلة، ولا يعني أن كل خصائص الجهاز تم اختبارها.</li>
+      <li>مسؤولية مقدم الخدمة لا تتجاوز المبلغ المدفوع مقابل الخدمة.</li>
+      <li>أوافق على سياسة الدفع والاسترداد المذكورة أعلاه، وألتزم بإرسال رسالة "استلمت المبلغ المسترد" عند الاسترداد.</li>
+    </ul>
+  </div>
+
+  <div class="input-group">
+    <label class="agree-row" for="agree">
+      <input id="agree" type="checkbox" required>
+      قرأت وأوافق على البنود أعلاه <span class="required">*</span>
+    </label>
+  </div>
+</section>
+
+     <section class="price" id="priceBox">
+  <small>💰 السعر التقريبي</small>
+  <div class="total" id="total">0 جنيه</div>
+  <div class="breakdown" id="breakdown"></div>
+  <small class="price-note">لا يشمل قطع الغيار أو الشحن أو الجمارك.</small>
+</section>
 
       <button type="button" id="sendButton">📱 إرسال الطلب عبر واتساب</button>
       <p class="footer-note">بعد فتح واتساب، أرسل صور الجهاز وملصق رقم الموديل وصور أي خدوش أو عيوب ظاهرة إن أمكن.</p>
