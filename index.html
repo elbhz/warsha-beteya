@@ -312,11 +312,14 @@
   document.getElementById('sendButton').addEventListener('click', () => {
   const form = document.getElementById('requestForm');
   const phoneInput = document.getElementById('phone');
+const phoneError = document.getElementById('phoneError');
 
- if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
-  alert('⚠️ أدخل رقم واتساب صحيح يبدأ بـ 01 ومكون من 11 رقم.');
+if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
+  phoneError.classList.remove('hidden');
   phoneInput.focus();
   return;
+} else {
+  phoneError.classList.add('hidden');
 }
 
   if (!document.getElementById('agree').checked) {
