@@ -311,10 +311,16 @@
     mainService.addEventListener('change', updatePrice);
     addServiceButton.addEventListener('click', addExtraService);
 
+<script>
 document.getElementById('sendButton').addEventListener('click', () => {
   const form = document.getElementById('requestForm');
   const phoneInput = document.getElementById('phone');
   const phoneError = document.getElementById('phoneError');
+  const agreeCheckbox = document.getElementById('agree');
+  const agreeError = document.getElementById('agreeError');
+  const moddingSection = document.getElementById('moddingSection');
+  const moddingOptIn = document.getElementById('moddingOptIn');
+  const moddingError = document.getElementById('moddingError');
 
   // ✅ Phone validation
   if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
@@ -325,28 +331,23 @@ document.getElementById('sendButton').addEventListener('click', () => {
     phoneError.classList.add('hidden');
   }
 
- // ✅ Agreement checkbox (inline error + scroll)
-const agreeCheckbox = document.getElementById('agree');
-const agreeError = document.getElementById('agreeError');
-if (!agreeCheckbox.checked) {
-  agreeError.classList.remove('hidden');   // show error span
-  agreeCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' }); // snap to checkbox
-  return;
-} else {
-  agreeError.classList.add('hidden');      // hide if valid
-}
+  // ✅ Agreement checkbox
+  if (!agreeCheckbox.checked) {
+    agreeError.classList.remove('hidden');
+    agreeCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  } else {
+    agreeError.classList.add('hidden');
+  }
 
-// ✅ Modding checkbox (only if section visible)
-const moddingSection = document.getElementById('moddingSection');
-const moddingOptIn = document.getElementById('moddingOptIn');
-const moddingError = document.getElementById('moddingError');
-if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
-  moddingError.classList.remove('hidden'); // show error span
-  moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' }); // snap to checkbox
-  return;
-} else {
-  moddingError.classList.add('hidden');    // hide if valid
-}
+  // ✅ Modding checkbox (only if section visible)
+  if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
+    moddingError.classList.remove('hidden');
+    moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  } else {
+    moddingError.classList.add('hidden');
+  }
 
   // ✅ Built‑in validation fallback
   if (!form.checkValidity()) { 
@@ -354,7 +355,7 @@ if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
     return; 
   }
 
-  // --- WhatsApp message code (unchanged) ---
+  // --- WhatsApp message code ---
   const main = selectedData(mainService);
   const extras = extraSelects().map(selectedData).filter(x => x.value);
   const model = document.getElementById('model').value.trim();
@@ -388,8 +389,10 @@ if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
   ].filter(Boolean).join('\n');
 
   const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-  window.open(whatsappUrl, '_blank');
+  window.open(whatsappUrl, '_blank'); // ✅ always runs if all checks pass
 });
+</script>
+
     
   </script>
 </body>
