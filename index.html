@@ -311,34 +311,39 @@
     mainService.addEventListener('change', updatePrice);
     addServiceButton.addEventListener('click', addExtraService);
 
- document.getElementById('sendButton').addEventListener('click', () => {
+document.getElementById('sendButton').addEventListener('click', () => {
   const form = document.getElementById('requestForm');
   const phoneInput = document.getElementById('phone');
-  const phoneError = document.getElementById('phoneError'); // span under phone input
+  const phoneError = document.getElementById('phoneError');
 
-  // ✅ WhatsApp number validation (inline error instead of alert)
+  // ✅ Phone validation
   if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
-    phoneError.classList.remove('hidden');   // show error span
+    phoneError.classList.remove('hidden');
     phoneInput.focus();
     return;
   } else {
-    phoneError.classList.add('hidden');      // hide error if valid
+    phoneError.classList.add('hidden');
   }
 
-  // ✅ Agreement checkbox
-  if (!document.getElementById('agree').checked) {
-    alert('⚠️ يجب الموافقة على البنود قبل المتابعة.');
+  // ✅ Agreement checkbox (inline error instead of alert)
+  const agreeCheckbox = document.getElementById('agree');
+  const agreeError = document.getElementById('agreeError');
+  if (!agreeCheckbox.checked) {
+    agreeError.classList.remove('hidden'); // show error span
     return;
+  } else {
+    agreeError.classList.add('hidden');    // hide if valid
   }
 
-  // ✅ Skip modding check if section is hidden
+  // ✅ Modding checkbox (only if section visible)
   const moddingSection = document.getElementById('moddingSection');
-  if (!moddingSection.classList.contains('hidden')) {
-    const moddingOptIn = document.getElementById('moddingOptIn');
-    if (!moddingOptIn.checked) {
-      alert('⚠️ يجب الموافقة على خدمات التعديل قبل المتابعة.');
-      return;
-    }
+  const moddingOptIn = document.getElementById('moddingOptIn');
+  const moddingError = document.getElementById('moddingError');
+  if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
+    moddingError.classList.remove('hidden'); // show error span
+    return;
+  } else {
+    moddingError.classList.add('hidden');    // hide if valid
   }
 
   // ✅ Built‑in validation fallback
@@ -381,10 +386,9 @@
   ].filter(Boolean).join('\n');
 
   const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-  window.open(whatsappUrl, '_blank'); // ✅ ensures request is sent
+  window.open(whatsappUrl, '_blank');
 });
-
-
+    
   </script>
 </body>
 </html>
