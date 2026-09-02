@@ -228,6 +228,17 @@
     const device = document.getElementById('device');
     const firmwareBox = document.getElementById('ps4FirmwareBox');
     const firmware = document.getElementById('firmware');
+    device.addEventListener('change', () => {
+  if (device.value === 'ps4') {
+    ps4FirmwareBox.classList.remove('hidden');
+    firmware.setAttribute('required', 'true');
+  } else {
+    ps4FirmwareBox.classList.add('hidden');
+    firmware.removeAttribute('required');
+    firmware.value = ''; // reset selection when hidden
+  }
+});
+
     const mainService = document.getElementById('mainService');
     const extraBox = document.getElementById('extraBox');
     const additionalServices = document.getElementById('additionalServices');
