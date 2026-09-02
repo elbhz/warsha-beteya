@@ -309,34 +309,43 @@
     mainService.addEventListener('change', updatePrice);
     addServiceButton.addEventListener('click', addExtraService);
 
-  document.getElementById('sendButton').addEventListener('click', () => {
+ document.getElementById('sendButton').addEventListener('click', () => {
   const form = document.getElementById('requestForm');
   const phoneInput = document.getElementById('phone');
-const phoneError = document.getElementById('phoneError');
+  const phoneError = document.getElementById('phoneError'); // span under phone input
 
-if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
-  phoneError.classList.remove('hidden');
-  phoneInput.focus();
-  return;
-} else {
-  phoneError.classList.add('hidden');
-}
+  // ✅ WhatsApp number validation (inline error instead of alert)
+  if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
+    phoneError.classList.remove('hidden');   // show error span
+    phoneInput.focus();
+    return;
+  } else {
+    phoneError.classList.add('hidden');      // hide error if valid
+  }
 
+  // ✅ Agreement checkbox
   if (!document.getElementById('agree').checked) {
     alert('⚠️ يجب الموافقة على البنود قبل المتابعة.');
     return;
   }
-  if (!document.getElementById('moddingOptIn').checked &&
-      !document.getElementById('moddingSection').classList.contains('hidden')) {
-    alert('⚠️ يجب الموافقة على خدمات التعديل قبل المتابعة.');
-    return;
+
+  // ✅ Skip modding check if section is hidden
+  const moddingSection = document.getElementById('moddingSection');
+  if (!moddingSection.classList.contains('hidden')) {
+    const moddingOptIn = document.getElementById('moddingOptIn');
+    if (!moddingOptIn.checked) {
+      alert('⚠️ يجب الموافقة على خدمات التعديل قبل المتابعة.');
+      return;
+    }
   }
 
+  // ✅ Built‑in validation fallback
   if (!form.checkValidity()) { 
     form.reportValidity(); 
     return; 
   }
 
+  // --- WhatsApp message code (unchanged) ---
   const main = selectedData(mainService);
   const extras = extraSelects().map(selectedData).filter(x => x.value);
   const model = document.getElementById('model').value.trim();
@@ -369,10 +378,10 @@ if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
     'سأرسل صور الجهاز وملصق رقم الموديل وحالته الحالية هنا.'
   ].filter(Boolean).join('\n');
 
- const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-window.open(whatsappUrl, '_blank');
-
+  const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+  window.open(whatsappUrl, '_blank'); // ✅ ensures request is sent
 });
+
 
   </script>
 </body>
