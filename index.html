@@ -325,26 +325,28 @@ document.getElementById('sendButton').addEventListener('click', () => {
     phoneError.classList.add('hidden');
   }
 
-  // ✅ Agreement checkbox (inline error instead of alert)
-  const agreeCheckbox = document.getElementById('agree');
-  const agreeError = document.getElementById('agreeError');
-  if (!agreeCheckbox.checked) {
-    agreeError.classList.remove('hidden'); // show error span
-    return;
-  } else {
-    agreeError.classList.add('hidden');    // hide if valid
-  }
+ // ✅ Agreement checkbox (inline error + scroll)
+const agreeCheckbox = document.getElementById('agree');
+const agreeError = document.getElementById('agreeError');
+if (!agreeCheckbox.checked) {
+  agreeError.classList.remove('hidden');   // show error span
+  agreeCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' }); // snap to checkbox
+  return;
+} else {
+  agreeError.classList.add('hidden');      // hide if valid
+}
 
-  // ✅ Modding checkbox (only if section visible)
-  const moddingSection = document.getElementById('moddingSection');
-  const moddingOptIn = document.getElementById('moddingOptIn');
-  const moddingError = document.getElementById('moddingError');
-  if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
-    moddingError.classList.remove('hidden'); // show error span
-    return;
-  } else {
-    moddingError.classList.add('hidden');    // hide if valid
-  }
+// ✅ Modding checkbox (only if section visible)
+const moddingSection = document.getElementById('moddingSection');
+const moddingOptIn = document.getElementById('moddingOptIn');
+const moddingError = document.getElementById('moddingError');
+if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
+  moddingError.classList.remove('hidden'); // show error span
+  moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' }); // snap to checkbox
+  return;
+} else {
+  moddingError.classList.add('hidden');    // hide if valid
+}
 
   // ✅ Built‑in validation fallback
   if (!form.checkValidity()) { 
