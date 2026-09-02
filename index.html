@@ -313,12 +313,11 @@
   const form = document.getElementById('requestForm');
   const phoneInput = document.getElementById('phone');
 
-  // ✅ WhatsApp number validation
-  if (!/^[0-9]{11}$/.test(phoneInput.value.trim())) {
-    alert('⚠️ أدخل رقم واتساب صحيح مكون من 11 رقم.');
-    phoneInput.focus();
-    return; // stop here if invalid
-  }
+ if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
+  alert('⚠️ أدخل رقم واتساب صحيح يبدأ بـ 01 ومكون من 11 رقم.');
+  phoneInput.focus();
+  return;
+}
 
   if (!document.getElementById('agree').checked) {
     alert('⚠️ يجب الموافقة على البنود قبل المتابعة.');
