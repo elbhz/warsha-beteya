@@ -125,12 +125,13 @@
     </ul>
   </div>
 
-  <div class="input-group">
-    <label for="moddingOptIn">
-      <input type="checkbox" id="moddingOptIn" required>
-      <strong>أوافق صراحة على خدمات التعديل وأتحمل المسؤولية الكاملة</strong> <span class="required">*</span>
-    </label>
-  </div>
+ <div class="input-group">
+  <label for="moddingOptIn">
+    <input type="checkbox" id="moddingOptIn" required>
+    <strong>أوافق صراحة على خدمات التعديل وأتحمل المسؤولية الكاملة</strong> <span class="required">*</span>
+  </label>
+  <span id="moddingError" class="error-message hidden">⚠️ يجب الموافقة على خدمات التعديل قبل المتابعة</span>
+</div>
 
   <div class="agreement agreement-warning input-group">
     <strong>بموافقتي، أقر بالآتي:</strong>
@@ -186,12 +187,13 @@
     </ul>
   </div>
 
-  <div class="input-group">
-    <label class="agree-row" for="agree">
-      <input id="agree" type="checkbox" required>
-      قرأت وأوافق على البنود أعلاه <span class="required">*</span>
-    </label>
-  </div>
+ <div class="input-group">
+  <label class="agree-row" for="agree">
+    <input id="agree" type="checkbox" required>
+    قرأت وأوافق على البنود أعلاه <span class="required">*</span>
+  </label>
+  <span id="agreeError" class="error-message hidden">⚠️ يجب الموافقة على البنود قبل المتابعة</span>
+</div>
 </section>
 
      <section class="price" id="priceBox">
