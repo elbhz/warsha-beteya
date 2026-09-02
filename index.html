@@ -366,8 +366,9 @@
     'سأرسل صور الجهاز وملصق رقم الموديل وحالته الحالية هنا.'
   ].filter(Boolean).join('\n');
 
-  const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-  window.open(whatsappUrl, '_blank');
+ const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+window.open(whatsappUrl, '_blank');
+
 });
 
   </script>
