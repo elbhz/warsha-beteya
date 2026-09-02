@@ -329,3 +329,11 @@ button:hover {
   opacity: 1;
   max-height: 500px;
 }
+.error-message {
+  color: #ff6b6b;   /* red highlight */
+  font-size: 0.9em; /* slightly smaller text */
+  margin-top: 4px;
+}
+.hidden {
+  display: none;
+}
