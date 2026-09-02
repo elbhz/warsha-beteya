@@ -311,12 +311,13 @@
 
   document.getElementById('sendButton').addEventListener('click', () => {
   const form = document.getElementById('requestForm');
-
   const phoneInput = document.getElementById('phone');
+
+  // ✅ WhatsApp number validation
   if (!/^[0-9]{11}$/.test(phoneInput.value.trim())) {
     alert('⚠️ أدخل رقم واتساب صحيح مكون من 11 رقم.');
     phoneInput.focus();
-    return;
+    return; // stop here if invalid
   }
 
   if (!document.getElementById('agree').checked) {
@@ -369,6 +370,7 @@
   const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
   window.open(whatsappUrl, '_blank');
 });
+
   </script>
 </body>
 </html>
