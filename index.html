@@ -290,11 +290,12 @@
       moddingOptIn.required = requiresModding;
       if (!requiresModding) moddingOptIn.checked = false;
     }
-   function populateServices() {
+  function populateServices() {
   fillSelect(mainService, '-- اختر الخدمة الأساسية --');
   mainService.disabled = !device.value;
   additionalServices.innerHTML = '';
 
+  // toggle fade-slide sections
   extraBox.classList.toggle('show', !!device.value);
   extraRequestBox.classList.toggle('show', !!device.value);
   firmwareBox.classList.toggle('show', device.value === 'ps4');
@@ -302,6 +303,12 @@
   firmware.required = device.value === 'ps4';
   updateModdingRequirement();
   updatePrice();
+
+  // ✅ ensure hidden is removed so fade-slide animation works
+  if (mainService.value !== "") {
+    extraBox.classList.remove("hidden");
+    extraRequestBox.classList.remove("hidden");
+  }
 }
 
     function updatePrice() {
