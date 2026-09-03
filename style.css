@@ -352,3 +352,27 @@ button:hover {
   opacity: 1;
   transform: translateY(0);
 }
+
+#moddingOptIn {
+  transform: scale(1.5);
+  margin-right: 8px;
+}
+
+label[for="moddingOptIn"] {
+  background-color: #fff3cd; /* light yellow */
+  border: 2px solid #ff9800;
+  padding: 10px;
+  display: inline-block;
+}
+
+.error-highlight {
+  animation: shake 0.3s;
+  box-shadow: 0 0 5px red;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
