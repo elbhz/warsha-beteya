@@ -366,6 +366,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
   // ✅ Modding checkbox (only if section visible)
   if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
     moddingError.classList.remove('hidden');
+    document.getElementById("moddingOptIn").focus();
     moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   } else {
