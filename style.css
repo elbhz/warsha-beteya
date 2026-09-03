@@ -334,6 +334,21 @@ button:hover {
   font-size: 0.9em; /* slightly smaller text */
   margin-top: 4px;
 }
+/* Hidden state */
 .hidden {
   display: none;
+}
+
+/* Base fade-slide style */
+.fade-slide {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s ease; /* smooth fade + slide */
+}
+
+/* When visible (hidden removed) */
+.fade-slide.show {
+  display: block;        /* ensures the element is visible */
+  opacity: 1;
+  transform: translateY(0);
 }
