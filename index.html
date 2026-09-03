@@ -296,19 +296,25 @@
   additionalServices.innerHTML = '';
 
   // toggle fade-slide sections
-  extraBox.classList.toggle('show', !!device.value);
-  extraRequestBox.classList.toggle('show', !!device.value);
-  firmwareBox.classList.toggle('show', device.value === 'ps4');
+  if (device.value) {
+    extraBox.classList.remove("hidden");
+    extraBox.classList.add("show");
 
+    extraRequestBox.classList.remove("hidden");
+    extraRequestBox.classList.add("show");
+  } else {
+    extraBox.classList.add("hidden");
+    extraBox.classList.remove("show");
+
+    extraRequestBox.classList.add("hidden");
+    extraRequestBox.classList.remove("show");
+  }
+
+  firmwareBox.classList.toggle('show', device.value === 'ps4');
   firmware.required = device.value === 'ps4';
+
   updateModdingRequirement();
   updatePrice();
-
-  // ✅ ensure hidden is removed so fade-slide animation works
-  if (mainService.value !== "") {
-    extraBox.classList.remove("hidden");
-    extraRequestBox.classList.remove("hidden");
-  }
 }
 
     function updatePrice() {
