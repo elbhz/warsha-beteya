@@ -58,6 +58,25 @@ h1 {
   font-weight:700;
 }
 
+.fb-link {
+  display:block;
+  text-align:center;
+  margin:0 0 22px;
+  padding:11px 14px;
+  border:1px solid var(--blue);
+  border-radius:10px;
+  background:#eaf2fb;
+  color:var(--blue);
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  transition:.18s;
+}
+
+.fb-link:hover {
+  background:#dbe9fa;
+}
+
 .notice {
   color:#624400;
   border:1px solid #f2c94c;
