@@ -155,9 +155,9 @@
 
       <div class="notice">
         <strong>مهم قبل الطلب:</strong><br>
-        أقدم صيانة وتنظيفاً وإصلاحات واضحة ومحدودة. الأعطال العميقة في البوردة أو الدوائر الإلكترونية ليست ضمن ا[...]
+        أقدم صيانة وتنظيفاً وإصلاحات واضحة ومحدودة. الأعطال العميقة في البوردة أو الدوائر الإلكترونية ليست ضم[...]
         <br><br>
-        📦 قطع الغيار تُطلب عند الحاجة، ووصولها قد يستغرق تقريباً من 1 إلى 5 أسابيع حتى تصل وتخلص الإجراءات وتصل با[...]
+        📦 قطع الغيار تُطلب عند الحاجة، ووصولها قد يستغرق تقريباً من 1 إلى 5 أسابيع حتى تصل وتخلص الإجراءات وتصل[...]
       </div>
 
       <div class="policy">
@@ -218,7 +218,7 @@
 
   <script>
     const WHATSAPP_NUMBER = '201277048080';
-    const moddingServices = ['hen', 'cfw', '(jailbreak) goldhen', 'oclp', 'oclp_full', 'jailbreak', 'setup', 'opl', 'fmc', 'brick'];
+    const moddingServices = ['hen', 'cfw', 'goldhen', 'oclp', 'oclp_full', 'jailbreak', 'setup', 'opl', 'fmc', 'brick'];
     const services = {
       ps1: [['clean', 'تنظيف عميق', 150], ['disc', 'صيانة قارئ/درج الأقراص', 300], ['inspect', 'فحص مبدئي', 100]],
       ps2: [['clean', 'تنظيف عميق', 150], ['thermal', 'تغيير معجون حراري', 200], ['disc', 'صيانة قارئ/درج الأقراص', 300], ['opl', 'إعداد OPL / FMCB', 350]],
@@ -287,6 +287,28 @@
       return [...document.querySelectorAll('.additional-service')];
     }
 
+    function calculateTotalPrice(main, extras) {
+      return main.price + extras.reduce((sum, x) => sum + x.price, 0);
+    }
+
+    function toggleSection(section, shouldShow) {
+      if (shouldShow) {
+        section.classList.remove('hidden');
+        section.classList.add('show');
+      } else {
+        section.classList.add('hidden');
+        section.classList.remove('show');
+      }
+    }
+
+    function showValidationError(errorEl, shouldShow = true) {
+      if (shouldShow) {
+        errorEl.classList.remove('hidden');
+      } else {
+        errorEl.classList.add('hidden');
+      }
+    }
+
     function addExtraService() {
       if (!device.value) return;
       
@@ -311,11 +333,6 @@
       row.append(select, removeBtn);
       additionalServices.appendChild(row);
       updatePrice();
-    }
-
-    function toggleSection(section, shouldShow) {
-      section.classList.toggle('hidden', !shouldShow);
-      section.classList.toggle('show', shouldShow);
     }
 
     function updateModdingRequirement() {
@@ -352,8 +369,7 @@
         .map(getSelectedData)
         .filter(x => x.value);
       
-      const total = main.price + extras.reduce((sum, x) => sum + x.price, 0);
-      
+      const total = calculateTotalPrice(main, extras);
       updateModdingRequirement();
 
       if (!main.value) {
@@ -364,24 +380,20 @@
       priceBox.classList.add('show');
       totalEl.textContent = total + ' جنيه';
 
-      let html = '<strong>تفصيل السعر:</strong><br>• الخدمة الأساسية: ' + main.name + ' - ' + main.price + ' جنيه';
-      extras.forEach((x, i) => {
-        html += '<br>• خدمة إضافية ' + (i + 1) + ': ' + x.name + ' - ' + x.price + ' جنيه';
-      });
-      html += '<br><strong>• الإجمالي التقريبي: ' + total + ' جنيه</strong>';
-      breakdown.innerHTML = html;
+      // Build price breakdown
+      const breakdownLines = [
+        `الخدمة الأساسية: ${main.name} - ${main.price} جنيه`,
+        ...extras.map((x, i) => `خدمة إضافية ${i + 1}: ${x.name} - ${x.price} جنيه`),
+        `الإجمالي التقريبي: ${total} جنيه`
+      ];
+      breakdown.innerHTML = '<strong>تفصيل السعر:</strong><br>• ' + breakdownLines.join('<br>• ');
     }
 
     // Event listeners
     device.addEventListener('change', () => {
-      if (device.value === 'ps4') {
-        ps4FirmwareBox.classList.remove('hidden');
-        firmware.setAttribute('required', 'true');
-      } else {
-        ps4FirmwareBox.classList.add('hidden');
-        firmware.removeAttribute('required');
-        firmware.value = '';
-      }
+      toggleSection(ps4FirmwareBox, device.value === 'ps4');
+      firmware.required = device.value === 'ps4';
+      if (device.value !== 'ps4') firmware.value = '';
       populateServices();
     });
 
@@ -397,28 +409,27 @@
       const moddingError = document.getElementById('moddingError');
 
       // Validate phone
-      if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
-        phoneError.classList.remove('hidden');
+      const isValidPhone = /^01[0-9]{9}$/.test(phoneInput.value.trim());
+      showValidationError(phoneError, !isValidPhone);
+      if (!isValidPhone) {
         phoneInput.focus();
         return;
       }
-      phoneError.classList.add('hidden');
 
       // Validate agreement
+      showValidationError(agreeError, !agreeCheckbox.checked);
       if (!agreeCheckbox.checked) {
-        agreeError.classList.remove('hidden');
         agreeCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
-      agreeError.classList.add('hidden');
 
       // Validate modding agreement (if applicable)
-      if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
-        moddingError.classList.remove('hidden');
+      const moddingSectionVisible = !moddingSection.classList.contains('hidden');
+      showValidationError(moddingError, moddingSectionVisible && !moddingOptIn.checked);
+      if (moddingSectionVisible && !moddingOptIn.checked) {
         moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
-      moddingError.classList.add('hidden');
 
       // Fallback validation
       if (!form.checkValidity()) {
@@ -429,7 +440,7 @@
       // Build WhatsApp message
       const main = getSelectedData(mainService);
       const extras = getExtraSelects().map(getSelectedData).filter(x => x.value);
-      const total = main.price + extras.reduce((sum, x) => sum + x.price, 0);
+      const total = calculateTotalPrice(main, extras);
       const hasModding = [main, ...extras].some(x => isModdingService(x.value));
 
       const deviceName = device.options[device.selectedIndex].textContent;
@@ -438,34 +449,31 @@
       const name = document.getElementById('name').value.trim();
       const notes = document.getElementById('notes').value.trim();
 
-      const extraLines = extras.map((x, i) => 'خدمة إضافية ' + (i + 1) + ': ' + x.name);
-      const extraReqLine = extraRequest.value.trim() ? 'طلب إضافي للاستفسار: ' + extraRequest.value.trim() : '';
-      const notesLine = notes ? 'ملاحظات: ' + notes : '';
-
-      const message = [
+      const messageLines = [
         'طلب صيانة - ورشة بيتية',
         '--------------------------------',
-        'الاسم: ' + name,
-        'واتساب: ' + phoneInput.value.trim(),
+        `الاسم: ${name}`,
+        `واتساب: ${phoneInput.value.trim()}`,
         '--------------------------------',
-        'الجهاز: ' + deviceName,
-        'رقم الموديل: ' + model,
-        device.value === 'ps4' ? 'إصدار نظام PS4: ' + fw : '',
-        'الخدمة الأساسية: ' + main.name,
-        ...extraLines,
-        extraReqLine,
-        notesLine,
+        `الجهاز: ${deviceName}`,
+        `رقم الموديل: ${model}`,
+        ...(device.value === 'ps4' ? [`إصدار نظام PS4: ${fw}`] : []),
+        `الخدمة الأساسية: ${main.name}`,
+        ...extras.map((x, i) => `خدمة إضافية ${i + 1}: ${x.name}`),
+        ...(extraRequest.value.trim() ? [`طلب إضافي للاستفسار: ${extraRequest.value.trim()}`] : []),
+        ...(notes ? [`ملاحظات: ${notes}`] : []),
         '--------------------------------',
-        'خدمات التعديل: ' + (hasModding ? 'نعم - تم الموافقة الصريحة' : 'لا'),
-        'السعر التقريبي: ' + total + ' جنيه (لا يشمل قطع الغيار)',
+        `خدمات التعديل: ${hasModding ? 'نعم - تم الموافقة الصريحة' : 'لا'}`,
+        `السعر التقريبي: ${total} جنيه (لا يشمل قطع الغيار)`,
         'القطع المستوردة قد تستغرق 1-5 أسابيع.',
         'خدمة منزلية.',
         '--------------------------------',
         'أوافق على بنود الخدمة وسياسة الدفع والاسترداد.',
         'سأرسل صور الجهاز وملصق رقم الموديل وحالته الحالية هنا.'
-      ].filter(Boolean).join('\n');
+      ];
 
-      const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+      const message = messageLines.join('\n');
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     });
   </script>
