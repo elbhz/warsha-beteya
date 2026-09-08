@@ -59,7 +59,10 @@ h1 {
 }
 
 .fb-link {
-  display:block;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
   text-align:center;
   margin:0 0 22px;
   padding:11px 14px;
@@ -216,6 +219,16 @@ button {
   cursor:pointer;
   font:700 17px inherit;
   transition:.18s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+.btn-icon {
+  width:22px;
+  height:22px;
+  flex:none;
 }
 
 button:hover {
