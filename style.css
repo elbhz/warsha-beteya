@@ -59,10 +59,7 @@ h1 {
 }
 
 .fb-link {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
+  display:block;
   text-align:center;
   margin:0 0 22px;
   padding:11px 14px;
@@ -219,16 +216,6 @@ button {
   cursor:pointer;
   font:700 17px inherit;
   transition:.18s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-}
-
-.btn-icon {
-  width:22px;
-  height:22px;
-  flex:none;
 }
 
 button:hover {
@@ -346,24 +333,42 @@ button:hover {
   padding: 12px;
   margin-bottom: 15px;
 }
+.hidden {
+  display: none;
+}
+
+.fade-slide {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+.fade-slide.show {
+  opacity: 1;
+  max-height: 500px;
+}
 .error-message {
   color: #ff6b6b;   /* red highlight */
   font-size: 0.9em; /* slightly smaller text */
   margin-top: 4px;
 }
-
-/* Smooth fade + slide-down reveal for the optional sections (extra services, extra request) */
-.fade-slide {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transform: translateY(-10px);
-  transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.35s ease;
+/* Hidden state */
+.hidden {
+  display: none;
 }
 
+/* Base fade-slide style */
+.fade-slide {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s ease; /* smooth fade + slide */
+}
+
+/* When visible (hidden removed) */
 .fade-slide.show {
+  display: block;        /* ensures the element is visible */
   opacity: 1;
-  max-height: 600px;
   transform: translateY(0);
 }
 
@@ -377,4 +382,99 @@ label[for="moddingOptIn"] {
   border: 2px solid #ff9800;
   padding: 10px;
   display: inline-block;
+}
+
+.error-highlight {
+  animation: shake 0.3s;
+  box-shadow: 0 0 5px red;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.success-box {
+  margin-top: 16px;
+  padding: 22px;
+  text-align: center;
+  border-radius: 12px;
+  background: #eafaf1;
+  border: 2px solid var(--green);
+  animation: successPop 0.35s ease;
+}
+
+@keyframes successPop {
+  0% { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon {
+  font-size: 34px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.success-box h3 {
+  margin: 0 0 12px;
+  color: var(--green);
+  font-size: 19px;
+}
+
+.success-ref-label {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: #3d6b52;
+  font-weight: 600;
+}
+
+.success-ref {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 9px 16px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  direction: ltr;
+  color: #0e5c37;
+  background: #fff;
+  border: 2px dashed var(--green);
+  border-radius: 8px;
+}
+
+.success-note {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: #3d6b52;
+  line-height: 1.6;
+}
+
+.success-whatsapp-hint {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  color: #5a7d6a;
+}
+
+.whatsapp-fallback-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 9px;
+  background: linear-gradient(135deg,#25d366,#128c7e);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: .18s;
+}
+
+.whatsapp-fallback-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(20,143,106,.28);
+}
+
+.whatsapp-fallback-btn.emphasize {
+  animation: shake 0.4s;
+  box-shadow: 0 0 0 4px rgba(255,152,0,.35);
 }

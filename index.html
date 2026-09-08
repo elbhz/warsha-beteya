@@ -21,13 +21,7 @@
     <p class="subtitle">صيانة أجهزة PlayStation، الأيدي، وأجهزة MacBook</p>
     <div class="badge">🏠 الخدمة تُقدَّم من المنزل وليست من محل تجاري</div>
 
-    <a class="fb-link" href="https://www.facebook.com/profile.php?id=61593335382482" target="_blank" rel="noopener noreferrer">
-      <svg class="btn-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-        <circle cx="20" cy="20" r="17" fill="#2b6cb0"/>
-        <path d="M23.8 12.5h-2.4c-1.9 0-2.7 1-2.7 2.9V18h4.6l-.6 4h-4v11h-4V22h-3v-4h3v-3.2c0-3.5 2-5.7 5.4-5.7h3.7v3.4z" fill="#ffffff"/>
-      </svg>
-      <span>تابعنا على فيسبوك لمشاهدة أعمالنا</span>
-    </a>
+    <a class="fb-link" href="https://www.facebook.com/profile.php?id=61593335382482" target="_blank" rel="noopener noreferrer">📘 تابعنا على فيسبوك لمشاهدة أعمالنا</a>
 
     <form id="requestForm">
       <section class="section">
@@ -64,7 +58,6 @@
             <option value="ds4">يد DualShock 4</option>
             <option value="mac-intel">MacBook Intel (قديم / OCLP)</option>
             <option value="mac-silicon">MacBook Apple Silicon (M1 / M2 / M3 / M4)</option>
-            <option value="pc-laptop">PC / Laptop (كمبيوتر أو لابتوب)</option>
           </select>
         </div>
 
@@ -103,7 +96,7 @@
           <label>خدمات إضافية (اختياري)</label>
           <div id="additionalServices"></div>
           <button type="button" class="add-service-btn" id="addServiceButton">+ إضافة خدمة أخرى</button>
-          <p class="hint">يمكنك إضافة أكثر من خدمة. تظهر فقط الخدمات المناسبة للجهاز المختار.</p>
+          <p class="hint">يمكنك إضافة أكثر من خدمة. تظهر فقط الخدمات المناسبة للجهاز المختار، ولا تتكرر خدمة مختارة من قبل في نفس الطلب.</p>
         </div>
 
         <div id="extraRequestBox" class="hidden fade-slide">
@@ -212,37 +205,51 @@
   <small class="price-note">لا يشمل قطع الغيار أو الشحن أو الجمارك.</small>
 </section>
 
-      <button type="button" id="sendButton">
-        <svg class="btn-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-          <path fill="#ffffff" d="M20 8c-6.6 0-12 5.4-12 12 0 2.1.6 4.2 1.6 6L8 32l6.2-1.6c1.7.9 3.7 1.5 5.8 1.5 6.6 0 12-5.4 12-12S26.6 8 20 8zm7 16.9c-.3.8-1.6 1.5-2.4 1.6-.6.1-1.4.2-4.5-1-3.8-1.5-6.2-5.3-6.4-5.6-.2-.3-1.5-2-1.5-3.7 0-1.8.9-2.6 1.2-3 .3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.2.4.1.6-.1.2-.2.4-.4.6l-.5.6c-.2.2-.4.4-.2.7.2.4.9 1.5 2 2.5 1.4 1.2 2.5 1.6 2.9 1.8.4.2.6.1.8-.1.3-.3.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 1 2.4 1.1.4.2.6.3.7.4.1.3.1.9-.2 1.7z"/>
-        </svg>
-        <span>إرسال الطلب عبر واتساب</span>
-      </button>
+      <button type="button" id="sendButton">📱 إرسال الطلب عبر واتساب</button>
       <p class="footer-note">بعد فتح واتساب، أرسل صور الجهاز وملصق رقم الموديل وصور أي خدوش أو عيوب ظاهرة إن أمكن.</p>
+
+      <section id="successBox" class="success-box hidden" role="status" aria-live="polite">
+        <div class="success-icon">✅</div>
+        <h3>تم تجهيز طلبك بنجاح</h3>
+        <p class="success-ref-label">رقم الطلب</p>
+        <div class="success-ref" id="orderRef">—</div>
+        <p class="success-note">احتفظ برقم الطلب ده لحد ما نأكد الحجز معاك. لو نسيته، ابعتلنا آخر رسالة واتساب وهتلاقيه فيها.</p>
+        <p class="success-whatsapp-hint" id="whatsappHint">لو واتساب مفتحش تلقائيًا في تاب جديد، اضغط الزر ده:</p>
+        <a id="whatsappFallback" href="#" target="_blank" rel="noopener noreferrer" class="whatsapp-fallback-btn">📱 فتح واتساب وإرسال الطلب</a>
+      </section>
     </form>
   </main>
 
   <script>
     const WHATSAPP_NUMBER = '201277048080';
-    const moddingServices = ['hen','cfw','(jailbreak) goldhen','oclp','oclp_full','jailbreak','setup','opl','brick'];
+    const moddingServices = ['hen','cfw','(jailbreak) goldhen','oclp','oclp_full','jailbreak','setup','opl','fmc','brick'];
     const services = {
       ps1: [ ['clean','تنظيف عميق',150], ['disc','صيانة قارئ/درج الأقراص',300], ['inspect','فحص مبدئي',100] ],
-      ps2: [ ['clean','تنظيف عميق',150], ['thermal','تغيير معجون حراري',200], ['disc','صيانة قارئ/درج الأقراص',300], ['opl','إعداد و تعديل (Jailbreak) OPL / FreeMcBoot / Fortuna',350], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
-      ps3: [ ['clean','تنظيف عميق',200], ['thermal','تغيير معجون حراري',250], ['pads','تغيير بادات حرارية',300], ['fullthermal','تنظيف + معجون + بادات',600], ['disc','صيانة قارئ/درج الأقراص',350], ['hen','إعداد و تعديل (Jailbreak) CFW / HFW',400], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',450], ['inspect','فحص مبدئي',120] ],
+      ps2: [ ['clean','تنظيف عميق',150], ['thermal','تغيير معجون حراري',200], ['disc','صيانة قارئ/درج الأقراص',300], ['opl','إعداد OPL / FMCB',350], ['fmc','Free McBoot / Fortuna',300], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
+      ps3: [ ['clean','تنظيف عميق',200], ['thermal','تغيير معجون حراري',250], ['pads','تغيير بادات حرارية',300], ['fullthermal','تنظيف + معجون + بادات',600], ['disc','صيانة قارئ/درج الأقراص',350], ['hen','إعداد HEN / CFW',400], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',450], ['inspect','فحص مبدئي',120] ],
       ps4: [ ['clean','تنظيف عميق',250], ['thermal','تغيير معجون حراري',300], ['pads','تغيير بادات حرارية',350], ['fullthermal','تنظيف + معجون + بادات',700], ['disc','صيانة قارئ/درج الأقراص',400], ['(jailbreak) goldhen','إعداد (jailbreak) GoldHEN (بعد تأكيد التوافق)',450], ['setup','إعداد وترتيب البرامج والألعاب',150], ['storage','تركيب/تهيئة HDD أو SSD',250], ['brick','إصلاح تعليق الشاشة/Software Brick',500], ['inspect','فحص مبدئي',150] ],
-      psp: [ ['clean','تنظيف عميق',120], ['battery','تغيير بطارية (القطعة منفصلة)',150], ['screen','تغيير شاشة (القطعة منفصلة)',200], ['buttons','صيانة أزرار/Analog',180], ['cfw','إعداد و تعديل (Jailbreak) CFW / ARK',300], ['setup','إعداد وترتيب البرامج والألعاب',120], ['brick','إصلاح تعليق الشاشة/Software Brick',350], ['inspect','فحص مبدئي',80] ],
-      vita: [ ['clean','تنظيف عميق',150], ['battery','تغيير بطارية (القطعة منفصلة)',180], ['screen','تغيير شاشة (القطعة منفصلة)',250], ['buttons','صيانة أزرار/Analog',200], ['cfw','إعداد و تعديل (Jailbreak) CFW',350], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
+      psp: [ ['clean','تنظيف عميق',120], ['battery','تغيير بطارية (القطعة منفصلة)',150], ['screen','تغيير شاشة (القطعة منفصلة)',200], ['buttons','صيانة أزرار/Analog',180], ['cfw','إعداد CFW / Ark',300], ['setup','إعداد وترتيب البرامج والألعاب',120], ['brick','إصلاح تعليق الشاشة/Software Brick',350], ['inspect','فحص مبدئي',80] ],
+      vita: [ ['clean','تنظيف عميق',150], ['battery','تغيير بطارية (القطعة منفصلة)',180], ['screen','تغيير شاشة (القطعة منفصلة)',250], ['buttons','صيانة أزرار/Analog',200], ['cfw','إعداد CFW',350], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
       ds2: [ ['clean','تنظيف عميق',100], ['drift','صيانة Analog / حل الانحراف',180], ['buttons','صيانة أزرار',150], ['inspect','فحص مبدئي',70] ],
       ds3: [ ['clean','تنظيف عميق',120], ['drift','صيانة Analog / حل الانحراف',200], ['buttons','صيانة أزرار',160], ['battery','تغيير بطارية (القطعة منفصلة)',120], ['charge','صيانة منفذ الشحن',180], ['inspect','فحص مبدئي',80] ],
       ds4: [ ['clean','تنظيف عميق',130], ['drift','صيانة Analog / حل الانحراف',220], ['buttons','صيانة أزرار',180], ['battery','تغيير بطارية (القطعة منفصلة)',140], ['charge','صيانة منفذ الشحن',200], ['inspect','فحص مبدئي',100] ],
-      'mac-intel': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',350], ['fullthermal','تنظيف + معجون حراري',500], ['macos','تثبيت macOS',300], ['oclp','OCLP (Jailbreak): تثبيت وتحسين macOS',500], ['linux','تثبيت نظام Linux (توزيعة حسب الطلب)',350], ['storage','تركيب/تهيئة SSD (القطعة منفصلة)',300], ['battery','تغيير بطارية (القطعة منفصلة)',250], ['brick','إصلاح مشاكل الإقلاع/Software Brick',400], ['inspect','فحص مبدئي',150] ],
-      'mac-silicon': [ ['clean','تنظيف خارجي وفحص مبدئي',200], ['inspect','فحص مبدئي',150] ],
-      'pc-laptop': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',300], ['fullthermal','تنظيف + معجون حراري',500], ['linux','تثبيت نظام Linux (توزيعة حسب الطلب)',300], ['inspect','فحص مبدئي',150] ]
+      'mac-intel': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',350], ['fullthermal','تنظيف + معجون حراري',500], ['macos','تثبيت macOS',300], ['oclp','OCLP: تثبيت وتحسين macOS',500], ['storage','تركيب/تهيئة SSD (القطعة منفصلة)',300], ['battery','تغيير بطارية (القطعة منفصلة)',250], ['brick','إصلاح مشاكل الإقلاع/Software Brick',400], ['inspect','فحص مبدئي',150] ],
+      'mac-silicon': [ ['clean','تنظيف خارجي وفحص مبدئي',200], ['inspect','فحص مبدئي',150] ]
     };
 
     const device = document.getElementById('device');
     const firmwareBox = document.getElementById('ps4FirmwareBox');
     const firmware = document.getElementById('firmware');
+    device.addEventListener('change', () => {
+  if (device.value === 'ps4') {
+    ps4FirmwareBox.classList.remove('hidden');
+    firmware.setAttribute('required', 'true');
+  } else {
+    ps4FirmwareBox.classList.add('hidden');
+    firmware.removeAttribute('required');
+    firmware.value = ''; // reset selection when hidden
+  }
+});
 
     const mainService = document.getElementById('mainService');
     const extraBox = document.getElementById('extraBox');
@@ -267,26 +274,55 @@
       const o = select.options[select.selectedIndex];
       return o ? {name:o.textContent, price:Number(o.dataset.price || 0), value:o.value} : {name:'',price:0,value:''};
     }
-    function fillSelect(select, placeholder) {
+    function fillSelect(select, placeholder, excludeValues) {
+      const currentValue = select.value;
       select.innerHTML = '';
       select.appendChild(option('', placeholder, 0));
-      getList().forEach(([id,name,price]) => select.appendChild(option(id,name,price)));
+      getList().forEach(([id,name,price]) => {
+        // امنع تكرار خدمة مختارة بالفعل في مكان تاني، إلا لو هي نفس اختيار هذه القائمة
+        if (excludeValues && excludeValues.has(id) && id !== currentValue) return;
+        select.appendChild(option(id,name,price));
+      });
+      if (currentValue && [...select.options].some(o => o.value === currentValue)) {
+        select.value = currentValue;
+      }
     }
     function extraSelects() { return [...document.querySelectorAll('.additional-service')]; }
+    // كل الخدمات المختارة حاليًا في أي قائمة، ما عدا القائمة الممررة (عشان القائمة تقدر تفضل شايلة اختيارها هي)
+    function getUsedValues(excludeSelect) {
+      const allSelects = [mainService, ...extraSelects()];
+      return new Set(
+        allSelects
+          .filter(s => s !== excludeSelect)
+          .map(s => s.value)
+          .filter(Boolean)
+      );
+    }
+    // يعيد بناء كل قوائم الخدمات (الأساسية + الإضافية) بحيث ما تتكررش نفس الخدمة في أكتر من قائمة
+    function refreshAllServiceSelects() {
+      fillSelect(mainService, '-- اختر الخدمة الأساسية --', getUsedValues(mainService));
+      mainService.disabled = !device.value;
+      extraSelects().forEach(sel => {
+        fillSelect(sel, '-- اختر خدمة إضافية --', getUsedValues(sel));
+      });
+    }
+    function onServiceSelectionChanged() {
+      refreshAllServiceSelects();
+      updatePrice();
+    }
     function addExtraService() {
       if (!device.value) return;
       const row = document.createElement('div');
       row.className = 'service-row';
       const select = document.createElement('select');
       select.className = 'additional-service';
-      fillSelect(select, '-- اختر خدمة إضافية --');
       const remove = document.createElement('button');
       remove.type = 'button'; remove.className = 'remove-service-btn'; remove.textContent = 'حذف';
-      remove.addEventListener('click', () => { row.remove(); updatePrice(); });
-      select.addEventListener('change', updatePrice);
+      remove.addEventListener('click', () => { row.remove(); onServiceSelectionChanged(); });
+      select.addEventListener('change', onServiceSelectionChanged);
       row.append(select, remove);
       additionalServices.appendChild(row);
-      updatePrice();
+      onServiceSelectionChanged();
     }
     function updateModdingRequirement() {
       const selected = [selectedData(mainService), ...extraSelects().map(selectedData)];
@@ -296,8 +332,6 @@
       if (!requiresModding) moddingOptIn.checked = false;
     }
   function populateServices() {
-  fillSelect(mainService, '-- اختر الخدمة الأساسية --');
-  mainService.disabled = !device.value;
   additionalServices.innerHTML = '';
 
   // toggle fade-slide sections
@@ -315,14 +349,10 @@
     extraRequestBox.classList.remove("show");
   }
 
-  const isPs4 = device.value === 'ps4';
-  firmwareBox.classList.toggle('hidden', !isPs4);
-  firmwareBox.classList.toggle('show', isPs4);
-  firmware.required = isPs4;
-  if (!isPs4) firmware.value = ''; // reset selection when hidden
+  firmwareBox.classList.toggle('show', device.value === 'ps4');
+  firmware.required = device.value === 'ps4';
 
-  updateModdingRequirement();
-  updatePrice();
+  onServiceSelectionChanged();
 }
 
     function updatePrice() {
@@ -340,8 +370,23 @@
     }
 
     device.addEventListener('change', populateServices);
-    mainService.addEventListener('change', updatePrice);
+    mainService.addEventListener('change', onServiceSelectionChanged);
     addServiceButton.addEventListener('click', addExtraService);
+
+    // رقم طلب فريد لكل عملية إرسال: WB-YYYYMMDD-HHMM-XXX
+    function generateOrderRef() {
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      const datePart = '' + now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate());
+      const timePart = pad(now.getHours()) + pad(now.getMinutes());
+      const randomPart = Math.floor(100 + Math.random() * 900); // 3 digits, avoids leading zero confusion
+      return 'WB-' + datePart + '-' + timePart + '-' + randomPart;
+    }
+
+    const successBox = document.getElementById('successBox');
+    const orderRefEl = document.getElementById('orderRef');
+    const whatsappFallback = document.getElementById('whatsappFallback');
+    const whatsappHint = document.getElementById('whatsappHint');
 
 document.getElementById('sendButton').addEventListener('click', () => {
   const form = document.getElementById('requestForm');
@@ -349,6 +394,8 @@ document.getElementById('sendButton').addEventListener('click', () => {
   const phoneError = document.getElementById('phoneError');
   const agreeCheckbox = document.getElementById('agree');
   const agreeError = document.getElementById('agreeError');
+  const moddingSection = document.getElementById('moddingSection');
+  const moddingOptIn = document.getElementById('moddingOptIn');
   const moddingError = document.getElementById('moddingError');
 
   // ✅ Phone validation
@@ -372,7 +419,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
   // ✅ Modding checkbox (only if section visible)
   if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
     moddingError.classList.remove('hidden');
-    moddingOptIn.focus();
+    document.getElementById("moddingOptIn").focus();
     moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   } else {
@@ -394,9 +441,11 @@ document.getElementById('sendButton').addEventListener('click', () => {
   const sum = main.price + extras.reduce((total,x) => total + x.price, 0);
   const hasModding = [main, ...extras].some(x => isModdingService(x.value));
   const extraLines = extras.map((x,i) => 'خدمة إضافية ' + (i + 1) + ': ' + x.name);
+  const orderRef = generateOrderRef();
 
   const message = [
     'طلب صيانة - ورشة بيتية',
+    'رقم الطلب: ' + orderRef,
     '--------------------------------',
     'الاسم: ' + document.getElementById('name').value.trim(),
     'واتساب: ' + phoneInput.value.trim(),
@@ -419,7 +468,23 @@ document.getElementById('sendButton').addEventListener('click', () => {
   ].filter(Boolean).join('\n');
 
   const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-  window.open(whatsappUrl, '_blank'); // ✅ always runs if all checks pass
+  const newWindow = window.open(whatsappUrl, '_blank');
+
+  // ✅ إظهار رسالة النجاح ورقم الطلب دايمًا، بغض النظر عن نجاح فتح واتساب تلقائيًا
+  orderRefEl.textContent = orderRef;
+  whatsappFallback.href = whatsappUrl;
+  successBox.classList.remove('hidden');
+  successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // لو المتصفح منع فتح نافذة جديدة (شائع في الموبايل)، وضّح للعميل إنه يضغط الزر يدويًا
+  const popupBlocked = !newWindow || newWindow.closed || typeof newWindow.closed === 'undefined';
+  if (popupBlocked) {
+    whatsappHint.textContent = 'واتساب محتاج فتح يدوي على جهازك. اضغط الزر ده لإرسال الطلب:';
+    whatsappFallback.classList.add('emphasize');
+  } else {
+    whatsappHint.textContent = 'لو واتساب مفتحش تلقائيًا في تاب جديد، اضغط الزر ده:';
+    whatsappFallback.classList.remove('emphasize');
+  }
 });
     
   </script>
