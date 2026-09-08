@@ -333,42 +333,24 @@ button:hover {
   padding: 12px;
   margin-bottom: 15px;
 }
-.hidden {
-  display: none;
-}
-
-.fade-slide {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.3s ease, max-height 0.3s ease;
-}
-
-.fade-slide.show {
-  opacity: 1;
-  max-height: 500px;
-}
 .error-message {
   color: #ff6b6b;   /* red highlight */
   font-size: 0.9em; /* slightly smaller text */
   margin-top: 4px;
 }
-/* Hidden state */
-.hidden {
-  display: none;
-}
 
-/* Base fade-slide style */
+/* Smooth fade + slide-down reveal for the optional sections (extra services, extra request) */
 .fade-slide {
   opacity: 0;
+  max-height: 0;
+  overflow: hidden;
   transform: translateY(-10px);
-  transition: all 0.4s ease; /* smooth fade + slide */
+  transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.35s ease;
 }
 
-/* When visible (hidden removed) */
 .fade-slide.show {
-  display: block;        /* ensures the element is visible */
   opacity: 1;
+  max-height: 600px;
   transform: translateY(0);
 }
 
@@ -382,16 +364,4 @@ label[for="moddingOptIn"] {
   border: 2px solid #ff9800;
   padding: 10px;
   display: inline-block;
-}
-
-.error-highlight {
-  animation: shake 0.3s;
-  box-shadow: 0 0 5px red;
-}
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
 }

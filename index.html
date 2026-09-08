@@ -230,16 +230,6 @@
     const device = document.getElementById('device');
     const firmwareBox = document.getElementById('ps4FirmwareBox');
     const firmware = document.getElementById('firmware');
-    device.addEventListener('change', () => {
-  if (device.value === 'ps4') {
-    ps4FirmwareBox.classList.remove('hidden');
-    firmware.setAttribute('required', 'true');
-  } else {
-    ps4FirmwareBox.classList.add('hidden');
-    firmware.removeAttribute('required');
-    firmware.value = ''; // reset selection when hidden
-  }
-});
 
     const mainService = document.getElementById('mainService');
     const extraBox = document.getElementById('extraBox');
@@ -312,8 +302,11 @@
     extraRequestBox.classList.remove("show");
   }
 
-  firmwareBox.classList.toggle('show', device.value === 'ps4');
-  firmware.required = device.value === 'ps4';
+  const isPs4 = device.value === 'ps4';
+  firmwareBox.classList.toggle('hidden', !isPs4);
+  firmwareBox.classList.toggle('show', isPs4);
+  firmware.required = isPs4;
+  if (!isPs4) firmware.value = ''; // reset selection when hidden
 
   updateModdingRequirement();
   updatePrice();
@@ -343,8 +336,6 @@ document.getElementById('sendButton').addEventListener('click', () => {
   const phoneError = document.getElementById('phoneError');
   const agreeCheckbox = document.getElementById('agree');
   const agreeError = document.getElementById('agreeError');
-  const moddingSection = document.getElementById('moddingSection');
-  const moddingOptIn = document.getElementById('moddingOptIn');
   const moddingError = document.getElementById('moddingError');
 
   // ✅ Phone validation
@@ -368,7 +359,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
   // ✅ Modding checkbox (only if section visible)
   if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
     moddingError.classList.remove('hidden');
-    document.getElementById("moddingOptIn").focus();
+    moddingOptIn.focus();
     moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   } else {
