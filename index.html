@@ -58,6 +58,7 @@
             <option value="ds4">يد DualShock 4</option>
             <option value="mac-intel">MacBook Intel (قديم / OCLP)</option>
             <option value="mac-silicon">MacBook Apple Silicon (M1 / M2 / M3 / M4)</option>
+            <option value="pc-laptop">PC / Laptop (كمبيوتر أو لابتوب)</option>
           </select>
         </div>
 
@@ -212,19 +213,20 @@
 
   <script>
     const WHATSAPP_NUMBER = '201277048080';
-    const moddingServices = ['hen','cfw','(jailbreak) goldhen','oclp','oclp_full','jailbreak','setup','opl','fmc','brick'];
+    const moddingServices = ['hen','cfw','(jailbreak) goldhen','oclp','oclp_full','jailbreak','setup','opl','brick'];
     const services = {
       ps1: [ ['clean','تنظيف عميق',150], ['disc','صيانة قارئ/درج الأقراص',300], ['inspect','فحص مبدئي',100] ],
-      ps2: [ ['clean','تنظيف عميق',150], ['thermal','تغيير معجون حراري',200], ['disc','صيانة قارئ/درج الأقراص',300], ['opl','إعداد OPL / FMCB',350], ['fmc','Free McBoot / Fortuna',300], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
-      ps3: [ ['clean','تنظيف عميق',200], ['thermal','تغيير معجون حراري',250], ['pads','تغيير بادات حرارية',300], ['fullthermal','تنظيف + معجون + بادات',600], ['disc','صيانة قارئ/درج الأقراص',350], ['hen','إعداد HEN / CFW',400], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',450], ['inspect','فحص مبدئي',120] ],
+      ps2: [ ['clean','تنظيف عميق',150], ['thermal','تغيير معجون حراري',200], ['disc','صيانة قارئ/درج الأقراص',300], ['opl','إعداد و تعديل (Jailbreak) OPL / FreeMcBoot / Fortuna',350], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
+      ps3: [ ['clean','تنظيف عميق',200], ['thermal','تغيير معجون حراري',250], ['pads','تغيير بادات حرارية',300], ['fullthermal','تنظيف + معجون + بادات',600], ['disc','صيانة قارئ/درج الأقراص',350], ['hen','إعداد و تعديل (Jailbreak) CFW / HFW',400], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',450], ['inspect','فحص مبدئي',120] ],
       ps4: [ ['clean','تنظيف عميق',250], ['thermal','تغيير معجون حراري',300], ['pads','تغيير بادات حرارية',350], ['fullthermal','تنظيف + معجون + بادات',700], ['disc','صيانة قارئ/درج الأقراص',400], ['(jailbreak) goldhen','إعداد (jailbreak) GoldHEN (بعد تأكيد التوافق)',450], ['setup','إعداد وترتيب البرامج والألعاب',150], ['storage','تركيب/تهيئة HDD أو SSD',250], ['brick','إصلاح تعليق الشاشة/Software Brick',500], ['inspect','فحص مبدئي',150] ],
-      psp: [ ['clean','تنظيف عميق',120], ['battery','تغيير بطارية (القطعة منفصلة)',150], ['screen','تغيير شاشة (القطعة منفصلة)',200], ['buttons','صيانة أزرار/Analog',180], ['cfw','إعداد CFW / Ark',300], ['setup','إعداد وترتيب البرامج والألعاب',120], ['brick','إصلاح تعليق الشاشة/Software Brick',350], ['inspect','فحص مبدئي',80] ],
-      vita: [ ['clean','تنظيف عميق',150], ['battery','تغيير بطارية (القطعة منفصلة)',180], ['screen','تغيير شاشة (القطعة منفصلة)',250], ['buttons','صيانة أزرار/Analog',200], ['cfw','إعداد CFW',350], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
+      psp: [ ['clean','تنظيف عميق',120], ['battery','تغيير بطارية (القطعة منفصلة)',150], ['screen','تغيير شاشة (القطعة منفصلة)',200], ['buttons','صيانة أزرار/Analog',180], ['cfw','إعداد و تعديل (Jailbreak) CFW / ARK',300], ['setup','إعداد وترتيب البرامج والألعاب',120], ['brick','إصلاح تعليق الشاشة/Software Brick',350], ['inspect','فحص مبدئي',80] ],
+      vita: [ ['clean','تنظيف عميق',150], ['battery','تغيير بطارية (القطعة منفصلة)',180], ['screen','تغيير شاشة (القطعة منفصلة)',250], ['buttons','صيانة أزرار/Analog',200], ['cfw','إعداد و تعديل (Jailbreak) CFW',350], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
       ds2: [ ['clean','تنظيف عميق',100], ['drift','صيانة Analog / حل الانحراف',180], ['buttons','صيانة أزرار',150], ['inspect','فحص مبدئي',70] ],
       ds3: [ ['clean','تنظيف عميق',120], ['drift','صيانة Analog / حل الانحراف',200], ['buttons','صيانة أزرار',160], ['battery','تغيير بطارية (القطعة منفصلة)',120], ['charge','صيانة منفذ الشحن',180], ['inspect','فحص مبدئي',80] ],
       ds4: [ ['clean','تنظيف عميق',130], ['drift','صيانة Analog / حل الانحراف',220], ['buttons','صيانة أزرار',180], ['battery','تغيير بطارية (القطعة منفصلة)',140], ['charge','صيانة منفذ الشحن',200], ['inspect','فحص مبدئي',100] ],
-      'mac-intel': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',350], ['fullthermal','تنظيف + معجون حراري',500], ['macos','تثبيت macOS',300], ['oclp','OCLP: تثبيت وتحسين macOS',500], ['storage','تركيب/تهيئة SSD (القطعة منفصلة)',300], ['battery','تغيير بطارية (القطعة منفصلة)',250], ['brick','إصلاح مشاكل الإقلاع/Software Brick',400], ['inspect','فحص مبدئي',150] ],
-      'mac-silicon': [ ['clean','تنظيف خارجي وفحص مبدئي',200], ['inspect','فحص مبدئي',150] ]
+      'mac-intel': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',350], ['fullthermal','تنظيف + معجون حراري',500], ['macos','تثبيت macOS',300], ['oclp','OCLP (Jailbreak): تثبيت وتحسين macOS',500], ['linux','تثبيت نظام Linux (توزيعة حسب الطلب)',350], ['storage','تركيب/تهيئة SSD (القطعة منفصلة)',300], ['battery','تغيير بطارية (القطعة منفصلة)',250], ['brick','إصلاح مشاكل الإقلاع/Software Brick',400], ['inspect','فحص مبدئي',150] ],
+      'mac-silicon': [ ['clean','تنظيف خارجي وفحص مبدئي',200], ['inspect','فحص مبدئي',150] ],
+      'pc-laptop': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',300], ['fullthermal','تنظيف + معجون حراري',500], ['linux','تثبيت نظام Linux (توزيعة حسب الطلب)',300], ['inspect','فحص مبدئي',150] ]
     };
 
     const device = document.getElementById('device');
