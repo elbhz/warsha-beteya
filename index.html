@@ -2,26 +2,44 @@
 <html lang="ar" dir="rtl">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-90SYVXP2KQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-90SYVXP2KQ');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90SYVXP2KQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90SYVXP2KQ');
+  </script>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#6d5bd0">
+  <meta name="description" content="ورشة بيتية – صيانة أجهزة PlayStation، أيادي التحكم، أجهزة MacBook، وأجهزة الكمبيوتر. خدمة منزلية موثوقة في مصر، احجز طلبك مباشرة عبر واتساب.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ورشة بيتية">
+  <meta name="application-name" content="ورشة بيتية">
   <title>ورشة بيتية | صيانة ألعاب وMac</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<link rel="stylesheet" href="style.css">
 <body>
   <main class="wrap">
     <h1>🎮 ورشة بيتية | صيانة ألعاب وMac</h1>
-    <p class="subtitle">صيانة أجهزة PlayStation، الأيدي، وأجهزة MacBook</p>
+    <p class="subtitle">صيانة أجهزة PlayStation، الأيدي، أجهزة MacBook، وأجهزة الكمبيوتر</p>
     <div class="badge">🏠 الخدمة تُقدَّم من المنزل وليست من محل تجاري</div>
 
-    <a class="fb-link" href="https://www.facebook.com/profile.php?id=61593335382482" target="_blank" rel="noopener noreferrer">📘 تابعنا على فيسبوك لمشاهدة أعمالنا</a>
+    <div class="top-links">
+      <a class="fb-link" href="https://www.facebook.com/profile.php?id=61593335382482" target="_blank" rel="noopener noreferrer">
+        <svg class="btn-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <circle cx="20" cy="20" r="17" fill="#2b6cb0"/>
+          <path d="M23.8 12.5h-2.4c-1.9 0-2.7 1-2.7 2.9V18h4.6l-.6 4h-4v11h-4V22h-3v-4h3v-3.2c0-3.5 2-5.7 5.4-5.7h3.7v3.4z" fill="#ffffff"/>
+        </svg>
+        <span>تابعنا على فيسبوك لمشاهدة أعمالنا</span>
+      </a>
+
+      <a class="rate-link" href="#rateSection">
+        <span class="rate-link-icon" aria-hidden="true">⭐</span>
+        <span>قيّم تجربتك معنا</span>
+      </a>
+    </div>
 
     <form id="requestForm">
       <section class="section">
@@ -32,12 +50,13 @@
         </div>
 
         <div class="input-group">
-  <label for="phone">رقم واتساب <span class="required">*</span></label>
-  <input id="phone" type="tel" required 
-         placeholder="01xxxxxxxxx" 
-         pattern="[0-9]{11}">
-  <span id="phoneError" class="error-message hidden">⚠️ أدخل رقم واتساب صحيح (11 رقم)</span>
-</div>
+          <label for="phone">رقم واتساب <span class="required">*</span></label>
+          <input id="phone" type="tel" required
+                 placeholder="01xxxxxxxxx"
+                 pattern="[0-9]{11}"
+                 inputmode="numeric">
+          <span id="phoneError" class="error-message hidden">⚠️ أدخل رقم واتساب صحيح (11 رقم)</span>
+        </div>
       </section>
 
       <section class="section">
@@ -58,6 +77,7 @@
             <option value="ds4">يد DualShock 4</option>
             <option value="mac-intel">MacBook Intel (قديم / OCLP)</option>
             <option value="mac-silicon">MacBook Apple Silicon (M1 / M2 / M3 / M4)</option>
+            <option value="pc-laptop">PC / Laptop (كمبيوتر أو لابتوب)</option>
           </select>
         </div>
 
@@ -66,7 +86,7 @@
           <input id="model" type="text" required placeholder="مثال: CUH-7216B / CECH-2504A / PCH-2008 / A1466">
           <p class="hint">لو لا تعرفه، اكتب "لا أعرف" وسأراجعه عند الاستلام.</p>
         </div>
-          
+
         <div id="ps4FirmwareBox" class="hidden input-group">
           <label for="firmware">إصدار نظام PS4 <span class="required">*</span></label>
           <select id="firmware">
@@ -103,7 +123,7 @@
           <label for="extraRequest">طلب أو خدمة أخرى للاستفسار (اختياري)</label>
           <textarea id="extraRequest" placeholder="اكتب طلبك هنا، وسيتم تأكيد توفره وسعره قبل البدء"></textarea>
         </div>
-        
+
         <div class="input-group">
           <label for="notes">ملاحظات أو وصف المشكلة (اختياري)</label>
           <textarea id="notes" placeholder="مثال: الجهاز صوته عالٍ، أو لا يقرأ الأقراص"></textarea>
@@ -111,41 +131,41 @@
       </section>
 
       <section class="modding-section hidden" id="moddingSection">
-  <h2>🔓 خدمات التعديل (Jailbreak/CFW/HEN/OPL/OCLP)</h2>
+        <h2>🔓 خدمات التعديل (Jailbreak/CFW/HEN/OPL/OCLP)</h2>
 
-  <div class="modding-warning">
-    <strong>⚠️ تنبيه مهم:</strong><br>
-    خدمات التعديل قد تلغي الضمان الرسمي، وقد تخالف شروط استخدام المنصة (مثل شبكة PlayStation).<br>
-    هذه الخدمات مخصصة للاستخدام الشخصي مع الألعاب والبرامج اللي تملكها بشكل قانوني فقط.<br>
-    لازم توافق صراحة على البنود دي قبل المتابعة.
-    <br><br>
-    <strong>📌 ملاحظة الأداء:</strong> بعد التعديل، قد تلاحظ فرق في الأداء عن النظام الأصلي. أمثلة:
-    <ul class="modding-list">
-      <li>أجهزة Mac مع أنظمة أحدث قد تكون أبطأ قليلاً من النظام الأصلي.</li>
-      <li>بعض الألعاب أو التطبيقات قد تعمل بأداء مختلف عن المتوقع.</li>
-      <li>قد تظهر مشاكل توافق مع بعض البرامج أو الخصائص.</li>
-    </ul>
-  </div>
+        <div class="modding-warning">
+          <strong>⚠️ تنبيه مهم:</strong><br>
+          خدمات التعديل قد تلغي الضمان الرسمي، وقد تخالف شروط استخدام المنصة (مثل شبكة PlayStation).<br>
+          هذه الخدمات مخصصة للاستخدام الشخصي مع الألعاب والبرامج اللي تملكها بشكل قانوني فقط.<br>
+          لازم توافق صراحة على البنود دي قبل المتابعة.
+          <br><br>
+          <strong>📌 ملاحظة الأداء:</strong> بعد التعديل، قد تلاحظ فرق في الأداء عن النظام الأصلي. أمثلة:
+          <ul class="modding-list">
+            <li>أجهزة Mac مع أنظمة أحدث قد تكون أبطأ قليلاً من النظام الأصلي.</li>
+            <li>بعض الألعاب أو التطبيقات قد تعمل بأداء مختلف عن المتوقع.</li>
+            <li>قد تظهر مشاكل توافق مع بعض البرامج أو الخصائص.</li>
+          </ul>
+        </div>
 
-<div class="input-group">
-  <label for="moddingOptIn">
-    <input type="checkbox" id="moddingOptIn" required>
-    <strong>أوافق صراحة على خدمات التعديل وأتحمل المسؤولية الكاملة</strong> <span class="required">*</span>
-  </label>
-  <span id="moddingError" class="error-message hidden">⚠️ يجب الموافقة على خدمات التعديل قبل المتابعة</span>
-</div>
+        <div class="input-group">
+          <label for="moddingOptIn">
+            <input type="checkbox" id="moddingOptIn" required>
+            <strong>أوافق صراحة على خدمات التعديل وأتحمل المسؤولية الكاملة</strong> <span class="required">*</span>
+          </label>
+          <span id="moddingError" class="error-message hidden">⚠️ يجب الموافقة على خدمات التعديل قبل المتابعة</span>
+        </div>
 
-  <div class="agreement agreement-warning input-group">
-    <strong>بموافقتي، أقر بالآتي:</strong>
-    <ul>
-      <li>الجهاز ملكي وأنا المسؤول الوحيد عنه.</li>
-      <li>أفهم أن التعديل قد يلغي الضمان وقد يسبب حظر الجهاز من الخدمات أونلاين.</li>
-      <li>ألتزم باستخدام الجهاز المعدّل للأغراض الشخصية والقانونية فقط.</li>
-      <li>مقدّم الخدمة لا يوفّر ألعاباً مقرصنة ولا يساعد في أي استخدام غير قانوني.</li>
-      <li>أتحمل المسؤولية الكاملة عن أي عواقب قانونية أو فنية ناتجة عن التعديل، <strong>بما في ذلك أي فرق في الأداء</strong>.</li>
-    </ul>
-  </div>
-</section>
+        <div class="agreement agreement-warning input-group">
+          <strong>بموافقتي، أقر بالآتي:</strong>
+          <ul>
+            <li>الجهاز ملكي وأنا المسؤول الوحيد عنه.</li>
+            <li>أفهم أن التعديل قد يلغي الضمان وقد يسبب حظر الجهاز من الخدمات أونلاين.</li>
+            <li>ألتزم باستخدام الجهاز المعدّل للأغراض الشخصية والقانونية فقط.</li>
+            <li>مقدّم الخدمة لا يوفّر ألعاباً مقرصنة ولا يساعد في أي استخدام غير قانوني.</li>
+            <li>أتحمل المسؤولية الكاملة عن أي عواقب قانونية أو فنية ناتجة عن التعديل، <strong>بما في ذلك أي فرق في الأداء</strong>.</li>
+          </ul>
+        </div>
+      </section>
 
       <div class="notice">
         <strong>مهم قبل الطلب:</strong><br>
@@ -174,38 +194,43 @@
       </div>
 
       <section class="section">
-  <h2>⚠️ الموافقة</h2>
+        <h2>⚠️ الموافقة</h2>
 
-  <div class="agreement input-group">
-    <strong>بإرسال الطلب، أنا أوافق على الآتي:</strong>
-    <ul>
-      <li>الجهاز ملكي ولي الحق في تسليمه للصيانة.</li>
-      <li>السعر الظاهر تقديري، والسعر النهائي يتأكد بعد الفحص وقبل بدء أي عمل إضافي.</li>
-      <li>قد يحدث فقدان للبيانات أو تظهر أعطال قديمة أثناء الفحص؛ لا يوجد نسخ احتياطي للبيانات إلا باتفاق مسبق.</li>
-      <li>سيتم تسجيل حالة الجهاز عند الاستلام بالصور/الفيديو ووصف مختصر؛ هذا التوثيق هو المرجع لحالة الجهاز قبل الصيانة.</li>
-      <li>الفحص يشمل فقط النقاط المسجلة، ولا يعني أن كل خصائص الجهاز تم اختبارها.</li>
-      <li>مسؤولية مقدم الخدمة لا تتجاوز المبلغ المدفوع مقابل الخدمة.</li>
-      <li>أوافق على سياسة الدفع والاسترداد المذكورة أعلاه، وألتزم بإرسال رسالة "استلمت المبلغ المسترد" عند الاسترداد.</li>
-    </ul>
-  </div>
+        <div class="agreement input-group">
+          <strong>بإرسال الطلب، أنا أوافق على الآتي:</strong>
+          <ul>
+            <li>الجهاز ملكي ولي الحق في تسليمه للصيانة.</li>
+            <li>السعر الظاهر تقديري، والسعر النهائي يتأكد بعد الفحص وقبل بدء أي عمل إضافي.</li>
+            <li>قد يحدث فقدان للبيانات أو تظهر أعطال قديمة أثناء الفحص؛ لا يوجد نسخ احتياطي للبيانات إلا باتفاق مسبق.</li>
+            <li>سيتم تسجيل حالة الجهاز عند الاستلام بالصور/الفيديو ووصف مختصر؛ هذا التوثيق هو المرجع لحالة الجهاز قبل الصيانة.</li>
+            <li>الفحص يشمل فقط النقاط المسجلة، ولا يعني أن كل خصائص الجهاز تم اختبارها.</li>
+            <li>مسؤولية مقدم الخدمة لا تتجاوز المبلغ المدفوع مقابل الخدمة.</li>
+            <li>أوافق على سياسة الدفع والاسترداد المذكورة أعلاه، وألتزم بإرسال رسالة "استلمت المبلغ المسترد" عند الاسترداد.</li>
+          </ul>
+        </div>
 
- <div class="input-group">
-  <label class="agree-row" for="agree">
-    <input id="agree" type="checkbox" required>
-    قرأت وأوافق على البنود أعلاه <span class="required">*</span>
-  </label>
-  <span id="agreeError" class="error-message hidden">⚠️ يجب الموافقة على البنود قبل المتابعة</span>
-</div>
-</section>
+        <div class="input-group">
+          <label class="agree-row" for="agree">
+            <input id="agree" type="checkbox" required>
+            قرأت وأوافق على البنود أعلاه <span class="required">*</span>
+          </label>
+          <span id="agreeError" class="error-message hidden">⚠️ يجب الموافقة على البنود قبل المتابعة</span>
+        </div>
+      </section>
 
-     <section class="price" id="priceBox">
-  <small>💰 السعر التقريبي</small>
-  <div class="total" id="total">0 جنيه</div>
-  <div class="breakdown" id="breakdown"></div>
-  <small class="price-note">لا يشمل قطع الغيار أو الشحن أو الجمارك.</small>
-</section>
+      <section class="price" id="priceBox">
+        <small>💰 السعر التقريبي</small>
+        <div class="total" id="total">0 جنيه</div>
+        <div class="breakdown" id="breakdown"></div>
+        <small class="price-note">لا يشمل قطع الغيار أو الشحن أو الجمارك.</small>
+      </section>
 
-      <button type="button" id="sendButton">📱 إرسال الطلب عبر واتساب</button>
+      <button type="button" id="sendButton" class="btn-with-icon">
+        <svg class="btn-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path fill="#ffffff" d="M20 8c-6.6 0-12 5.4-12 12 0 2.1.6 4.2 1.6 6L8 32l6.2-1.6c1.7.9 3.7 1.5 5.8 1.5 6.6 0 12-5.4 12-12S26.6 8 20 8zm7 16.9c-.3.8-1.6 1.5-2.4 1.6-.6.1-1.4.2-4.5-1-3.8-1.5-6.2-5.3-6.4-5.6-.2-.3-1.5-2-1.5-3.7 0-1.8.9-2.6 1.2-3 .3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.2.4.1.6-.1.2-.2.4-.4.6l-.5.6c-.2.2-.4.4-.2.7.2.4.9 1.5 2 2.5 1.4 1.2 2.5 1.6 2.9 1.8.4.2.6.1.8-.1.3-.3.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 1 2.4 1.1.4.2.6.3.7.4.1.3.1.9-.2 1.7z"/>
+        </svg>
+        <span>إرسال الطلب عبر واتساب</span>
+      </button>
       <p class="footer-note">بعد فتح واتساب، أرسل صور الجهاز وملصق رقم الموديل وصور أي خدوش أو عيوب ظاهرة إن أمكن.</p>
 
       <section id="successBox" class="success-box hidden" role="status" aria-live="polite">
@@ -215,41 +240,67 @@
         <div class="success-ref" id="orderRef">—</div>
         <p class="success-note">احتفظ برقم الطلب ده لحد ما نأكد الحجز معاك. لو نسيته، ابعتلنا آخر رسالة واتساب وهتلاقيه فيها.</p>
         <p class="success-whatsapp-hint" id="whatsappHint">لو واتساب مفتحش تلقائيًا في تاب جديد، اضغط الزر ده:</p>
-        <a id="whatsappFallback" href="#" target="_blank" rel="noopener noreferrer" class="whatsapp-fallback-btn">📱 فتح واتساب وإرسال الطلب</a>
+        <a id="whatsappFallback" href="#" target="_blank" rel="noopener noreferrer" class="whatsapp-fallback-btn">
+          <svg class="btn-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <path fill="#ffffff" d="M20 8c-6.6 0-12 5.4-12 12 0 2.1.6 4.2 1.6 6L8 32l6.2-1.6c1.7.9 3.7 1.5 5.8 1.5 6.6 0 12-5.4 12-12S26.6 8 20 8zm7 16.9c-.3.8-1.6 1.5-2.4 1.6-.6.1-1.4.2-4.5-1-3.8-1.5-6.2-5.3-6.4-5.6-.2-.3-1.5-2-1.5-3.7 0-1.8.9-2.6 1.2-3 .3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.2.4.1.6-.1.2-.2.4-.4.6l-.5.6c-.2.2-.4.4-.2.7.2.4.9 1.5 2 2.5 1.4 1.2 2.5 1.6 2.9 1.8.4.2.6.1.8-.1.3-.3.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 1 2.4 1.1.4.2.6.3.7.4.1.3.1.9-.2 1.7z"/>
+          </svg>
+          <span>فتح واتساب وإرسال الطلب</span>
+        </a>
+        <p class="success-rate-hint">✅ ولما تستلم جهازك، هتلاقي رابط "قيّم تجربتك معنا" في أعلى الصفحة لو حابب تشاركنا رأيك.</p>
       </section>
     </form>
+
+    <section class="section rate-section" id="rateSection">
+      <h2>⭐ قيّم تجربتك معنا</h2>
+      <p class="rate-intro">لو سبق واستخدمت خدمة ورشة بيتية، رأيك يهمنا جدًا ويساعد عملاء تانيين ياخدوا قرارهم.</p>
+
+      <div class="stars" id="starRating" role="radiogroup" aria-label="التقييم من 5 نجوم">
+        <button type="button" class="star" data-value="1" role="radio" aria-checked="false" aria-label="نجمة واحدة">★</button>
+        <button type="button" class="star" data-value="2" role="radio" aria-checked="false" aria-label="نجمتان">★</button>
+        <button type="button" class="star" data-value="3" role="radio" aria-checked="false" aria-label="3 نجوم">★</button>
+        <button type="button" class="star" data-value="4" role="radio" aria-checked="false" aria-label="4 نجوم">★</button>
+        <button type="button" class="star" data-value="5" role="radio" aria-checked="false" aria-label="5 نجوم">★</button>
+      </div>
+      <p class="rate-selected-label" id="rateSelectedLabel">اختر تقييمك</p>
+
+      <div class="input-group">
+        <label for="rateComment">تعليق (اختياري)</label>
+        <textarea id="rateComment" placeholder="اكتب رأيك في الخدمة، أو أي اقتراح لتحسينها"></textarea>
+      </div>
+
+      <span id="rateError" class="error-message hidden">⚠️ اختر تقييمًا من 1 إلى 5 نجوم قبل الإرسال</span>
+
+      <button type="button" id="rateSendButton" class="btn-with-icon">
+        <svg class="btn-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path fill="#ffffff" d="M20 8c-6.6 0-12 5.4-12 12 0 2.1.6 4.2 1.6 6L8 32l6.2-1.6c1.7.9 3.7 1.5 5.8 1.5 6.6 0 12-5.4 12-12S26.6 8 20 8zm7 16.9c-.3.8-1.6 1.5-2.4 1.6-.6.1-1.4.2-4.5-1-3.8-1.5-6.2-5.3-6.4-5.6-.2-.3-1.5-2-1.5-3.7 0-1.8.9-2.6 1.2-3 .3-.3.7-.4 1-.4h.7c.2 0 .5 0 .8.6.3.7 1 2.4 1.1 2.6.1.2.2.4.1.6-.1.2-.2.4-.4.6l-.5.6c-.2.2-.4.4-.2.7.2.4.9 1.5 2 2.5 1.4 1.2 2.5 1.6 2.9 1.8.4.2.6.1.8-.1.3-.3.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 1 2.4 1.1.4.2.6.3.7.4.1.3.1.9-.2 1.7z"/>
+        </svg>
+        <span>إرسال التقييم عبر واتساب</span>
+      </button>
+      <p class="footer-note">هيتفتح واتساب برسالة فيها تقييمك جاهزة للإرسال لينا مباشرة.</p>
+    </section>
   </main>
 
   <script>
     const WHATSAPP_NUMBER = '201277048080';
-    const moddingServices = ['hen','cfw','(jailbreak) goldhen','oclp','oclp_full','jailbreak','setup','opl','fmc','brick'];
+    const moddingServices = ['hen','cfw','(jailbreak) goldhen','oclp','oclp_full','jailbreak','setup','opl','brick'];
     const services = {
       ps1: [ ['clean','تنظيف عميق',150], ['disc','صيانة قارئ/درج الأقراص',300], ['inspect','فحص مبدئي',100] ],
-      ps2: [ ['clean','تنظيف عميق',150], ['thermal','تغيير معجون حراري',200], ['disc','صيانة قارئ/درج الأقراص',300], ['opl','إعداد OPL / FMCB',350], ['fmc','Free McBoot / Fortuna',300], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
-      ps3: [ ['clean','تنظيف عميق',200], ['thermal','تغيير معجون حراري',250], ['pads','تغيير بادات حرارية',300], ['fullthermal','تنظيف + معجون + بادات',600], ['disc','صيانة قارئ/درج الأقراص',350], ['hen','إعداد HEN / CFW',400], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',450], ['inspect','فحص مبدئي',120] ],
+      ps2: [ ['clean','تنظيف عميق',150], ['thermal','تغيير معجون حراري',200], ['disc','صيانة قارئ/درج الأقراص',300], ['opl','إعداد و تعديل (Jailbreak) OPL / FreeMcBoot / Fortuna',350], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
+      ps3: [ ['clean','تنظيف عميق',200], ['thermal','تغيير معجون حراري',250], ['pads','تغيير بادات حرارية',300], ['fullthermal','تنظيف + معجون + بادات',600], ['disc','صيانة قارئ/درج الأقراص',350], ['hen','إعداد و تعديل (Jailbreak) CFW / HEN',400], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',450], ['inspect','فحص مبدئي',120] ],
       ps4: [ ['clean','تنظيف عميق',250], ['thermal','تغيير معجون حراري',300], ['pads','تغيير بادات حرارية',350], ['fullthermal','تنظيف + معجون + بادات',700], ['disc','صيانة قارئ/درج الأقراص',400], ['(jailbreak) goldhen','إعداد (jailbreak) GoldHEN (بعد تأكيد التوافق)',450], ['setup','إعداد وترتيب البرامج والألعاب',150], ['storage','تركيب/تهيئة HDD أو SSD',250], ['brick','إصلاح تعليق الشاشة/Software Brick',500], ['inspect','فحص مبدئي',150] ],
-      psp: [ ['clean','تنظيف عميق',120], ['battery','تغيير بطارية (القطعة منفصلة)',150], ['screen','تغيير شاشة (القطعة منفصلة)',200], ['buttons','صيانة أزرار/Analog',180], ['cfw','إعداد CFW / Ark',300], ['setup','إعداد وترتيب البرامج والألعاب',120], ['brick','إصلاح تعليق الشاشة/Software Brick',350], ['inspect','فحص مبدئي',80] ],
-      vita: [ ['clean','تنظيف عميق',150], ['battery','تغيير بطارية (القطعة منفصلة)',180], ['screen','تغيير شاشة (القطعة منفصلة)',250], ['buttons','صيانة أزرار/Analog',200], ['cfw','إعداد CFW',350], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
+      psp: [ ['clean','تنظيف عميق',120], ['battery','تغيير بطارية (القطعة منفصلة)',150], ['screen','تغيير شاشة (القطعة منفصلة)',200], ['buttons','صيانة أزرار/Analog',180], ['cfw','إعداد و تعديل (Jailbreak) CFW / ARK',300], ['setup','إعداد وترتيب البرامج والألعاب',120], ['brick','إصلاح تعليق الشاشة/Software Brick',350], ['inspect','فحص مبدئي',80] ],
+      vita: [ ['clean','تنظيف عميق',150], ['battery','تغيير بطارية (القطعة منفصلة)',180], ['screen','تغيير شاشة (القطعة منفصلة)',250], ['buttons','صيانة أزرار/Analog',200], ['cfw','إعداد و تعديل (Jailbreak) CFW',350], ['setup','إعداد وترتيب البرامج والألعاب',150], ['brick','إصلاح تعليق الشاشة/Software Brick',400], ['inspect','فحص مبدئي',100] ],
       ds2: [ ['clean','تنظيف عميق',100], ['drift','صيانة Analog / حل الانحراف',180], ['buttons','صيانة أزرار',150], ['inspect','فحص مبدئي',70] ],
       ds3: [ ['clean','تنظيف عميق',120], ['drift','صيانة Analog / حل الانحراف',200], ['buttons','صيانة أزرار',160], ['battery','تغيير بطارية (القطعة منفصلة)',120], ['charge','صيانة منفذ الشحن',180], ['inspect','فحص مبدئي',80] ],
       ds4: [ ['clean','تنظيف عميق',130], ['drift','صيانة Analog / حل الانحراف',220], ['buttons','صيانة أزرار',180], ['battery','تغيير بطارية (القطعة منفصلة)',140], ['charge','صيانة منفذ الشحن',200], ['inspect','فحص مبدئي',100] ],
-      'mac-intel': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',350], ['fullthermal','تنظيف + معجون حراري',500], ['macos','تثبيت macOS',300], ['oclp','OCLP: تثبيت وتحسين macOS',500], ['storage','تركيب/تهيئة SSD (القطعة منفصلة)',300], ['battery','تغيير بطارية (القطعة منفصلة)',250], ['brick','إصلاح مشاكل الإقلاع/Software Brick',400], ['inspect','فحص مبدئي',150] ],
-      'mac-silicon': [ ['clean','تنظيف خارجي وفحص مبدئي',200], ['inspect','فحص مبدئي',150] ]
+      'mac-intel': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',350], ['fullthermal','تنظيف + معجون حراري',500], ['macos','تثبيت macOS',300], ['oclp','OCLP (Jailbreak): تثبيت وتحسين macOS',500], ['linux','تثبيت نظام Linux (توزيعة حسب الطلب)',350], ['storage','تركيب/تهيئة SSD (القطعة منفصلة)',300], ['battery','تغيير بطارية (القطعة منفصلة)',250], ['brick','إصلاح مشاكل الإقلاع/Software Brick',400], ['inspect','فحص مبدئي',150] ],
+      'mac-silicon': [ ['clean','تنظيف خارجي وفحص مبدئي',200], ['inspect','فحص مبدئي',150] ],
+      'pc-laptop': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',300], ['fullthermal','تنظيف + معجون حراري',500], ['linux','تثبيت نظام Linux (توزيعة حسب الطلب)',300], ['inspect','فحص مبدئي',150] ]
     };
 
     const device = document.getElementById('device');
     const firmwareBox = document.getElementById('ps4FirmwareBox');
     const firmware = document.getElementById('firmware');
-    device.addEventListener('change', () => {
-  if (device.value === 'ps4') {
-    ps4FirmwareBox.classList.remove('hidden');
-    firmware.setAttribute('required', 'true');
-  } else {
-    ps4FirmwareBox.classList.add('hidden');
-    firmware.removeAttribute('required');
-    firmware.value = ''; // reset selection when hidden
-  }
-});
 
     const mainService = document.getElementById('mainService');
     const extraBox = document.getElementById('extraBox');
@@ -331,29 +382,24 @@
       moddingOptIn.required = requiresModding;
       if (!requiresModding) moddingOptIn.checked = false;
     }
-  function populateServices() {
-  additionalServices.innerHTML = '';
+    // نقطة واحدة فقط للتعامل مع تغيير الجهاز (بدل مستمعين متعارضين على نفس الحدث)
+    function populateServices() {
+      additionalServices.innerHTML = '';
 
-  // toggle fade-slide sections
-  if (device.value) {
-    extraBox.classList.remove("hidden");
-    extraBox.classList.add("show");
+      // toggle fade-slide sections
+      const hasDevice = Boolean(device.value);
+      extraBox.classList.toggle('hidden', !hasDevice);
+      extraBox.classList.toggle('show', hasDevice);
+      extraRequestBox.classList.toggle('hidden', !hasDevice);
+      extraRequestBox.classList.toggle('show', hasDevice);
 
-    extraRequestBox.classList.remove("hidden");
-    extraRequestBox.classList.add("show");
-  } else {
-    extraBox.classList.add("hidden");
-    extraBox.classList.remove("show");
+      const isPs4 = device.value === 'ps4';
+      firmwareBox.classList.toggle('hidden', !isPs4);
+      firmware.required = isPs4;
+      if (!isPs4) firmware.value = ''; // reset selection when hidden
 
-    extraRequestBox.classList.add("hidden");
-    extraRequestBox.classList.remove("show");
-  }
-
-  firmwareBox.classList.toggle('show', device.value === 'ps4');
-  firmware.required = device.value === 'ps4';
-
-  onServiceSelectionChanged();
-}
+      onServiceSelectionChanged();
+    }
 
     function updatePrice() {
       const main = selectedData(mainService);
@@ -388,105 +434,155 @@
     const whatsappFallback = document.getElementById('whatsappFallback');
     const whatsappHint = document.getElementById('whatsappHint');
 
-document.getElementById('sendButton').addEventListener('click', () => {
-  const form = document.getElementById('requestForm');
-  const phoneInput = document.getElementById('phone');
-  const phoneError = document.getElementById('phoneError');
-  const agreeCheckbox = document.getElementById('agree');
-  const agreeError = document.getElementById('agreeError');
-  const moddingSection = document.getElementById('moddingSection');
-  const moddingOptIn = document.getElementById('moddingOptIn');
-  const moddingError = document.getElementById('moddingError');
+    document.getElementById('sendButton').addEventListener('click', () => {
+      const form = document.getElementById('requestForm');
+      const phoneInput = document.getElementById('phone');
+      const phoneError = document.getElementById('phoneError');
+      const agreeCheckbox = document.getElementById('agree');
+      const agreeError = document.getElementById('agreeError');
+      const moddingError = document.getElementById('moddingError');
 
-  // ✅ Phone validation
-  if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
-    phoneError.classList.remove('hidden');
-    phoneInput.focus();
-    return;
-  } else {
-    phoneError.classList.add('hidden');
-  }
+      // ✅ Phone validation
+      if (!/^01[0-9]{9}$/.test(phoneInput.value.trim())) {
+        phoneError.classList.remove('hidden');
+        phoneInput.focus();
+        return;
+      } else {
+        phoneError.classList.add('hidden');
+      }
 
-  // ✅ Agreement checkbox
-  if (!agreeCheckbox.checked) {
-    agreeError.classList.remove('hidden');
-    agreeCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  } else {
-    agreeError.classList.add('hidden');
-  }
+      // ✅ Agreement checkbox
+      if (!agreeCheckbox.checked) {
+        agreeError.classList.remove('hidden');
+        agreeCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      } else {
+        agreeError.classList.add('hidden');
+      }
 
-  // ✅ Modding checkbox (only if section visible)
-  if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
-    moddingError.classList.remove('hidden');
-    document.getElementById("moddingOptIn").focus();
-    moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  } else {
-    moddingError.classList.add('hidden');
-  }
+      // ✅ Modding checkbox (only if section visible)
+      if (!moddingSection.classList.contains('hidden') && !moddingOptIn.checked) {
+        moddingError.classList.remove('hidden');
+        moddingOptIn.focus();
+        moddingOptIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      } else {
+        moddingError.classList.add('hidden');
+      }
 
-  // ✅ Built‑in validation fallback
-  if (!form.checkValidity()) { 
-    form.reportValidity(); 
-    return; 
-  }
+      // ✅ Built‑in validation fallback
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
 
-  // --- WhatsApp message code ---
-  const main = selectedData(mainService);
-  const extras = extraSelects().map(selectedData).filter(x => x.value);
-  const model = document.getElementById('model').value.trim();
-  const deviceName = device.options[device.selectedIndex].textContent;
-  const fw = device.value === 'ps4' ? firmware.value : 'غير مطلوب';
-  const sum = main.price + extras.reduce((total,x) => total + x.price, 0);
-  const hasModding = [main, ...extras].some(x => isModdingService(x.value));
-  const extraLines = extras.map((x,i) => 'خدمة إضافية ' + (i + 1) + ': ' + x.name);
-  const orderRef = generateOrderRef();
+      // --- WhatsApp message code ---
+      const main = selectedData(mainService);
+      const extras = extraSelects().map(selectedData).filter(x => x.value);
+      const model = document.getElementById('model').value.trim();
+      const deviceName = device.options[device.selectedIndex].textContent;
+      const fw = device.value === 'ps4' ? firmware.value : 'غير مطلوب';
+      const sum = main.price + extras.reduce((total,x) => total + x.price, 0);
+      const hasModding = [main, ...extras].some(x => isModdingService(x.value));
+      const extraLines = extras.map((x,i) => 'خدمة إضافية ' + (i + 1) + ': ' + x.name);
+      const orderRef = generateOrderRef();
 
-  const message = [
-    'طلب صيانة - ورشة بيتية',
-    'رقم الطلب: ' + orderRef,
-    '--------------------------------',
-    'الاسم: ' + document.getElementById('name').value.trim(),
-    'واتساب: ' + phoneInput.value.trim(),
-    '--------------------------------',
-    'الجهاز: ' + deviceName,
-    'رقم الموديل: ' + model,
-    device.value === 'ps4' ? 'إصدار نظام PS4: ' + fw : '',
-    'الخدمة الأساسية: ' + main.name,
-    ...extraLines,
-    extraRequest.value.trim() ? 'طلب إضافي للاستفسار: ' + extraRequest.value.trim() : '',
-    document.getElementById('notes').value.trim() ? 'ملاحظات: ' + document.getElementById('notes').value.trim() : '',
-    '--------------------------------',
-    'خدمات التعديل: ' + (hasModding ? 'نعم - تم الموافقة الصريحة' : 'لا'),
-    'السعر التقريبي: ' + sum + ' جنيه (لا يشمل قطع الغيار)',
-    'القطع المستوردة قد تستغرق 1-5 أسابيع.',
-    'خدمة منزلية.',
-    '--------------------------------',
-    'أوافق على بنود الخدمة وسياسة الدفع والاسترداد.',
-    'سأرسل صور الجهاز وملصق رقم الموديل وحالته الحالية هنا.'
-  ].filter(Boolean).join('\n');
+      const message = [
+        'طلب صيانة - ورشة بيتية',
+        'رقم الطلب: ' + orderRef,
+        '--------------------------------',
+        'الاسم: ' + document.getElementById('name').value.trim(),
+        'واتساب: ' + phoneInput.value.trim(),
+        '--------------------------------',
+        'الجهاز: ' + deviceName,
+        'رقم الموديل: ' + model,
+        device.value === 'ps4' ? 'إصدار نظام PS4: ' + fw : '',
+        'الخدمة الأساسية: ' + main.name,
+        ...extraLines,
+        extraRequest.value.trim() ? 'طلب إضافي للاستفسار: ' + extraRequest.value.trim() : '',
+        document.getElementById('notes').value.trim() ? 'ملاحظات: ' + document.getElementById('notes').value.trim() : '',
+        '--------------------------------',
+        'خدمات التعديل: ' + (hasModding ? 'نعم - تم الموافقة الصريحة' : 'لا'),
+        'السعر التقريبي: ' + sum + ' جنيه (لا يشمل قطع الغيار)',
+        'القطع المستوردة قد تستغرق 1-5 أسابيع.',
+        'خدمة منزلية.',
+        '--------------------------------',
+        'أوافق على بنود الخدمة وسياسة الدفع والاسترداد.',
+        'سأرسل صور الجهاز وملصق رقم الموديل وحالته الحالية هنا.'
+      ].filter(Boolean).join('\n');
 
-  const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-  const newWindow = window.open(whatsappUrl, '_blank');
+      const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+      const newWindow = window.open(whatsappUrl, '_blank');
 
-  // ✅ إظهار رسالة النجاح ورقم الطلب دايمًا، بغض النظر عن نجاح فتح واتساب تلقائيًا
-  orderRefEl.textContent = orderRef;
-  whatsappFallback.href = whatsappUrl;
-  successBox.classList.remove('hidden');
-  successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // ✅ إظهار رسالة النجاح ورقم الطلب دايمًا، بغض النظر عن نجاح فتح واتساب تلقائيًا
+      orderRefEl.textContent = orderRef;
+      whatsappFallback.href = whatsappUrl;
+      successBox.classList.remove('hidden');
+      successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  // لو المتصفح منع فتح نافذة جديدة (شائع في الموبايل)، وضّح للعميل إنه يضغط الزر يدويًا
-  const popupBlocked = !newWindow || newWindow.closed || typeof newWindow.closed === 'undefined';
-  if (popupBlocked) {
-    whatsappHint.textContent = 'واتساب محتاج فتح يدوي على جهازك. اضغط الزر ده لإرسال الطلب:';
-    whatsappFallback.classList.add('emphasize');
-  } else {
-    whatsappHint.textContent = 'لو واتساب مفتحش تلقائيًا في تاب جديد، اضغط الزر ده:';
-    whatsappFallback.classList.remove('emphasize');
-  }
-});
-    
+      // لو المتصفح منع فتح نافذة جديدة (شائع في الموبايل)، وضّح للعميل إنه يضغط الزر يدويًا
+      const popupBlocked = !newWindow || newWindow.closed || typeof newWindow.closed === 'undefined';
+      if (popupBlocked) {
+        whatsappHint.textContent = 'واتساب محتاج فتح يدوي على جهازك. اضغط الزر ده لإرسال الطلب:';
+        whatsappFallback.classList.add('emphasize');
+      } else {
+        whatsappHint.textContent = 'لو واتساب مفتحش تلقائيًا في تاب جديد، اضغط الزر ده:';
+        whatsappFallback.classList.remove('emphasize');
+      }
+    });
+
+    // ===== تقييم الخدمة بالنجوم =====
+    (function () {
+      let selectedRating = 0;
+      const starButtons = [...document.querySelectorAll('#starRating .star')];
+      const rateSelectedLabel = document.getElementById('rateSelectedLabel');
+      const rateError = document.getElementById('rateError');
+      const rateComment = document.getElementById('rateComment');
+      const starLabels = ['اختر تقييمك', 'ضعيف', 'مقبول', 'جيد', 'جيد جدًا', 'ممتاز'];
+
+      function paintStars(previewValue) {
+        starButtons.forEach(btn => {
+          const v = Number(btn.dataset.value);
+          btn.classList.toggle('filled', v <= previewValue);
+          btn.setAttribute('aria-checked', v === selectedRating ? 'true' : 'false');
+        });
+      }
+
+      starButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedRating = Number(btn.dataset.value);
+          paintStars(selectedRating);
+          rateSelectedLabel.textContent = starLabels[selectedRating];
+          rateError.classList.add('hidden');
+        });
+        btn.addEventListener('mouseenter', () => paintStars(Number(btn.dataset.value)));
+        btn.addEventListener('mouseleave', () => paintStars(selectedRating));
+        btn.addEventListener('focus', () => paintStars(Number(btn.dataset.value)));
+        btn.addEventListener('blur', () => paintStars(selectedRating));
+      });
+
+      document.getElementById('rateSendButton').addEventListener('click', () => {
+        if (!selectedRating) {
+          rateError.classList.remove('hidden');
+          document.getElementById('starRating').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        rateError.classList.add('hidden');
+
+        const starsLine = '⭐'.repeat(selectedRating) + '☆'.repeat(5 - selectedRating);
+        const comment = rateComment.value.trim();
+
+        const message = [
+          'تقييم خدمة - ورشة بيتية',
+          '--------------------------------',
+          'التقييم: ' + starsLine + ' (' + selectedRating + ' من 5)',
+          comment ? 'تعليق العميل: ' + comment : ''
+        ].filter(Boolean).join('\n');
+
+        const whatsappUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+        window.open(whatsappUrl, '_blank');
+      });
+    })();
   </script>
 </body>
 </html>
