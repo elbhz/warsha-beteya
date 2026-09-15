@@ -1162,3 +1162,173 @@ button:active { transform:translateY(0); }
 }
 
 .noscript-banner a { color:#154f89; font-weight:800; }
+
+/* =========================================================
+   PROMO OFFERS — styles for promos.js only. This whole block
+   is safe to delete together with the <script src="promos.js">
+   tag and the two empty slot divs in index.html if the
+   back-to-school campaign is ever fully retired; nothing else
+   on the page depends on these rules.
+   ========================================================= */
+.promo-banner {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:8px 16px;
+  padding:10px var(--sp-md);
+  background:linear-gradient(135deg,#f2a900,#e08a00);
+  color:#3a2600;
+  font-weight:800;
+  font-size:var(--fs-xs);
+  text-align:center;
+}
+
+.promo-banner-text { line-height:1.5; }
+
+.promo-banner-cta {
+  display:inline-flex;
+  align-items:center;
+  padding:7px 16px;
+  border-radius:999px;
+  background:#3a2600;
+  color:#fff9e8;
+  font-weight:800;
+  font-size:var(--fs-2xs);
+  text-decoration:none;
+  white-space:nowrap;
+  transition:transform .15s ease, background-color .15s ease;
+}
+.promo-banner-cta:hover { background:#241800; transform:translateY(-1px); }
+
+.promo-section {
+  padding:0 0 var(--sp-lg);
+  margin-bottom:var(--sp-lg);
+  border-bottom:1px solid var(--line);
+}
+
+.promo-intro {
+  margin:0 0 var(--sp-md);
+  color:var(--ink-soft);
+  font-size:var(--fs-sm);
+  line-height:1.6;
+}
+
+.promo-cards {
+  display:grid;
+  gap:14px;
+  margin-bottom:var(--sp-md);
+}
+
+@media (min-width:620px) {
+  .promo-cards { grid-template-columns:1fr 1fr; }
+}
+
+.promo-card {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  border:1.6px solid #f4dfa0;
+  background:#fffaf0;
+  border-radius:var(--radius-md);
+  padding:var(--sp-md);
+}
+
+.promo-card-head {
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.promo-card-icon { font-size:1.4em; line-height:1; }
+
+.promo-card-title {
+  margin:0;
+  font-size:var(--fs-md);
+  font-weight:800;
+  color:var(--purple-dark);
+}
+
+.promo-card-scope {
+  margin:0;
+  font-size:var(--fs-2xs);
+  color:var(--ink-soft);
+  font-weight:600;
+}
+
+.promo-line {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:4px 10px;
+  padding:6px 0;
+  border-top:1px dashed #ecd9a0;
+  font-size:var(--fs-xs);
+}
+.promo-line:first-of-type { border-top:none; padding-top:2px; }
+
+.promo-line-label { flex:1 1 auto; color:var(--ink); }
+
+.promo-line-price { white-space:nowrap; }
+.promo-line-price s { margin-inline-end:6px; color:#9a8760; font-weight:600; }
+.promo-line-price strong { color:#8a5a00; font-size:1.05em; font-weight:800; }
+
+.promo-percent {
+  align-self:flex-start;
+  padding:4px 12px;
+  border-radius:999px;
+  background:#fff3cd;
+  border:1px solid var(--gold);
+  color:#8a5a00;
+  font-weight:800;
+  font-size:var(--fs-sm);
+}
+
+.promo-card-note {
+  margin:0;
+  color:var(--ink-soft);
+  font-size:var(--fs-2xs);
+  line-height:1.55;
+}
+
+.promo-card-footer {
+  margin-top:auto;
+  padding-top:8px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  border-top:1px solid #f4dfa0;
+}
+
+.promo-card-countdown {
+  font-size:var(--fs-2xs);
+  font-weight:700;
+  color:#8a5a00;
+}
+
+.promo-card-cta {
+  display:inline-flex;
+  align-items:center;
+  padding:8px 14px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#25d366,#128c7e);
+  color:#fff;
+  font-weight:700;
+  font-size:var(--fs-2xs);
+  text-decoration:none;
+  white-space:nowrap;
+  transition:transform .15s ease;
+}
+.promo-card-cta:hover { transform:translateY(-1px); }
+
+.promo-terms {
+  margin:0;
+  padding-inline-start:20px;
+  color:var(--ink-soft);
+  font-size:var(--fs-2xs);
+  line-height:1.7;
+}
+.promo-terms li { margin:4px 0; }
