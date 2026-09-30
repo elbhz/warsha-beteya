@@ -217,13 +217,27 @@
     const cardsHtml = activePromos.map(renderCard).join('');
     const termsHtml = PROMO_TERMS.map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('');
 
+    let maxSaving = 0;
+    activePromos.forEach(function (p) {
+      (p.lines || []).forEach(function (l) { maxSaving = Math.max(maxSaving, l.was - l.now); });
+    });
+    const latestEnd = activePromos.reduce(function (max, p) { return (p.endDate > max ? p.endDate : max); }, activePromos[0].endDate);
+    const teaserLines = activePromos.map(function (p) { return '• ' + escapeHtml(p.title); }).join('<br>');
+    const teaser = teaserLines + '<br>العرض لحد ' + formatArabicDate(latestEnd);
+
     slot.innerHTML =
-      '<section class="promo-section" aria-labelledby="promoHeading">' +
-        '<h2 class="section-heading" id="promoHeading">🎒 عروض الرجوع للمدارس</h2>' +
-        '<p class="promo-intro">اسأل عن العرض المناسب لجهازك، وهنأكد لك السعر والتفاصيل على واتساب قبل أي التزام.</p>' +
-        '<div class="promo-cards">' + cardsHtml + '</div>' +
-        '<ul class="promo-terms">' + termsHtml + '</ul>' +
-      '</section>';
+      '<details class="collapse promo-section">' +
+        '<summary class="collapse-summary">' +
+          '<span class="collapse-title"><h2 class="section-heading" id="promoHeading">🎒 عروض الرجوع للمدارس</h2>' +
+          '<span class="collapse-sub">' + teaser + '</span></span>' +
+          '<span class="collapse-hint" aria-hidden="true">شوف العروض</span>' +
+        '</summary>' +
+        '<div class="collapse-body">' +
+          '<p class="promo-intro">اسأل عن العرض المناسب لجهازك، وهنأكد لك السعر والتفاصيل على واتساب قبل أي التزام.</p>' +
+          '<div class="promo-cards">' + cardsHtml + '</div>' +
+          '<ul class="promo-terms">' + termsHtml + '</ul>' +
+        '</div>' +
+      '</details>';
   }
 
   function init() {

@@ -1064,9 +1064,7 @@ button:active { transform:translateY(0); }
    FAQ — native <details>/<summary>, no JS needed to expand.
    ========================================================= */
 .faq {
-  padding:0 0 var(--sp-lg);
-  margin-bottom:var(--sp-lg);
-  border-bottom:1px solid var(--line);
+  background:var(--surface);
 }
 
 .faq-item {
@@ -1367,3 +1365,86 @@ button:active { transform:translateY(0); }
 #stepInfo { scroll-margin-top:16px; }
 
 @media print { .hero-cta { display:none; } }
+
+/* =========================================================
+   COLLAPSIBLE SECTIONS  (promos, trust, process, notice, policy)
+   Native <details>: tap/click/keyboard, no JS needed.
+   Click-only on purpose: phones have no hover, and hover-open
+   fights with click on desktop. Hover only highlights.
+   ========================================================= */
+.collapse-summary {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  min-height:56px; padding:10px 16px;
+  border:1.5px solid var(--line); border-radius:var(--radius-md); background:var(--soft);
+  cursor:pointer; list-style:none; touch-action:manipulation;
+  transition:border-color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.collapse-summary::-webkit-details-marker { display:none; }
+.collapse-summary .section-heading { margin:0; }
+.collapse-title { display:block; min-width:0; }
+.collapse-sub { display:block; margin-top:3px; color:var(--ink-soft); font-size:var(--fs-2xs); font-weight:600; line-height:1.5; }
+.collapse-hint {
+  flex:none; display:inline-flex; align-items:center; gap:6px;
+  padding:7px 14px; border-radius:999px; background:#fff; border:1px solid var(--purple);
+  color:var(--purple); font-size:var(--fs-2xs); font-weight:800; white-space:nowrap;
+}
+.collapse-hint::after { content:"\25BE"; font-size:1.15em; line-height:1; transition:transform .2s ease; }
+.collapse[open] > .collapse-summary .collapse-hint::after { transform:rotate(180deg); }
+.collapse-body { padding-top:var(--sp-md); }
+.collapse-summary:active { background:#efedff; }
+@media (hover:hover) {
+  .collapse-summary:hover { border-color:var(--purple); background:#fff; box-shadow:0 4px 14px rgba(109,91,208,.14); }
+  .collapse-summary:hover .collapse-hint { background:var(--purple); color:#fff; }
+}
+/* promos: warmer so the offer catches the eye */
+.promo-section > .collapse-summary { background:#fff8e4; border-color:#f0c94c; }
+.promo-section > .collapse-summary .collapse-hint { border-color:var(--gold); color:#8a5a00; }
+@media (hover:hover) {
+  /* the amber hint-color override above has equal specificity to the generic
+     hover rule and sits later in the file, so without this it would win even
+     on hover, leaving dark amber text on the purple hover fill (illegible).
+     This rule outranks both (4 classes) so hover always gets white text. */
+  .promo-section > .collapse-summary:hover .collapse-hint { color:#fff; }
+}
+/* notice + policy: summary IS the callout header */
+.collapse-callout { margin:var(--sp-md) 0; }
+.collapse-callout > .collapse-summary { border-inline-start:4px solid transparent; }
+.collapse-callout .collapse-body { padding:0; }
+.collapse-callout .callout { margin:0; border-radius:0 0 var(--radius-md) var(--radius-md); }
+.collapse-callout[open] > .collapse-summary { border-radius:var(--radius-md) var(--radius-md) 0 0; }
+.collapse-amber > .collapse-summary { background:#fff8e4; border-color:#f0c94c; border-inline-start-color:var(--gold); }
+.collapse-blue > .collapse-summary { background:#eaf3fc; border-color:#a9cdee; border-inline-start-color:var(--blue); }
+.collapse-amber .collapse-callout-title { color:#8a5a00; }
+.collapse-blue .collapse-callout-title { color:#154f89; }
+.collapse-callout-title { font-size:var(--fs-base); font-weight:800; }
+.collapse-callout .collapse-sub { color:inherit; opacity:.85; }
+
+/* policy card: key terms always visible, refund cases collapsed */
+.policy-card { margin:var(--sp-md) 0; }
+.policy-title { display:block; margin-bottom:4px; color:#154f89; font-size:var(--fs-base); font-weight:800; }
+.policy-card .collapse-refund { margin:12px 0 0; }
+.policy-card .collapse-refund > .collapse-summary,
+.policy-card .collapse-refund[open] > .collapse-summary { background:#fff; border:1.5px solid #a9cdee; border-radius:var(--radius-md); }
+.policy-card .collapse-refund .collapse-body { padding-top:8px; }
+.policy-card .collapse-refund .callout-list { margin-top:4px; }
+
+/* =========================================================
+   DETACHED CARDS (FAQ, rating) — siblings of .wrap, not
+   nested inside it, so the page's purple gradient shows
+   around them like a gap between cards, not a single slab.
+   Width/padding breakpoints mirror .wrap/.content exactly
+   so everything still lines up edge-to-edge down the page.
+   ========================================================= */
+.detached-card {
+  max-width:640px;
+  margin:var(--sp-lg) auto 0;
+  padding:var(--sp-lg) var(--sp-md);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+}
+@media (min-width:760px) {
+  .detached-card { padding:var(--sp-xl); }
+}
+@media (min-width:900px) {
+  .detached-card { max-width:760px; }
+}
