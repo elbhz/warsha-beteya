@@ -7,6 +7,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
     gtag('config', 'G-90SYVXP2KQ');
   </script>
   <meta charset="UTF-8">
@@ -241,6 +242,37 @@
             </select>
           </div>
 
+          <!-- ===== مسار تثبيت Linux: يظهر فقط لما الخدمة الأساسية = تثبيت Linux ===== -->
+          <div id="linuxDistroBox" class="linux-panel hidden fade-slide">
+            <div class="linux-bar"><span class="linux-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="linux-bar-title">linux@warsha:~</span></div>
+            <div class="linux-body">
+              <label for="linuxDistro" class="linux-title"><span class="linux-prompt" aria-hidden="true">$</span> 🐧 اختار التوزيعة اللي عايز تثبتها</label>
+              <select id="linuxDistro"></select>
+              <p class="linux-hint">السعر بيتحدد حسب نوع التوزيعة. مش عارف تختار؟ اختار "مش عارف" وهنقترح عليك الأنسب لجهازك.</p>
+            </div>
+          </div>
+
+          <div id="linuxModeBox" class="linux-panel hidden fade-slide">
+            <div class="linux-bar"><span class="linux-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="linux-bar-title">install --mode</span></div>
+            <div class="linux-body" role="radiogroup" aria-labelledby="linuxModeTitle">
+              <p class="linux-title" id="linuxModeTitle"><span class="linux-prompt" aria-hidden="true">$</span> تحب التثبيت يتم إزاي؟</p>
+              <label class="linux-choice"><input type="radio" name="linuxMode" value="wipe"><span><strong>مسح الهارد بالكامل</strong><small>Linux هو النظام الوحيد على الجهاز، وكل البيانات الحالية بتتمسح.</small></span></label>
+              <label class="linux-choice"><input type="radio" name="linuxMode" value="dual"><span><strong>تثبيت بجانب نظامي الحالي (Dual Boot)</strong><small>تحتفظ بـ Windows أو macOS وتختار النظام وقت التشغيل. بزيادة 150 جنيه.</small></span></label>
+              <label class="linux-choice"><input type="radio" name="linuxMode" value="unsure"><span><strong>مش عارف، اختار لي</strong><small>هنقرر معاك بعد فحص الجهاز. السعر النهائي يتأكد وقتها.</small></span></label>
+            </div>
+          </div>
+
+          <div id="linuxBackupBox" class="linux-panel linux-panel--warn hidden fade-slide">
+            <div class="linux-bar"><span class="linux-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="linux-bar-title">backup --confirm</span></div>
+            <div class="linux-body">
+              <label class="linux-choice linux-choice--warn" for="linuxBackup">
+                <input type="checkbox" id="linuxBackup">
+                <span><strong>عملت نسخة احتياطية من بياناتي المهمة <span class="required">*</span></strong><small>وأفهم إن مسح الهارد أو تعديل الأقسام (partitions) ممكن يمسح بياناتي، ومقدّم الخدمة مش مسؤول عن حفظها.</small></span>
+              </label>
+              <p class="linux-hint" id="linuxBitlockerHint">لو جهازك Windows ومشفّر بـ BitLocker، احتفظ بمفتاح الاسترداد (Recovery Key) لأنه ممكن يتطلب بعد تعديل الأقسام.</p>
+            </div>
+          </div>
+
           <div id="extraBox" class="hidden fade-slide field">
             <label>خدمات إضافية (اختياري)</label>
             <div id="additionalServices"></div>
@@ -467,10 +499,34 @@
       ds2: [ ['clean','تنظيف عميق',100], ['drift','صيانة Analog / حل الانحراف',180], ['buttons','صيانة أزرار',150], ['inspect','فحص مبدئي',70] ],
       ds3: [ ['clean','تنظيف عميق',120], ['drift','صيانة Analog / حل الانحراف',200], ['buttons','صيانة أزرار',160], ['battery','تغيير بطارية (القطعة منفصلة)',120], ['charge','صيانة منفذ الشحن',180], ['inspect','فحص مبدئي',80] ],
       ds4: [ ['clean','تنظيف عميق',130], ['drift','صيانة Analog / حل الانحراف',220], ['buttons','صيانة أزرار',180], ['battery','تغيير بطارية (القطعة منفصلة)',140], ['charge','صيانة منفذ الشحن',200], ['inspect','فحص مبدئي',100] ],
-      'mac-intel': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',350], ['fullthermal','تنظيف + معجون حراري',500], ['macos','تثبيت macOS',300], ['oclp','OCLP (Jailbreak): تثبيت وتحسين macOS',1000], ['linux','تثبيت نظام Linux (توزيعة حسب الطلب)',350], ['storage','تركيب/تهيئة SSD (القطعة منفصلة)',300], ['battery','تغيير بطارية (القطعة منفصلة)',250], ['brick','إصلاح مشاكل الإقلاع/Software Brick',400], ['inspect','فحص مبدئي',150] ],
+      'mac-intel': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',350], ['fullthermal','تنظيف + معجون حراري',500], ['macos','تثبيت macOS',300], ['oclp','OCLP (Jailbreak): تثبيت وتحسين macOS',1000], ['linux','تثبيت نظام Linux',350], ['storage','تركيب/تهيئة SSD (القطعة منفصلة)',300], ['battery','تغيير بطارية (القطعة منفصلة)',250], ['brick','إصلاح مشاكل الإقلاع/Software Brick',400], ['inspect','فحص مبدئي',150] ],
       'mac-silicon': [ ['clean','تنظيف خارجي وفحص مبدئي',200], ['inspect','فحص مبدئي',150] ],
-      'pc-laptop': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',300], ['fullthermal','تنظيف + معجون حراري',500], ['linux','تثبيت نظام Linux (توزيعة حسب الطلب)',300], ['inspect','فحص مبدئي',150] ]
+      'pc-laptop': [ ['clean','تنظيف داخلي وخارجي',250], ['thermal','تغيير معجون حراري',300], ['fullthermal','تنظيف + معجون حراري',500], ['linux','تثبيت نظام Linux',350], ['inspect','فحص مبدئي',150] ]
     };
+
+    // ===== تثبيت Linux: الأسعار والتوزيعات (كل الأرقام هنا فقط) =====
+    const LINUX_TIERS = {
+      std:   { label:'مناسبة للمبتدئين',                  price:350 },
+      light: { label:'خفيفة للأجهزة القديمة والبطيئة',    price:400 },
+      adv:   { label:'متقدمة (سعر ثابت يتحدد مسبقًا)',    price:800 }
+    };
+    const LINUX_DUAL_BOOT_FEE = 150;
+    const LINUX_DISTROS = [ // [id, الاسم, الفئة]
+      ['auto','مش عارف، اختار لي الأنسب','std'],
+      ['ubuntu','Ubuntu','std'], ['mint','Linux Mint','std'], ['fedora','Fedora','std'],
+      ['debian','Debian','std'], ['zorin','Zorin OS','std'], ['popos','Pop!_OS','std'],
+      ['lubuntu','Lubuntu','light'], ['xubuntu','Xubuntu','light'], ['mint-xfce','Linux Mint XFCE','light'], ['lite','Linux Lite','light'],
+      ['arch','Arch Linux','adv'], ['nixos','NixOS','adv'], ['custom','إعداد مخصص (اكتب التفاصيل في الملاحظات)','adv'],
+      ['other','توزيعة أخرى (اكتبها في الملاحظات)','std']
+    ];
+    const LINUX_MODES = { wipe:'مسح كامل للهارد', dual:'بجانب النظام الحالي (Dual Boot)', unsure:'مش متأكد - اختار لي' };
+    const LINUX_ADDONS = [
+      ['lx-wine','إضافة Linux: Wine / Bottles لتشغيل برامج Windows',100],
+      ['lx-printer','إضافة Linux: إعداد الطابعة',100],
+      ['lx-dev','إضافة Linux: بيئة تطوير (Dev Environment)',100]
+    ];
+    const LINUX_ADDON_IDS = new Set(LINUX_ADDONS.map(a => a[0]));
+    ['mac-intel','pc-laptop'].forEach(k => services[k].push(...LINUX_ADDONS));
 
     const device = document.getElementById('device');
     const firmwareBox = document.getElementById('ps4FirmwareBox');
@@ -487,6 +543,60 @@
     const breakdown = document.getElementById('breakdown');
     const moddingSection = document.getElementById('moddingSection');
     const moddingOptIn = document.getElementById('moddingOptIn');
+    const linuxDistroBox = document.getElementById('linuxDistroBox');
+    const linuxModeBox = document.getElementById('linuxModeBox');
+    const linuxBackupBox = document.getElementById('linuxBackupBox');
+    const linuxDistro = document.getElementById('linuxDistro');
+    const linuxBackup = document.getElementById('linuxBackup');
+    const linuxBitlockerHint = document.getElementById('linuxBitlockerHint');
+
+    (function buildLinuxDistroList() {
+      linuxDistro.appendChild(option('', '-- اختر التوزيعة --', 0));
+      const auto = LINUX_DISTROS[0];
+      linuxDistro.appendChild(option(auto[0], auto[1], 0));
+      Object.keys(LINUX_TIERS).forEach(key => {
+        const g = document.createElement('optgroup');
+        g.label = LINUX_TIERS[key].label + ' - ' + LINUX_TIERS[key].price + ' جنيه';
+        LINUX_DISTROS.filter(d => d[2] === key && d[0] !== 'auto' && d[0] !== 'other')
+          .forEach(d => g.appendChild(option(d[0], d[1], 0)));
+        linuxDistro.appendChild(g);
+      });
+      const other = LINUX_DISTROS[LINUX_DISTROS.length - 1];
+      linuxDistro.appendChild(option(other[0], other[1], 0));
+    })();
+
+    function setPanel(el, on) { el.classList.toggle('hidden', !on); el.classList.toggle('show', on); }
+    function linuxSelected() { return mainService.value === 'linux'; }
+    function linuxModeValue() { const r = document.querySelector('input[name="linuxMode"]:checked'); return r ? r.value : ''; }
+    function linuxQuote() {
+      if (!linuxSelected()) return null;
+      const d = LINUX_DISTROS.find(x => x[0] === linuxDistro.value);
+      const tier = LINUX_TIERS[d ? d[2] : 'std'];
+      const mode = linuxModeValue();
+      return { distro: d ? d[1] : '', base: tier.price, fixed: Boolean(d && d[2] === 'adv'), mode: mode, dual: mode === 'dual' ? LINUX_DUAL_BOOT_FEE : 0 };
+    }
+    function getMainData() {
+      const m = selectedData(mainService);
+      const q = linuxQuote();
+      if (q) { m.price = q.base; if (q.distro) m.name = 'تثبيت Linux: ' + q.distro + (q.fixed ? ' (سعر ثابت)' : ''); }
+      return m;
+    }
+    function updateLinuxPanels() {
+      const on = linuxSelected();
+      if (!on) linuxDistro.value = '';
+      const hasDistro = on && Boolean(linuxDistro.value);
+      const radios = document.querySelectorAll('input[name="linuxMode"]');
+      radios.forEach(r => { r.required = hasDistro; if (!hasDistro) r.checked = false; });
+      const mode = linuxModeValue();
+      const hasMode = hasDistro && Boolean(mode);
+      linuxDistro.required = on;
+      linuxBackup.required = hasMode;
+      if (!hasMode) linuxBackup.checked = false;
+      linuxBitlockerHint.classList.toggle('hidden', mode === 'wipe');
+      setPanel(linuxDistroBox, on);
+      setPanel(linuxModeBox, hasDistro);
+      setPanel(linuxBackupBox, hasMode);
+    }
 
     function option(value, text, price) {
       const el = document.createElement('option');
@@ -525,10 +635,16 @@
     }
     // يعيد بناء كل قوائم الخدمات (الأساسية + الإضافية) بحيث ما تتكررش نفس الخدمة في أكتر من قائمة
     function refreshAllServiceSelects() {
-      fillSelect(mainService, '-- اختر الخدمة الأساسية --', getUsedValues(mainService));
+      const mainExclude = getUsedValues(mainService);
+      LINUX_ADDON_IDS.forEach(id => mainExclude.add(id)); // الإضافات تظهر كخدمات إضافية فقط
+      fillSelect(mainService, '-- اختر الخدمة الأساسية --', mainExclude);
       mainService.disabled = !device.value;
+      const linuxOn = linuxSelected();
       extraSelects().forEach(sel => {
-        fillSelect(sel, '-- اختر خدمة إضافية --', getUsedValues(sel));
+        const ex = getUsedValues(sel);
+        ex.add('linux'); // تثبيت Linux خدمة أساسية فقط، عشان مساره يبقى واضح
+        if (!linuxOn) LINUX_ADDON_IDS.forEach(id => ex.add(id)); // إضافات Linux تظهر فقط مع تثبيت Linux
+        fillSelect(sel, '-- اختر خدمة إضافية --', ex);
       });
     }
     function onServiceSelectionChanged() {
@@ -578,15 +694,20 @@
     }
 
     function updatePrice() {
-      const main = selectedData(mainService);
+      updateLinuxPanels();
+      const main = getMainData();
+      const q = linuxQuote();
       const extras = extraSelects().map(selectedData).filter(x => x.value);
-      const sum = main.price + extras.reduce((total,x) => total + x.price, 0);
+      const dual = q ? q.dual : 0;
+      const sum = main.price + dual + extras.reduce((total,x) => total + x.price, 0);
       updateModdingRequirement();
       if (!main.value) { priceBox.classList.remove('show'); return; }
       priceBox.classList.add('show');
       totalEl.textContent = sum + ' جنيه';
       let html = '<strong>تفصيل السعر:</strong><br>• الخدمة الأساسية: ' + main.name + ' - ' + main.price + ' جنيه';
+      if (dual) html += '<br>• تثبيت بجانب النظام الحالي (Dual Boot) - ' + dual + ' جنيه';
       extras.forEach((x,i) => { html += '<br>• خدمة إضافية ' + (i + 1) + ': ' + x.name + ' - ' + x.price + ' جنيه'; });
+      if (q && q.mode === 'unsure') html += '<br>• ملحوظة: لو اتضح إن التثبيت بجانب نظام تاني، السعر بيزيد ' + LINUX_DUAL_BOOT_FEE + ' جنيه.';
       html += '<br><strong>• الإجمالي التقريبي: ' + sum + ' جنيه</strong>';
       breakdown.innerHTML = html;
     }
@@ -594,6 +715,8 @@
     device.addEventListener('change', populateServices);
     mainService.addEventListener('change', onServiceSelectionChanged);
     addServiceButton.addEventListener('click', addExtraService);
+    linuxDistro.addEventListener('change', updatePrice);
+    linuxModeBox.addEventListener('change', updatePrice);
 
     // رقم طلب فريد لكل عملية إرسال: WB-YYYYMMDD-HHMM-XXX
     function generateOrderRef() {
@@ -653,12 +776,13 @@
       }
 
       // --- WhatsApp message code ---
-      const main = selectedData(mainService);
+      const main = getMainData();
+      const q = linuxQuote();
       const extras = extraSelects().map(selectedData).filter(x => x.value);
       const model = document.getElementById('model').value.trim();
       const deviceName = device.options[device.selectedIndex].textContent;
       const fw = device.value === 'ps4' ? firmware.value : 'غير مطلوب';
-      const sum = main.price + extras.reduce((total,x) => total + x.price, 0);
+      const sum = main.price + (q ? q.dual : 0) + extras.reduce((total,x) => total + x.price, 0);
       const hasModding = [main, ...extras].some(x => isModdingService(x.value));
       const extraLines = extras.map((x,i) => 'خدمة إضافية ' + (i + 1) + ': ' + x.name);
       const orderRef = generateOrderRef();
@@ -674,6 +798,10 @@
         'رقم الموديل: ' + model,
         device.value === 'ps4' ? 'إصدار نظام PS4: ' + fw : '',
         'الخدمة الأساسية: ' + main.name,
+        ...(q ? [
+          'نوع تثبيت Linux: ' + (LINUX_MODES[q.mode] || ''),
+          'تأكيد النسخة الاحتياطية: نعم، عملت نسخة احتياطية'
+        ] : []),
         ...extraLines,
         extraRequest.value.trim() ? 'طلب إضافي للاستفسار: ' + extraRequest.value.trim() : '',
         document.getElementById('notes').value.trim() ? 'ملاحظات: ' + document.getElementById('notes').value.trim() : '',

@@ -1448,3 +1448,71 @@ button:active { transform:translateY(0); }
 @media (min-width:900px) {
   .detached-card { max-width:760px; }
 }
+
+
+/* =========================================================
+   LINUX INSTALL FLOW — شكل "تيرمنال" هادي، يظهر فقط مع تثبيت Linux
+   ========================================================= */
+.linux-panel {
+  margin:0 0 var(--sp-md);
+  border:1px solid #2c3548;
+  border-radius:var(--radius-md);
+  background:#141922;
+  color:#e6edf3;
+  color-scheme:dark;
+  overflow:hidden;
+  box-shadow:0 8px 22px rgba(12,16,28,.25);
+}
+.linux-panel--warn { border-color:#8a6a1f; }
+.linux-bar {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 14px;
+  background:#0d1117;
+  border-bottom:1px solid #2c3548;
+}
+.linux-dots { display:inline-flex; gap:6px; }
+.linux-dots i { width:10px; height:10px; border-radius:50%; background:#ff5f57; }
+.linux-dots i:nth-child(2) { background:#febc2e; }
+.linux-dots i:nth-child(3) { background:#28c840; }
+.linux-bar-title {
+  margin-inline-start:auto;
+  direction:ltr;
+  font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color:#8b98ab;
+}
+.linux-body { padding:var(--sp-sm) var(--sp-md) var(--sp-md); }
+.linux-panel label, .linux-panel .linux-title { color:#e6edf3; }
+.linux-title { display:block; margin:0 0 10px; font-size:var(--fs-sm); font-weight:800; }
+.linux-prompt {
+  display:inline-block; direction:ltr; margin-inline-end:6px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-weight:800; color:#3fb950;
+}
+.linux-panel select {
+  background-color:#0d1117;
+  color:#e6edf3;
+  border-color:#3b4a63;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233fb950' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+}
+.linux-panel select:focus { border-color:#3fb950; box-shadow:0 0 0 4px rgba(63,185,80,.18); }
+.linux-hint { margin:10px 0 0; font-size:var(--fs-2xs); line-height:1.6; color:#9aa7bb; }
+.linux-choice {
+  display:flex; align-items:flex-start; gap:12px;
+  margin:0 0 10px; padding:13px 14px;
+  border:1.6px solid #2f3b52; border-radius:var(--radius-sm);
+  background:#0d1117; cursor:pointer;
+  transition:border-color .15s ease, background .15s ease;
+}
+.linux-choice:last-of-type { margin-bottom:0; }
+.linux-choice:hover { border-color:#4a5b7a; }
+.linux-choice:has(input:checked) { border-color:#3fb950; background:#102018; }
+.linux-choice input { flex:none; width:22px; height:22px; min-height:0; margin:2px 0 0; accent-color:#3fb950; }
+.linux-choice span { display:block; }
+.linux-choice strong { display:block; font-size:var(--fs-sm); font-weight:800; color:#f0f6fc; }
+.linux-choice small { display:block; margin-top:3px; font-size:var(--fs-2xs); line-height:1.6; font-weight:500; color:#9aa7bb; }
+.linux-choice--warn { border-color:#8a6a1f; background:#1b1708; }
+.linux-choice--warn:hover { border-color:#b58a22; }
+.linux-choice--warn:has(input:checked) { border-color:#3fb950; background:#102018; }
+.linux-choice--warn input { accent-color:#f2a900; }
+.linux-choice--warn:has(input:checked) input { accent-color:#3fb950; }
+.linux-choice .required { color:#ff7b72; }
