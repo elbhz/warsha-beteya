@@ -14,6 +14,8 @@
     if (className) node.className = className;
     return node;
   };
+  const focusControl = node => node.tagName === 'SELECT' ? window.WarshaPicker.focus(node) : (node.focus({preventScroll:true}),node);
+  const focusDevice = () => state.category || state.device ? focusControl($('device')) : document.querySelector('[data-category]').focus({preventScroll:true});
   const show = (id,on) => $(id).classList.toggle('hidden',!on);
   function track(name,params = {}) {
     if (typeof window.gtag === 'function') window.gtag('event',name,params);
@@ -36,7 +38,7 @@
   function setOptions(select,rows,placeholder,current = '') {
     select.dir = 'rtl';
     select.replaceChildren(new Option(placeholder,''));
-    rows.forEach(([id,label,price]) => select.add(new Option(Q.optionLabel(label,price),id)));
+    rows.forEach(([id,label,price]) => { const option=new Option(Q.optionLabel(label,price),id); option.dataset.label=label; if(typeof price==='number') option.dataset.price=price; select.add(option); });
     if (rows.some(row => row[0] === current)) select.value = current;
   }
   function saveCurrent() {
@@ -52,11 +54,11 @@
   }
   function newItem(focus = true) {
     state = blank(); items.push(state);
-    if (focus) { renderEditor(); invalidatePrepared(); scrollToNode($('activeDeviceLabel')); $('device').focus({preventScroll:true}); }
+    if (focus) { renderEditor(); invalidatePrepared(); scrollToNode(document.querySelector('.category-prompt')); focusDevice(); }
   }
   function switchItem(uid) {
     saveCurrent(); state = items.find(item => item.uid === uid); renderEditor();
-    scrollToNode($('activeDeviceLabel')); $('device').focus({preventScroll:true});
+    scrollToNode(document.querySelector('.category-prompt')); focusDevice();
   }
   function removeItem(uid) {
     if (items.length === 1) return;
@@ -74,7 +76,7 @@
       if (item.uid === state.uid) edit.setAttribute('aria-current','true');
       const name = D.devices.find(d => d[0] === item.device)?.[1] || 'جهاز جديد';
       edit.append(element('strong','الجهاز ' + (index+1) + ' — ' + name));
-      edit.append(element('small',quote ? money(quote.total) + (Q.deviceIssue(item) ? ' · كمّل التفاصيل' : ' · تعديل الخدمات') : 'اختار الجهاز والخدمة'));
+      edit.append(element('small',quote ? money(quote.total) + (Q.deviceIssue(item) ? ' · كمّل التفاصيل' : ' · تعديل الخدمات') : 'اختار خدمته عشان يظهر السعر'));
       edit.addEventListener('click',() => switchItem(item.uid));
       const remove = element('button','حذف','remove-device-button'); remove.type = 'button';
       remove.disabled = items.length === 1; remove.setAttribute('aria-label','حذف الجهاز ' + (index+1));
@@ -97,8 +99,11 @@
     return select;
   }
   function renderEditor() {
+    window.WarshaPicker.close();
+    show('stepDevice',Boolean(state.category || state.device));
+    show('stepService',Boolean(state.device));
     // No mutation of a different device while rebuilding the active editor.
-    setOptions($('device'),D.devices.filter(d => !state.category || d[2] === state.category).map(d => d.slice(0,2)),'-- اختر الجهاز --',state.device);
+    setOptions($('device'),D.devices.filter(d => d[2] === (state.category || D.devices.find(row => row[0] === state.device)?.[2])).map(d => d.slice(0,2)),'-- اختر الجهاز --',state.device);
     setOptions($('mainService'),Q.availableServices(state.device,[],true),'-- اختر الخدمة الأساسية --',state.main);
     ['model','firmware','notes','extraRequest'].forEach(key => $(key).value = state[key]);
     $('linuxDistro').value = state.distro;
@@ -148,6 +153,13 @@
     show('moddingSection',order.requiresModding); $('moddingOptIn').required = order.requiresModding; $('moddingOptIn').disabled = !order.requiresModding;
     if (!order.requiresModding) $('moddingOptIn').checked = false;
     const hasQuote = order.entries.some(e => e.quote);
+    show('checkout',hasQuote);
+    show('deviceManager',items.length > 1 || hasQuote);
+    show('activeDeviceLabel',items.length > 1);
+    $('emptyQuote').hidden = hasQuote;
+    document.querySelector('.offer-toggle').hidden = !hasQuote;
+    show('offerStatus',hasQuote);
+    $('quoteDetails').hidden = !hasQuote;
     $('total').textContent = hasQuote ? money(order.total) : '—';
     $('quoteDevice').textContent = items.length + ' جهاز في الطلب' + (order.pending ? ' · ' + order.pending + ' بدون خدمة مختارة' : '');
     $('mobileQuote').hidden = !hasQuote; $('mobileTotal').textContent = hasQuote ? money(order.total) : '';
@@ -157,7 +169,7 @@
       const name = D.devices.find(d => d[0] === item.device)?.[1] || 'جهاز جديد';
       group.append(element('h3','الجهاز ' + (index+1) + ' — ' + name));
       if (item.model) group.append(element('p','الموديل: ' + item.model,'hint'));
-      if (!quote) group.append(element('p','كمّل اختيار الجهاز والخدمة. سعره غير مضاف للإجمالي بعد.','hint quote-pending'));
+      if (!quote) group.append(element('p','لسه فاضل اختيار خدمة الجهاز ده؛ سعره مش داخل الإجمالي.','hint quote-pending'));
       else {
         quote.lines.forEach(line => {
           const row = element('div',undefined,'quote-line');
@@ -173,7 +185,8 @@
       }
       $('breakdown').append(group);
     });
-    $('offerStatus').textContent = order.offer ? Q.bidiText(order.offer.title + ' · عرض واحد للطلب، بعد تأكيد الاستحقاق.') : ($('applyPromos').checked ? 'لا يوجد عرض متاح للخدمات المختارة حاليًا.' : 'السعر بدون عروض.');
+    $('offerStatus').textContent = order.offer ? Q.bidiText(order.offer.title + ' · عرض واحد للطلب، بعد تأكيد الاستحقاق.') : ($('applyPromos').checked ? 'ده سعر خدماتك المختارة. لو فيه عرض مناسب، هنحسبه هنا.' : 'السعر بدون عروض.');
+    window.WarshaPicker.sync();
     $('quoteAnnouncement').textContent = hasQuote ? 'إجمالي ' + items.length + ' جهاز: ' + money(order.total) + (order.pending ? '، أكمل الأجهزة الناقصة.' : '') : '';
   }
   const formatDate = Q.formatOfferDate;
@@ -186,8 +199,8 @@
     strip.append(element('span','عروض الرجوع للمدارس · خصومات على خدمات مختارة'));
     const more = element('a','شوف العروض ←'); more.href = '#promoSectionSlot'; strip.append(more); banner.append(strip);
     const section = element('section',undefined,'panel promo-section');
-    const heading = element('h2','عرض يناسب جهازك'); heading.id = 'promoHeading'; section.setAttribute('aria-labelledby',heading.id);
-    section.append(element('p','عروض لفترة محدودة','eyebrow'),heading);
+    const heading = element('h2','عناية أكتر، بسعر أوفر.'); heading.id = 'promoHeading'; section.setAttribute('aria-labelledby',heading.id);
+    section.append(element('p','باقات وعروض الورشة','eyebrow'),heading);
     const grid = element('div',undefined,'promo-cards');
     active.forEach(p => {
       const card = element('article',undefined,'promo-card');
@@ -199,7 +212,7 @@
       } else price.append(element('strong','خصم ' + p.percentOff + '%'));
       card.append(price,element('p','لحد ' + formatDate(p.endDate),'hint'));
       if (p.note) card.append(element('p',p.note,'hint'));
-      const button = element('button',p.type === 'bundle' ? 'أضف العرض للطلب' : p.type === 'second-controller' ? 'أضف أيدي التحكم' : 'اختار جهازك واستفيد','button button-outline');
+      const button = element('button',p.type === 'bundle' ? 'اختار الباقة دي' : p.type === 'second-controller' ? 'أضف أيدي التحكم' : 'اختار جهازك واستفيد','button button-outline');
       button.type = 'button';
       button.addEventListener('click',() => {
         if (!Q.activePromos().some(item => item.id === p.id)) { renderPromos(); renderQuote(); return; }
@@ -214,7 +227,7 @@
         }
         $('applyPromos').checked = true;
         renderEditor(); invalidatePrepared();
-        scrollToNode($('activeDeviceLabel')); $('device').focus({preventScroll:true});
+        scrollToNode(document.querySelector('.category-prompt')); focusDevice();
         track('promo_select',{promo:p.id});
       });
       card.append(button);
@@ -231,19 +244,26 @@
   ['addDeviceButton','addAnotherDeviceButton'].forEach(id => $(id).addEventListener('click',() => { saveCurrent(); newItem(); }));
   document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click',() => {
     saveCurrent(); const uid = state.uid;
-    const category = state.category === button.dataset.category ? '' : button.dataset.category;
+    if (button.getAttribute('aria-pressed') === 'true') {
+      state.category = '';
+      button.setAttribute('aria-pressed','false');
+      // Deselect only: preserve values and menu options, without focus or scroll.
+      window.WarshaPicker.close();
+      return;
+    }
+    const category = button.dataset.category;
     if (state.device && category && !D.devices.some(d => d[0] === state.device && d[2] === category)) Object.assign(state,blank(),{uid});
     state.category = category;
     const candidates = D.devices.filter(d => !category || d[2] === category);
     if (category && candidates.length === 1) state.device = candidates[0][0];
-    renderEditor(); invalidatePrepared(); scrollToNode($('activeDeviceLabel')); $('device').focus({preventScroll:true});
+    renderEditor(); invalidatePrepared(); scrollToNode(document.querySelector('.category-prompt')); focusDevice();
   }));
   $('device').addEventListener('change',() => {
     const device = $('device').value, uid = state.uid, category = state.category;
     Object.assign(state,blank(),{uid,category,device}); renderEditor(); invalidatePrepared();
   });
   $('mainService').addEventListener('change',() => { saveCurrent(); refresh(); invalidatePrepared(); });
-  $('addServiceButton').addEventListener('click',() => { const select = mountExtra(); refresh(); select.focus(); });
+  $('addServiceButton').addEventListener('click',() => { const select = mountExtra(); refresh(); focusControl(select); });
   $('linuxDistro').addEventListener('change',() => { saveCurrent(); state.backup = false; refresh(); invalidatePrepared(); });
   $('linuxModeBox').addEventListener('change',() => { saveCurrent(); state.backup = false; refresh(); invalidatePrepared(); });
   $('linuxBackup').addEventListener('change',() => { saveCurrent(); renderQuote(); invalidatePrepared(); });
@@ -268,7 +288,7 @@
       $('formError').textContent = 'الجهاز ' + (items.indexOf(state)+1) + ': ' + issue.text;
       show('formError',true);
       const field = issue.field === 'linuxModeBox' ? document.querySelector('[name="linuxMode"]') : $(issue.field);
-      field.setAttribute('aria-invalid','true'); field.focus(); scrollToNode(field); return false;
+      field.setAttribute('aria-invalid','true'); const target=focusControl(field); scrollToNode(target); return false;
     }
     $('name').setCustomValidity($('name').value.trim() ? '' : 'اكتب اسمك.');
     $('phone').value = Q.normalizePhone($('phone').value);
@@ -279,7 +299,7 @@
     show('moddingError',$('moddingOptIn').required && !$('moddingOptIn').checked);
     if (!invalid) { show('formError',false); return true; }
     const label = invalid.labels?.[0]?.textContent.replace(/\s+/g,' ').trim() || 'البيانات المطلوبة';
-    $('formError').textContent = 'راجع الحقل: ' + label; show('formError',true); invalid.focus(); invalid.reportValidity(); return false;
+    $('formError').textContent = 'راجع الحقل: ' + label; show('formError',true); focusControl(invalid); if(invalid.tagName!=='SELECT') invalid.reportValidity(); return false;
   }
   form.addEventListener('submit',event => {
     event.preventDefault(); saveCurrent(); refresh(); if (!validate()) return;
