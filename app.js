@@ -65,7 +65,7 @@
     saveCurrent(); const index = items.findIndex(item => item.uid === uid);
     items.splice(index,1);
     if (state.uid === uid) state = items[Math.min(index,items.length-1)];
-    renderEditor(); invalidatePrepared(); $('addDeviceButton').focus();
+    renderEditor(); invalidatePrepared(); if (items.length > 1) $('addDeviceButton').focus(); else focusDevice();
   }
   function renderDeviceList(order) {
     $('orderDevices').replaceChildren();
@@ -102,6 +102,9 @@
     window.WarshaPicker.close();
     show('stepDevice',Boolean(state.category || state.device));
     show('stepService',Boolean(state.device));
+    $('deviceOptional').open = Boolean(state.model);
+    $('serviceNotes').open = Boolean(state.notes || state.extraRequest);
+    $('extraBox').open = state.extras.length > 0;
     // No mutation of a different device while rebuilding the active editor.
     setOptions($('device'),D.devices.filter(d => d[2] === (state.category || D.devices.find(row => row[0] === state.device)?.[2])).map(d => d.slice(0,2)),'-- اختر الجهاز --',state.device);
     setOptions($('mainService'),Q.availableServices(state.device,[],true),'-- اختر الخدمة الأساسية --',state.main);
@@ -117,6 +120,32 @@
   function refreshServices() {
     setOptions($('mainService'),Q.availableServices(state.device,[],true),'-- اختر الخدمة الأساسية --',state.main);
     $('mainService').disabled = !state.device; state.main = $('mainService').value;
+    const explanations = {
+      clean:'لإزالة الأتربة وتنظيف الجهاز. لو فيه عطل أو سخونة غير طبيعية، الفحص يحدد المطلوب.',
+      thermal:'تغيير مادة نقل الحرارة بين المعالج والتبريد. نراجع حالة الجهاز قبل التنفيذ.',
+      pads:'تغيير وسادات نقل الحرارة داخل الجهاز، بعد مراجعة الحالة والمقاسات المناسبة.',
+      fullthermal:'باقة تجمع التنظيف وتغيير مواد التبريد المذكورة في الخدمة.',
+      drift:'للأنالوج اللي بيحرّك الشخصية أو المؤشر لوحده. الفحص يحدد سبب المشكلة.',
+      buttons:'للأزرار أو الأنالوج اللي مش بيستجيبوا كويس. القطع المطلوبة تُحسب منفصلة.',
+      disc:'لمشكلة قراءة الأقراص أو درج الأقراص. أي قطع مطلوبة لها سعر منفصل.',
+      brick:'لمشاكل النظام أو بدء التشغيل. الأعطال العميقة في البوردة خارج نطاق الخدمة.',
+      inspect:'مش لازم تعرف اسم العطل. نفحص الجهاز ونوضح الخدمة الممكنة وسعرها قبل الشغل.',
+      macos:'تثبيت نظام تشغيل Mac. اعمل نسخة احتياطية من بياناتك قبل تسليم الجهاز.',
+      oclp:'تثبيت macOS أحدث على أجهزة Intel المتوافقة باستخدام OCLP. التوافق والأداء يتأكدوا قبل التنفيذ.',
+      linux:'نظام تشغيل بديل. لو مش عارف تختار التوزيعة، اختار «مش عارف» في الخطوة الجاية.',
+      battery:'السعر للشغل فقط؛ سعر البطارية يتأكد منفصل قبل طلبها.',
+      screen:'السعر للشغل فقط؛ سعر الشاشة يتأكد منفصل قبل طلبها.',
+      storage:'تركيب أو تهيئة وحدة التخزين. القطعة منفصلة، ونسخة بياناتك الاحتياطية مهمة.',
+      charge:'فحص وصيانة منفذ الشحن. أي قطع مطلوبة لها سعر منفصل.',
+      setup:'إعداد البرامج والألعاب التي تملكها بشكل قانوني.',
+      hen:'تعديل نظام الجهاز بعد التأكد من التوافق. راجع التنبيهات والموافقة قبل الإرسال.',
+      cfw:'تعديل نظام الجهاز بعد التأكد من التوافق. راجع التنبيهات والموافقة قبل الإرسال.',
+      opl:'إعداد تشغيل الألعاب التي تملكها، بعد مراجعة توافق الجهاز.',
+      '(jailbreak) goldhen':'التوافق يعتمد على إصدار نظام PS4. نراجعه معاك قبل تأكيد الخدمة.'
+    };
+    $('serviceHelp').textContent = explanations[state.main] || '';
+    $('serviceHelp').hidden = !state.main;
+    show('inspectionHelp',!state.main);
     const selected = state.main ? [state.main] : [];
     const controls = [...document.querySelectorAll('.additional-service')];
     controls.forEach(select => {
@@ -154,7 +183,7 @@
     if (!order.requiresModding) $('moddingOptIn').checked = false;
     const hasQuote = order.entries.some(e => e.quote);
     show('checkout',hasQuote);
-    show('deviceManager',items.length > 1 || hasQuote);
+    show('deviceManager',items.length > 1);
     show('activeDeviceLabel',items.length > 1);
     $('emptyQuote').hidden = hasQuote;
     document.querySelector('.offer-toggle').hidden = !hasQuote;
@@ -163,7 +192,7 @@
     $('total').textContent = hasQuote ? money(order.total) : '—';
     $('quoteDevice').textContent = items.length + ' جهاز في الطلب' + (order.pending ? ' · ' + order.pending + ' بدون خدمة مختارة' : '');
     $('mobileQuote').hidden = !hasQuote; $('mobileTotal').textContent = hasQuote ? money(order.total) : '';
-    $('quoteContinue').hidden = !hasQuote; $('breakdown').replaceChildren();
+    $('quoteContinue').hidden = !hasQuote; $('nextContact').hidden = !hasQuote; $('breakdown').replaceChildren();
     order.entries.forEach(({state:item,quote,index}) => {
       const group = element('section',undefined,'device-quote');
       const name = D.devices.find(d => d[0] === item.device)?.[1] || 'جهاز جديد';
@@ -187,6 +216,7 @@
     });
     $('offerStatus').textContent = order.offer ? Q.bidiText(order.offer.title + ' · عرض واحد للطلب، بعد تأكيد الاستحقاق.') : ($('applyPromos').checked ? 'ده سعر خدماتك المختارة. لو فيه عرض مناسب، هنحسبه هنا.' : 'السعر بدون عروض.');
     window.WarshaPicker.sync();
+    updateProgress();
     $('quoteAnnouncement').textContent = hasQuote ? 'إجمالي ' + items.length + ' جهاز: ' + money(order.total) + (order.pending ? '، أكمل الأجهزة الناقصة.' : '') : '';
   }
   const formatDate = Q.formatOfferDate;
@@ -195,12 +225,9 @@
     const active = Q.activePromos();
     const banner = $('promoBannerSlot'), slot = $('promoSectionSlot'); banner.replaceChildren(); slot.replaceChildren();
     if (!active.length) return;
-    const strip = element('div',undefined,'promo-banner');
-    strip.append(element('span','عروض الرجوع للمدارس · خصومات على خدمات مختارة'));
-    const more = element('a','شوف العروض ←'); more.href = '#promoSectionSlot'; strip.append(more); banner.append(strip);
-    const section = element('section',undefined,'panel promo-section');
-    const heading = element('h2','عناية أكتر، بسعر أوفر.'); heading.id = 'promoHeading'; section.setAttribute('aria-labelledby',heading.id);
-    section.append(element('p','باقات وعروض الورشة','eyebrow'),heading);
+    const section = element('details',undefined,'panel promo-section');
+    const heading = element('span','الباقات والعروض (' + active.length + ')'); heading.id = 'promoHeading'; section.setAttribute('aria-labelledby',heading.id);
+    const summary=element('summary',undefined,'offers-summary'); summary.append(heading,element('small','الخصم المناسب بيتحسب تلقائيًا في ملخصك')); section.append(summary);
     const grid = element('div',undefined,'promo-cards');
     active.forEach(p => {
       const card = element('article',undefined,'promo-card');
@@ -240,6 +267,25 @@
       'تأكيد العرض وسداد العربون قبل نهاية فترته شرط لتثبيت السعر.'].forEach(t => terms.append(element('li',t)));
     section.append(terms); slot.append(section);
   }
+
+  function updateProgress() {
+    const inContact = Boolean(document.activeElement?.closest('#checkout'));
+    const current = inContact ? 3 : state.device ? 2 : 1;
+    document.querySelectorAll('[data-order-step]').forEach(link => {
+      const step = Number(link.dataset.orderStep);
+      const available = step === 1 || (step === 2 ? Boolean(state.device) : !$('checkout').classList.contains('hidden'));
+      link.setAttribute('aria-disabled',String(!available));
+      if (step === current) link.setAttribute('aria-current','step'); else link.removeAttribute('aria-current');
+    });
+  }
+  document.querySelectorAll('[data-order-step]').forEach(link => link.addEventListener('click',event => {
+    if (link.getAttribute('aria-disabled') === 'true') event.preventDefault();
+  }));
+  form.addEventListener('focusin',updateProgress);
+  $('chooseInspection').addEventListener('click',() => {
+    saveCurrent(); state.main = 'inspect'; state.extras = [];
+    renderEditor(); invalidatePrepared(); scrollToNode($('priceBox'));
+  });
 
   ['addDeviceButton','addAnotherDeviceButton'].forEach(id => $(id).addEventListener('click',() => { saveCurrent(); newItem(); }));
   document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click',() => {
@@ -362,6 +408,10 @@
   document.querySelectorAll('[data-inspection-fee]').forEach(node => node.textContent = D.CONFIG.inspectionFee);
   document.querySelectorAll('[data-whatsapp]').forEach(link => { link.href = wa('مرحبًا، عندي استفسار عن صيانة أجهزتي.'); link.addEventListener('click',() => track('whatsapp_enquiry')); });
   document.querySelectorAll('[data-facebook]').forEach(link => link.href = D.CONFIG.facebook);
+  $('copySiteLink').addEventListener('click',async () => {
+    try { await navigator.clipboard.writeText(D.CONFIG.siteUrl); $('siteCopyStatus').textContent = 'تم نسخ رابط الموقع. تقدر تبعته لأي حد.'; }
+    catch (_) { show('siteLinkFallback',true); $('siteCopyStatus').textContent = 'اضغط مطوّلًا على الرابط لنسخه، أو انسخه من شريط العنوان.'; }
+  });
   document.querySelector('.hero-cta').addEventListener('click',() => track('hero_cta_click'));
   setOptions($('linuxDistro'),D.LINUX_DISTROS.map(([id,label,tier]) => [id,label,D.LINUX_TIERS[tier].price]),'-- اختر التوزيعة --');
   const mobileLayout = window.matchMedia('(max-width: 760px)'), quoteColumn = document.querySelector('.quote-column');
