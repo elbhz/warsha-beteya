@@ -107,12 +107,20 @@
   <div class="trust-strip" aria-label="مميزات الخدمة"><span><b>01</b> توثيق حالة الجهاز بالصور</span><span><b>02</b> تأكيد السعر قبل الشغل</span><span><b>03</b> دفع على مرحلتين</span></div>
   <div id="promoBannerSlot"></div>
   <section class="booking-section" aria-labelledby="bookingHeading">
-    <div class="section-intro"><p class="eyebrow">جهازك محتاج إيه؟</p><h2 id="bookingHeading">اختار جهازك، واعرف التكلفة.</h2><p>ابدأ بالخدمة. بيانات التواصل هتحتاجها لما تكون جاهز تبعت الطلب.</p></div>
+    <div class="section-intro"><p class="eyebrow">جهازك محتاج إيه؟</p><h2 id="bookingHeading">اختار جهازك، واعرف التكلفة.</h2><p>ضيف الكونسول وأيدي التحكم أو أي أجهزة تانية في طلب واحد. لكل جهاز خدماته وسعره، وبيانات التواصل مرة واحدة.</p></div>
     <noscript><p class="callout">حاسبة السعر تحتاج JavaScript. <a href="https://wa.me/201277048080">تواصل معنا مباشرة على واتساب</a>.</p></noscript>
-    <div class="device-cards" role="group" aria-label="فئات الأجهزة"><button type="button" class="device-card" data-category="playstation" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="26" height="18" rx="7"/><path d="M8 16h6m-3-3v6m10-5h.01M24 18h.01"/></svg><strong>PlayStation</strong><span>PS1 – PS4 · PSP · Vita</span></button><button type="button" class="device-card" data-category="controllers" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9h14c4 0 7 15 4 16-2 1-6-5-7-5h-8c-1 0-5 6-7 5-3-1 0-16 4-16Z"/><path d="M8 14h6m-3-3v6m10-4h.01M24 16h.01"/></svg><strong>أيدي التحكم</strong><span>DualShock 2 / 3 / 4</span></button><button type="button" class="device-card" data-category="mac" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="20" height="16" rx="2"/><path d="M3 26h26l-3-5H6z"/></svg><strong>MacBook</strong><span>Intel · Apple Silicon</span></button><button type="button" class="device-card" data-category="pc" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="19" rx="2"/><path d="M11 28h10m-5-5v5"/></svg><strong>كمبيوتر ولابتوب</strong><span>تنظيف · فحص · Linux</span></button></div>
+
     <div class="booking-layout">
     <form id="requestForm" novalidate>
       <p id="formError" class="error-summary hidden" role="alert" tabindex="-1"></p>
+      <section class="order-devices panel" aria-labelledby="devicesHeading">
+        <h2 id="devicesHeading">أجهزة الطلب</h2>
+        <p class="hint">أضف كل جهاز أو يد تحكم لوحدها، حتى لو نفس الموديل. اختياراتك محفوظة أثناء التنقل بينهم.</p>
+        <ol id="orderDevices" class="order-device-list"></ol>
+        <button type="button" id="addDeviceButton" class="button button-outline">+ أضف جهاز آخر لنفس الطلب</button>
+      </section>
+      <p id="activeDeviceLabel" class="active-device-label" role="status" aria-live="polite"></p>
+    <div class="device-cards" role="group" aria-label="فئات الأجهزة"><button type="button" class="device-card" data-category="playstation" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="26" height="18" rx="7"/><path d="M8 16h6m-3-3v6m10-5h.01M24 18h.01"/></svg><strong>PlayStation</strong><span>PS1 – PS4 · PSP · Vita</span></button><button type="button" class="device-card" data-category="controllers" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9h14c4 0 7 15 4 16-2 1-6-5-7-5h-8c-1 0-5 6-7 5-3-1 0-16 4-16Z"/><path d="M8 14h6m-3-3v6m10-4h.01M24 16h.01"/></svg><strong>أيدي التحكم</strong><span>DualShock 2 / 3 / 4</span></button><button type="button" class="device-card" data-category="mac" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="20" height="16" rx="2"/><path d="M3 26h26l-3-5H6z"/></svg><strong>MacBook</strong><span>Intel · Apple Silicon</span></button><button type="button" class="device-card" data-category="pc" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="19" rx="2"/><path d="M11 28h10m-5-5v5"/></svg><strong>كمبيوتر ولابتوب</strong><span>تنظيف · فحص · Linux</span></button></div>
         <section class="step" id="stepDevice">
           <h2 class="step-heading"><span class="step-num">1</span> الجهاز</h2>
 
@@ -199,6 +207,7 @@
             <label for="notes">ملاحظات أو وصف المشكلة (اختياري)</label>
             <textarea id="notes" maxlength="1000" placeholder="مثال: الجهاز صوته عالٍ، أو لا يقرأ الأقراص"></textarea>
           </div>
+        <div class="device-next"><button type="button" id="addAnotherDeviceButton" class="button button-outline">+ أضف جهاز آخر لنفس الطلب</button><p class="hint">اختيارات الجهاز ده محفوظة. تقدر تضيف الكونسول أو يد تحكم تانية قبل بيانات التواصل.</p></div>
         </section>
       <section class="step" id="stepInfo"><h2 class="step-heading"><span class="step-num">3</span> بيانات التواصل</h2>
         <div class="field-grid"><div class="field"><label for="name">الاسم <span class="required">*</span></label><input id="name" name="name" type="text" required autocomplete="name" maxlength="100" placeholder="اكتب اسمك"></div>
@@ -257,7 +266,7 @@
         <div class="callout callout-blue policy-card">
           <strong class="policy-title">سياسة الدفع والاسترداد</strong>
           <ul class="callout-list">
-            <li><strong>رسوم الفحص:</strong> <span data-inspection-fee>150</span> جنيه (مبلغ ثابت). لو الخدمة اتنفذت، المبلغ ده بيخصم من السعر الإجمالي.</li>
+            <li><strong>رسوم الفحص:</strong> <span data-inspection-fee>150</span> جنيه لكل جهاز (مبلغ ثابت). لو الخدمة اتنفذت، المبلغ ده بيخصم من السعر الإجمالي.</li>
             <li>عند استلام الجهاز: تُدفع 50% من السعر التقريبي (كاش أو محفظة رقمية).</li>
             <li>عند التسليم: تُدفع الـ 50% المتبقية + أي قطع غيار إضافية.</li>
             <li>قطع الغيار المستوردة: سعر القطعة كامل يُدفع مقدّم قبل الطلب.</li>
@@ -310,12 +319,12 @@
       </section>
     </form>
     <aside class="quote-column" aria-labelledby="quoteHeading"><section class="price" id="priceBox">
-      <p class="eyebrow">تقدير مبدئي للشغل</p><h2 id="quoteHeading">ملخص طلبك</h2>
+      <p class="eyebrow">إجمالي كل أجهزة الطلب</p><h2 id="quoteHeading">ملخص طلبك</h2>
       <p id="quoteDevice">اختار جهازك والخدمة المناسبة</p><div class="total" id="total">—</div>
       <div id="breakdown" class="breakdown"></div><p id="quoteAnnouncement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
-      <label class="offer-toggle"><input type="checkbox" id="applyPromos" checked><span>طبّق أفضل عرض متاح للخدمات دي</span></label><p id="offerStatus" class="hint"></p>
+      <label class="offer-toggle"><input type="checkbox" id="applyPromos" checked><span>طبّق أفضل عرض واحد على الطلب</span></label><p id="offerStatus" class="hint"></p>
       <p class="price-note">السعر النهائي يتأكد بعد الفحص. لا يشمل قطع الغيار أو الشحن أو الجمارك.</p>
-      <div class="inspection-note"><strong>الفحص <span data-inspection-fee>150</span> جنيه</strong><p>بيتحسب ضمن سعر الخدمة لو اتنفذت، ومش بيتضاف عليه مرة تانية.</p></div>
+      <div class="inspection-note"><strong>الفحص <span data-inspection-fee>150</span> جنيه لكل جهاز</strong><p>بيتحسب ضمن سعر خدمة نفس الجهاز لو اتنفذت، ومش بيتضاف عليه مرة تانية.</p></div>
       <a href="#stepInfo" class="button button-primary" id="quoteContinue">كمّل بيانات التواصل</a>
     </section></aside>
     </div>

@@ -13,7 +13,20 @@
     return String(value).replace(/[٠-٩]/g, n => '٠١٢٣٤٥٦٧٨٩'.indexOf(n))
       .replace(/[۰-۹]/g, n => '۰۱۲۳۴۵۶۷۸۹'.indexOf(n));
   }
-  function displayText(value) { return toWesternDigits(value).replace(/و\s*(?=[A-Za-z])/g,'و '); }
+  function displayText(value) { return toWesternDigits(value).replace(/و[ \t]*(?=[A-Za-z])/g,'و '); }
+  // Native <option> elements cannot contain <bdi>. Unicode isolates are the
+  // equivalent: each Latin run, service label and price is a separate unit.
+  const LRI = '\u2066', RLI = '\u2067', PDI = '\u2069';
+  function bidiText(value) {
+    return displayText(value).replace(/[\u2066-\u2069]/g,'').replace(
+      /[A-Za-z0-9]+(?:[ \t]+[A-Za-z0-9]+|[ \t]*[\/+.,_-][ \t]*[A-Za-z0-9]+)*/g,
+      run => LRI + run + PDI
+    );
+  }
+  function optionLabel(label, price) {
+    const name = RLI + bidiText(label) + PDI;
+    return name + (typeof price === 'number' ? ' — ' + RLI + 'السعر: ' + LRI + numberFormat.format(price) + PDI + ' جنيه' + PDI : '');
+  }
   function formatMoney(value) { return numberFormat.format(value) + ' جنيه'; }
   function formatOfferDate(date) { return offerDateFormat.format(new Date(date + 'T12:00:00Z')); }
   function cairoDate(now = new Date()) {
@@ -76,7 +89,7 @@
     let discount = 0, offer = null;
     if (state.applyPromos !== false) {
       for (const p of activePromos(now)) {
-        if (p.type === 'enquiry' || (p.device && p.device !== state.device) || !p.services.every(id => selected.includes(id))) continue;
+        if (!['bundle','percent'].includes(p.type) || (p.device && p.device !== state.device) || !p.services.every(id => selected.includes(id))) continue;
         const eligible = lines.filter(line => p.services.includes(line.id)).reduce((sum,line) => sum + line.price,0);
         const saving = p.type === 'bundle' ? Math.max(0,eligible-p.price) : eligible * p.percentOff / 100;
         if (saving > discount) { discount = saving; offer = p; }
@@ -85,6 +98,76 @@
     discount = Math.round(discount * 100) / 100;
     return {lines,subtotal,discount,total:Math.round((subtotal-discount)*100)/100,offer,warnings,
       requiresModding:selected.some(id => D.moddingServices.has(id))};
+  }
+  function deviceIssue(state) {
+    if (!D.devices.some(d => d[0] === state.device)) return {field:'device',text:'اختار نوع الجهاز.'};
+    if (!service(state.device,state.main) || D.LINUX_ADDON_IDS.has(state.main)) return {field:'mainService',text:'اختار الخدمة الأساسية.'};
+    if (state.device === 'ps4' && !state.firmware) return {field:'firmware',text:'اختار إصدار نظام PS4 أو «لا أعرف».'};
+    if (state.main === 'linux') {
+      if (!D.LINUX_DISTROS.some(d => d[0] === state.distro)) return {field:'linuxDistro',text:'اختار توزيعة Linux.'};
+      if (!Object.hasOwn(D.LINUX_MODES,state.mode)) return {field:'linuxModeBox',text:'اختار طريقة تثبيت Linux.'};
+      if (!state.backup) return {field:'linuxBackup',text:'أكد النسخة الاحتياطية للجهاز ده قبل المتابعة.'};
+    }
+    return null;
+  }
+  function calculateOrder(states, applyPromos = true, now = new Date()) {
+    const entries = states.map((state,index) => ({index,state,quote:calculate({...state,applyPromos:false},now)}));
+    let saving = 0, chosen = null, target = -1;
+    if (applyPromos) {
+      entries.forEach(entry => {
+        const candidate = calculate({...entry.state,applyPromos:true},now);
+        if (candidate && candidate.discount > saving) {
+          saving = candidate.discount; chosen = candidate.offer; target = entry.index;
+        }
+      });
+      // One physical device per entry. Only the second controller receiving
+      // repair work qualifies; cleaning or standalone inspection is not repair.
+      const controllerOffer = activePromos(now).find(p => p.type === 'second-controller');
+      if (controllerOffer) {
+        const eligible = entries.filter(entry => controllerOffer.devices.includes(entry.state.device) && entry.quote &&
+          entry.quote.lines.some(line => controllerOffer.services.includes(line.id)));
+        if (eligible.length >= 2) {
+          const second = eligible[1];
+          const labour = second.quote.lines.filter(line => controllerOffer.services.includes(line.id)).reduce((sum,line) => sum+line.price,0);
+          const discount = Math.round(labour * controllerOffer.percentOff) / 100;
+          if (discount > saving) { saving = discount; chosen = controllerOffer; target = second.index; }
+        }
+      }
+    }
+    if (target >= 0) {
+      const quote = entries[target].quote;
+      quote.discount = saving; quote.offer = chosen; quote.total = Math.round((quote.subtotal-saving)*100)/100;
+    }
+    const subtotal = entries.reduce((sum,e) => sum + (e.quote?.subtotal || 0),0);
+    return {entries,subtotal,discount:saving,total:Math.round((subtotal-saving)*100)/100,offer:chosen,
+      pending:entries.filter(e => !e.quote).length,
+      requiresModding:entries.some(e => e.quote?.requiresModding)};
+  }
+  function orderMessage(states, customer, order, reference) {
+    if (!states.length || order.pending || states.some(deviceIssue)) throw new Error('Complete every device before preparing an order');
+    const lines = ['طلب صيانة - ' + D.CONFIG.name,'مرجع الطلب: ' + reference,
+      'الاسم: ' + customer.name.trim(),'واتساب: ' + normalizePhone(customer.phone),
+      'عدد الأجهزة: ' + states.length];
+    order.entries.forEach(({state,quote,index}) => {
+      lines.push('--------------------------------','الجهاز ' + (index+1) + ': ' + D.devices.find(d => d[0] === state.device)[1],
+        'رقم الموديل: ' + (state.model?.trim() || 'لا أعرف'));
+      if (state.device === 'ps4') lines.push('إصدار النظام: ' + state.firmware);
+      quote.lines.forEach(line => lines.push('• ' + line.name,'  السعر: ' + line.price + ' جنيه'));
+      if (state.main === 'linux') lines.push('طريقة التثبيت: ' + D.LINUX_MODES[state.mode],'تأكيد النسخة الاحتياطية لهذا الجهاز: نعم');
+      if (state.notes?.trim()) lines.push('ملاحظات الجهاز: ' + state.notes.trim());
+      if (state.extraRequest?.trim()) lines.push('طلب للاستفسار: ' + state.extraRequest.trim());
+      if (quote.offer) lines.push('العرض: ' + quote.offer.title + ' [' + quote.offer.id + ']','خصم الجهاز: ' + quote.discount + ' جنيه');
+      lines.push('إجمالي الجهاز ' + (index+1) + ': ' + quote.total + ' جنيه',...quote.warnings);
+    });
+    lines.push('--------------------------------','الإجمالي قبل الخصم: ' + order.subtotal + ' جنيه',
+      'إجمالي الخصم: ' + order.discount + ' جنيه','إجمالي الطلب التقريبي: ' + order.total + ' جنيه',
+      'الأسعار لا تشمل قطع الغيار أو الشحن أو الجمارك.',
+      'رسوم الفحص: ' + D.CONFIG.inspectionFee + ' جنيه لكل جهاز، محسوبة ضمن خدمته عند التنفيذ.',
+      order.offer ? 'عرض واحد للطلب، مع تأكيد الاستحقاق والعربون قبل انتهاء العرض على واتساب.' : '',
+      order.requiresModding ? 'تمت الموافقة الصريحة على شروط التعديل لكل الأجهزة المختارة التي تتطلبه.' : '',
+      'أوافق على بنود الخدمة وسياسة الدفع والاسترداد.','ورشة من المنزل في القاهرة. الاستلام والتسليم بالاتفاق.',
+      'سأرسل صور كل جهاز وموديله إن أمكن.');
+    return displayText(lines.filter(Boolean).join('\n'));
   }
   function message(state, customer, quote, reference) {
     if (!quote) throw new Error('A quote is required');
@@ -110,5 +193,5 @@
       'سأرسل صور الجهاز والموديل إن أمكن.'
     ].filter(Boolean).join('\n'));
   }
-  return {toWesternDigits,displayText,formatMoney,formatOfferDate,cairoDate,activePromos,normalizePhone,validPhone,service,components,conflict,availableServices,calculate,message};
+  return {bidiText,optionLabel,deviceIssue,calculateOrder,orderMessage,toWesternDigits,displayText,formatMoney,formatOfferDate,cairoDate,activePromos,normalizePhone,validPhone,service,components,conflict,availableServices,calculate,message};
 });

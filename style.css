@@ -299,3 +299,26 @@ details[open] > summary .collapse-hint::after { content:' −'; }
   .quote-column { position:static; margin-bottom:20px; }
   .step,.price,.panel { box-shadow:none; break-inside:avoid; }
 }
+
+/* Independent physical devices share one order and one contact form. */
+#requestForm .device-cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.order-devices h2 { font-size:22px; margin-bottom:8px; }
+.order-device-list { list-style:none; padding:0; margin:20px 0; display:grid; gap:10px; }
+.order-device-row { display:flex; gap:8px; min-width:0; }
+.order-device-button { flex:1; min-width:0; text-align:start; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); padding:12px 14px; }
+.order-device-button strong,.order-device-button small { display:block; overflow-wrap:anywhere; }
+.order-device-button strong { font-size:14px; }
+.order-device-button small { font-size:12px; color:var(--muted); margin-top:4px; }
+.order-device-button[aria-current=true] { border-color:var(--purple); background:var(--soft); box-shadow:inset 0 0 0 1px var(--purple); }
+.remove-device-button { align-self:center; min-width:44px; min-height:44px; border:1px solid #e3c4c8; border-radius:10px; color:var(--red); background:white; font-size:12px; padding:8px; }
+.active-device-label { border-inline-start:3px solid var(--purple); padding:8px 14px; font-size:14px; font-weight:700; color:var(--purple-dark); scroll-margin-top:24px; }
+.device-quote { margin-top:20px; }
+.device-quote h3 { margin:0 0 8px; font-size:14px; overflow-wrap:anywhere; }
+.device-quote .hint { margin-bottom:10px; overflow-wrap:anywhere; }
+.device-subtotal { color:var(--purple-dark); }
+.quote-pending { color:var(--red); }
+@media (min-width:761px) { .quote-column { max-height:calc(100dvh - 48px); overflow-y:auto; scrollbar-width:thin; } }
+@media (max-width:380px) { .order-devices { padding:16px; } .order-device-button { padding:10px; } }
+@media print { .quote-column { max-height:none; overflow:visible; } }
+
+.device-next { border-top:1px solid var(--line); padding-top:20px; margin-top:24px; }
