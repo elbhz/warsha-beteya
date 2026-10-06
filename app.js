@@ -14,7 +14,14 @@
     if (className) node.className = className;
     return node;
   };
-  const focusControl = node => node.tagName === 'SELECT' ? window.WarshaPicker.focus(node) : (node.focus({preventScroll:true}),node);
+  const focusControl = node => {
+    if (node.id === 'device') {
+      const target = document.querySelector('#deviceModels [aria-pressed=true]') || document.querySelector('#deviceModels button') || document.querySelector('[data-category]');
+      target.focus({preventScroll:true}); return target;
+    }
+    if (node.tagName === 'SELECT') return window.WarshaPicker.focus(node);
+    node.focus({preventScroll:true}); return node;
+  };
   const focusDevice = () => state.category || state.device ? focusControl($('device')) : document.querySelector('[data-category]').focus({preventScroll:true});
   const show = (id,on) => $(id).classList.toggle('hidden',!on);
   function track(name,params = {}) {
@@ -98,6 +105,24 @@
     field.append(label,select); row.append(field,remove); $('additionalServices').append(row);
     return select;
   }
+  function renderModels() {
+    const shortNames = {ps1:'PS1',ps2:'PS2',ps3:'PS3',ps4:'PS4',psp:'PSP',vita:'PS Vita',ds2:'DualShock 2',ds3:'DualShock 3',ds4:'DualShock 4','mac-intel':'MacBook Intel','mac-silicon':'MacBook Apple Silicon','pc-laptop':'كمبيوتر / لابتوب'};
+    const descriptions = {ps1:'بلايستيشن 1',ps2:'بلايستيشن 2',ps3:'بلايستيشن 3',ps4:'بلايستيشن 4',psp:'بلايستيشن محمول',vita:'بلايستيشن فيتا',ds2:'يد بلايستيشن 2',ds3:'يد بلايستيشن 3',ds4:'يد بلايستيشن 4','mac-intel':'معالج Intel','mac-silicon':'معالج Apple — سلسلة M','pc-laptop':'كمبيوتر مكتبي أو محمول'};
+    $('deviceModels').replaceChildren();
+    [...$('device').options].filter(o => o.value).forEach(option => {
+      const button = element('button',undefined,'model-card'); button.type = 'button';
+      button.dataset.model = option.value; button.setAttribute('aria-pressed',String(state.device === option.value));
+      button.append(element('strong',shortNames[option.value]),element('small',descriptions[option.value]));
+      button.addEventListener('click',() => {
+        if (state.device === option.value) return;
+        $('device').value = option.value;
+        $('device').dispatchEvent(new Event('change',{bubbles:true}));
+        const selected = document.querySelector('#deviceModels [aria-pressed=true]');
+        selected?.focus({preventScroll:true});
+      });
+      $('deviceModels').append(button);
+    });
+  }
   function renderEditor() {
     window.WarshaPicker.close();
     show('stepDevice',Boolean(state.category || state.device));
@@ -107,6 +132,7 @@
     $('extraBox').open = state.extras.length > 0;
     // No mutation of a different device while rebuilding the active editor.
     setOptions($('device'),D.devices.filter(d => d[2] === (state.category || D.devices.find(row => row[0] === state.device)?.[2])).map(d => d.slice(0,2)),'-- اختر الجهاز --',state.device);
+    renderModels();
     setOptions($('mainService'),Q.availableServices(state.device,[],true),'-- اختر الخدمة الأساسية --',state.main);
     ['model','firmware','notes','extraRequest'].forEach(key => $(key).value = state[key]);
     $('linuxDistro').value = state.distro;

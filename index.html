@@ -36,7 +36,7 @@
 
   <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css?v=20261006-clear">
+  <link rel="stylesheet" href="style.css?v=20261006-models">
 
   <script type="application/ld+json">
   {
@@ -82,11 +82,11 @@
   }
   </script>
 
-  <script defer src="data.js?v=20261006-clear"></script>
-  <script defer src="promos.js?v=20261006-clear"></script>
-  <script defer src="quote.js?v=20261006-clear"></script>
-  <script defer src="picker.js?v=20261006-clear"></script>
-  <script defer src="app.js?v=20261006-clear"></script>
+  <script defer src="data.js?v=20261006-models"></script>
+  <script defer src="promos.js?v=20261006-models"></script>
+  <script defer src="quote.js?v=20261006-models"></script>
+  <script defer src="picker.js?v=20261006-models"></script>
+  <script defer src="app.js?v=20261006-models"></script>
 </head>
 <body>
 <a class="skip-link" href="#requestForm">انتقل لحساب السعر</a>
@@ -128,13 +128,15 @@
       </section>
       <p id="activeDeviceLabel" class="active-device-label" role="status" aria-live="polite"></p>
     <p id="deviceStage" class="category-prompt">اختار فئة جهازك</p>
-    <div class="device-cards" role="group" aria-label="فئات الأجهزة"><button type="button" class="device-card" data-category="playstation" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="26" height="18" rx="7"/><path d="M8 16h6m-3-3v6m10-5h.01M24 18h.01"/></svg><strong>بلايستيشن</strong><span><bdi>PS1 – PS4 · PSP · Vita</bdi></span></button><button type="button" class="device-card" data-category="controllers" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9h14c4 0 7 15 4 16-2 1-6-5-7-5h-8c-1 0-5 6-7 5-3-1 0-16 4-16Z"/><path d="M8 14h6m-3-3v6m10-4h.01M24 16h.01"/></svg><strong>أيدي التحكم</strong><span>DualShock 2 / 3 / 4</span></button><button type="button" class="device-card" data-category="mac" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="20" height="16" rx="2"/><path d="M3 26h26l-3-5H6z"/></svg><strong>ماك بوك</strong><span><bdi>Intel · Apple Silicon</bdi></span></button><button type="button" class="device-card" data-category="pc" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="19" rx="2"/><path d="M11 28h10m-5-5v5"/></svg><strong>كمبيوتر ولابتوب</strong><span>كمبيوتر مكتبي أو لابتوب</span></button></div>
+    <div class="device-cards" role="group" aria-label="فئات الأجهزة"><button type="button" class="device-card" data-category="playstation" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="26" height="18" rx="7"/><path d="M8 16h6m-3-3v6m10-5h.01M24 18h.01"/></svg><strong>بلايستيشن</strong><span class="category-models"><bdi>PS1</bdi><bdi>PS2</bdi><bdi>PS3</bdi><bdi>PS4</bdi><bdi>PSP</bdi><bdi>PS Vita</bdi></span></button><button type="button" class="device-card" data-category="controllers" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9h14c4 0 7 15 4 16-2 1-6-5-7-5h-8c-1 0-5 6-7 5-3-1 0-16 4-16Z"/><path d="M8 14h6m-3-3v6m10-4h.01M24 16h.01"/></svg><strong>أيدي التحكم</strong><span class="category-models"><bdi>DualShock 2</bdi><bdi>DualShock 3</bdi><bdi>DualShock 4</bdi></span></button><button type="button" class="device-card" data-category="mac" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="20" height="16" rx="2"/><path d="M3 26h26l-3-5H6z"/></svg><strong>ماك بوك</strong><span class="category-models"><bdi>Intel</bdi><bdi>Apple Silicon</bdi></span></button><button type="button" class="device-card" data-category="pc" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="26" height="19" rx="2"/><path d="M11 28h10m-5-5v5"/></svg><strong>كمبيوتر ولابتوب</strong><span>كمبيوتر مكتبي أو لابتوب</span></button></div>
         <section class="step" id="stepDevice">
           <h2 class="step-heading"><span class="step-num">1</span> الجهاز</h2>
 
           <div class="field">
-            <label for="device">نوع الجهاز <span class="required">*</span></label>
-            <select id="device" required><option value="">-- اختر الجهاز --</option></select>
+            <p id="deviceModelLabel" class="field-label">اضغط على موديل جهازك <span class="required">*</span></p>
+            <select id="device" required aria-label="موديل الجهاز"><option value="">-- اختر الجهاز --</option></select>
+            <div id="deviceModels" class="model-grid" role="group" aria-labelledby="deviceModelLabel"></div>
+            <p class="hint">مش عارف الموديل؟ <a data-whatsapp href="https://wa.me/201277048080" target="_blank" rel="noopener noreferrer">ابعتلنا صورة الجهاز ونساعدك</a>.</p>
           </div>
 
           <details id="deviceOptional" class="optional-details"><summary>رقم الموديل (اختياري)</summary>

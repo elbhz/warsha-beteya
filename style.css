@@ -16,3 +16,19 @@
 @media(max-width:360px){.hero h1{font-size:31px}.wordmark{font-size:19px}.header-contact{padding:8px}.site-header nav a{font-size:14px}.device-card strong{font-size:16px}.device-card span{font-size:14px}.choice-button,.choice-option{flex-wrap:wrap}.choice-name{flex-basis:60%}.choice-price{font-size:15px}.order-progress a{font-size:14px}.order-progress b{width:22px;height:22px}.quote-line{flex-wrap:wrap}.quote-line span{flex-basis:60%}.mobile-quote{font-size:14px}.mobile-quote strong{display:block}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 @media print{.site-header nav,.hero-actions,.device-cards,.device-next,.mobile-quote,.choice-menu,.footer-links,.community-actions,#sendButton,.rate-section{display:none!important}.shell{width:100%}.booking-layout,.bottom-grid{display:block}.quote-column{position:static;max-height:none;overflow:visible}.step,.panel,.price{break-inside:avoid;box-shadow:none}.process{background:white;color:black}.process-steps p{color:black}body{padding:0}}
+
+/* Models are visible choices, never shorthand ranges or a hidden device menu. */
+.category-models{display:flex!important;flex-wrap:wrap;gap:7px;margin-top:10px!important}
+.category-models bdi{display:inline-block;padding:3px 8px;border:1px solid #d0ded6;border-radius:7px;font-size:15px;line-height:1.6;background:#f6faf7;color:#234b3b;white-space:nowrap}
+.device-card{min-height:180px}.device-card strong{padding-inline-end:24px}
+.choice:has(>#device){display:none}
+.model-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.model-card{position:relative;text-align:start;padding:18px 16px;border:1px solid #a9bcb3;background:white;color:#18364e;border-radius:12px;min-height:106px}
+.model-card strong{display:block;font-size:21px;line-height:1.5;overflow-wrap:anywhere}
+.model-card small{display:block;font-size:15px;color:#52646b;line-height:1.8;margin-top:6px}
+.model-card:hover{background:#f0f6f2}.model-card[aria-pressed=true]{border:2px solid #32634d;background:#eaf2ed;padding:17px 15px}
+.model-card[aria-pressed=true]:after{content:'✓';position:absolute;top:8px;inset-inline-end:10px;color:#32634d;font-size:16px;font-weight:800}
+.model-card[aria-pressed=true] strong{padding-inline-end:12px}
+@media(min-width:1600px){.device-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1000px){.model-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.device-cards{grid-template-columns:1fr}.device-card{min-height:0;padding:20px}.device-card[aria-pressed=true]{padding:19px}.device-card svg{float:right;margin:0 0 0 12px}.device-card strong{font-size:19px}.category-models{clear:both;padding-top:12px}.category-models bdi{font-size:16px;padding:4px 10px}.model-card{padding:18px 14px}.model-card[aria-pressed=true]{padding:17px 13px}.model-card strong{font-size:20px}}
